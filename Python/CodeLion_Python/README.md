@@ -50,3 +50,43 @@
     - 값을 삭제하고자 할 떄 ```del 딕셔너리명["키값"]```
     - 딕셔너리에 몇개의 값이 들어가있는지 확인하고 싶을 때 ```len(딕셔너리명)```
     - 딕셔너리의 내용을 다 초기화시키고 싶을 때 ```딕셔너리명.clear()```
+
+### 끝까지 반복하기
+- ```for x in range(num) : ``` : num만큼 반복
+```
+foods = ["된장찌개", "피자", "제육볶음"]
+for x in range(3):
+    print(foods[x])
+for x in foods:
+    print(x)
+
+information = {"고향":"수원", "취미":"영화관람", "좋아하는 음식":"국수"}
+for x, y in information.items():
+    print(x)
+    print(y)
+```
+
+### 집합 알아보기
+- list는 데이터의 중복을 방어해주지 않음
+- list : 순서가 명확함, 중복 존재 O
+- 집합 : 순서가 없음, 중복 존재 X
+- 집합 : 합집합연산, 교집합연산, 차집합연산
+- 집합은 list로부터 시작함 : ```set_name = set(list_name)```
+- 바로 집합을 생성함 : ```set_name = set(["list", "list", "list"])```
+
+### 집합 사용하기
+```
+foods = ["된장찌개", "피자", "제육볶음", "된장찌개"]
+foods_set = set(foods)
+print(foods)
+print(foods_set)
+```
+- list는 중복의 내용도 출력되지만, 집합은 중복의 내용은 출력되지 않음
+```
+menu1 = set(["된장찌개", "피자", "제육볶음"])
+menu2 = set(["된장찌개", "떡국", "김밥"])
+```
+위의 두 상황에서
+- 합집합(|) : ```menu3 = menu1 | menu2```
+- 교집합(&) : ```menu3 = menu1 & menu2```
+- 차집합(-) : ```menu3 = menu1 - menu2```
