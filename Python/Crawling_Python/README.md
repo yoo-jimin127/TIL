@@ -23,3 +23,18 @@
 - ```<Response [200]>``` : 성공적으로 응답이 온 상황
 - ```print(response.text)``` : response 안의 text를 html 형식으로 받아 출력함
     - response : request 안의 응답값을 채워줌
+
+### BeautifulSoup
+- bs4 모듈의 기능 ```from bs4 import BeautifulSoup```
+- ```print(BeautifulSoup(response.text, 'html.parser'))```와 ```print(response.text)```의 값이 같아보이나 다름
+    - 각 값의 type을 찍어보면 
+    ``` <class 'str'>
+        <class 'bs4.BeautifulSoup'>
+    ```
+    으로 나옴
+    - ```BeautifulSoup(response.text, 'html.parser')```은 문자열 type이었던 response.text를 다른 형식으로 변환해준 것(BeautifulSoup 의 형식에 맞추어 저장한 것)
+
+- ```BeautifulSoup (데이터, 파싱방법)``` : 데이터를 어떠한 형식으로 가져올 것인지
+    - 데이터: html, xml이 올 수 있음 (ex> response.text)
+    - 파싱: 문서 or 데이터를 유의미하게 가공하는 과정 - parser (파이썬 기본 내장 : html.parser)
+    ```BeautifulSoup(response.text, 'html.parser')```
