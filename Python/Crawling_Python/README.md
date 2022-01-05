@@ -50,3 +50,17 @@
     ```
     해당 오류 발생 [해결방법](https://ddolcat.tistory.com/749) ```file = open("daum.html", "w", encoding='utf-8')```
         - sol. 인코딩 방식을 file open시 추가, encoding='cp949'시 정상 처리 X -> encoding='utf-8' 정상 처리 O
+
+- 실시간 검색어가 가지고 있는 속성 : ```<a>```태그이며 ```link_favorsch```의 클래스 내에 존재함
+
+    **오류 해결**
+    - ```https://www.daum.net/```을 url으로 크롤링한 결과 daum.html에 meta태그와 script태그만 크롤링됨
+        - f12로 확인해보니 그냥 해당 페이지 태그가 그것뿐이었던 것. <br> 
+        -> ```https://news.daum.net/```을 url으로 파싱하니 제대로 크롤링된 것 확인
+    - ```AttributeError: 'NoneType' object has no attribute 'findAll'``` 
+        - 해당 오류가 발생하는 이유는 크게 3가지의 경우라고 함.
+            1.http요청에 대한응답 결과가 없거나
+            2.내용이 잘못되었거나
+            3.요청이 잘못된 경우
+        - 와 나 혹시 바보임? ```soup.response.findAll("a")``` -> ```soup.findAll("a")``` 해결
+            - 이미 응답 값이 bs4 모듈에 맞춰 soup에 저장되어있던 상태. 다시 response를 받으려니 꼬였던 것.
