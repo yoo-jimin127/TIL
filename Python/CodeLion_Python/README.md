@@ -140,3 +140,6 @@ def 함수이름() :
 - 프로그램에 쌓이는 데이터를 저장하는 방법 : 취미 & 답변 -> Dictionary의 형태로 저장하기
 - Dictionary는 ```KEY:VALUE``` 쌍으로 저장됨 - list 안에 Dictionary를 삽입하는 방식을 사용하여 구현하면 여러개의 딕셔너리를 생성할 수 있음
 - Dictionary 안의 모든 정보를 출력하고자 할 때 : ```for x in total_dictionary:```
+- 빈 Dictionary 생성 : ```dictionary_name = {}```
+- 빈 list 작성 : ```list_name = []```
+- ```print(x["질문"])```의 형식으로 출력할 수 있음

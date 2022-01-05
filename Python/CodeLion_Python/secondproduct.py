@@ -1,13 +1,14 @@
-total_dictionary = {}
+total_list = []
 
 while True :
     question = input("질문을 입력해주세요 : ")
     if question == "q":
         break
     else :
-        total_dictionary[question] = ""
+        total_list.append({"질문" : question, "답변" : ""})
 
-for x in total_dictionary:
-    print(x)
+for x in total_list:
+    print(x["질문"])
     answer = input("답변을 입력해주세요 : ")
-    total_dictionary[x] = answer
+    x["답변"] = answer
+print(total_list)
