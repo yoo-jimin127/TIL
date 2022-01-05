@@ -1,8 +1,18 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = "http://www.daum.net"
+url = "http://www.daum.net/"
 response = requests.get(url)
+soup = BeautifulSoup(response.text, 'html.parser')
+
+file = open("daum.html", "w", encoding='utf-8')
+file.write(response.text)
+file.close()
+
+print(soup.title)
+print(soup.title.string)
+print(soup.span)
+print(soup.findAll('span'))
 
 # print(response.text[:500])
 # print(response.url)
@@ -13,10 +23,3 @@ response = requests.get(url)
 # print(response.links)
 # print(response.ok)
 # print(response.status_code)
-
-soup = BeautifulSoup(response.text, 'html.parser')
-
-print(soup.title)
-print(soup.title.string)
-print(soup.span)
-print(soup.findAll('span'))

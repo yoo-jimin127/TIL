@@ -39,3 +39,14 @@
     - 파싱: 문서 or 데이터를 유의미하게 가공하는 과정 - parser (파이썬 기본 내장 : html.parser)
     ```BeautifulSoup(response.text, 'html.parser')```
     - 모든 span 태그를 찾아 출력하는 부분 : findAll을 사용함 ```print(soup.findAll('span'))```
+
+    **오류 해결**
+    - 데이터 파싱 중 
+    ```
+    Traceback (most recent call last):
+    File "C:\Users\UserK\Documents\GitHub\Study-1\Python\Crawling_Python\codelion.py", line 9, in <module>
+        file.write(response.text)
+    UnicodeEncodeError: 'cp949' codec can't encode character '\xeb' in position 564: illegal multibyte sequence
+    ```
+    해당 오류 발생 [해결방법](https://ddolcat.tistory.com/749) ```file = open("daum.html", "w", encoding='utf-8')```
+        - sol. 인코딩 방식을 file open시 추가, encoding='cp949'시 정상 처리 X -> encoding='utf-8' 정상 처리 O
