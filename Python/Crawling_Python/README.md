@@ -79,3 +79,7 @@
 - ```search_rank_file.write(str(rank) + "번째 기사 : " + result.get_text() + "\n")``` : rank 변수는 순위를 저장하는 정수형이므로 문자열과 함께 사용 어려움
     - sol. str() 형변환 함수를 사용함으로써 + 연산으로 붙여넣기 할 수 있도록 함
     - **오류 해결** : rankresult.txt 파일에 저장된 한글이 깨지는 현상 -> 파일 오픈 시 encoding type 추가 : ```open("rankresult.txt", "w", encoding="utf-8")```
+- 크롤링을 막아둔 사이트 ex) 네이버
+    - ```headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}```
+        - 로봇이 아님을 증명하여 ```request.get()```호출 시 url, headers=headers 로 param을 함께 넘겨줌
+        
