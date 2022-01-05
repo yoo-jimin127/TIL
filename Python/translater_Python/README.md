@@ -3,6 +3,7 @@
 ------
 
 #### googletrans 
+- [googletrans 공식문서](https://py-googletrans.readthedocs.io/en/latest/)
 - 언어감지 : 해당 문장의 언어 감지
 - 번역 : 특정 언어를 파악해 다른 언어로 변경
 - ```from googletrans import Translator``` : googletrans 모듈의 Translator기능 사용
