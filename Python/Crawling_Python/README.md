@@ -38,3 +38,4 @@
     - 데이터: html, xml이 올 수 있음 (ex> response.text)
     - 파싱: 문서 or 데이터를 유의미하게 가공하는 과정 - parser (파이썬 기본 내장 : html.parser)
     ```BeautifulSoup(response.text, 'html.parser')```
+    - 모든 span 태그를 찾아 출력하는 부분 : findAll을 사용함 ```print(soup.findAll('span'))```
