@@ -11,4 +11,6 @@
 - EMAIL SERVER to EMAIL CLIENT : IMAP
 - EMAIL CLIENT to EMAIL SERVER : SMTP
 - SMTP 서버를 이용해 우리가 원하는 곳으로 메일 보낼 수 있음
+- ![image](https://user-images.githubusercontent.com/66112716/148239448-8e363735-5a59-4f7a-a595-221ddb401375.png)
+
 
