@@ -3,8 +3,10 @@ import json
 
 city = "Seoul"
 apikey = "34d60f5d8e949a645997f0aca9311686"
+lang = "kr"
 
-api = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={apikey}"
+# units - metric
+api = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={apikey}&lang={lang}&units=metric"""
 
 result = requests.get(api)
 # print(result.text)

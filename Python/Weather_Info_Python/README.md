@@ -19,3 +19,4 @@
 print(type(result.text))    -> str
 print(type(data))    -> dictionary
 ```
+- ```units - metric```을 api url에 추가할 경우 섭씨 -> 화씨로 변경됨
