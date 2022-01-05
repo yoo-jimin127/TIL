@@ -64,3 +64,18 @@
             3.요청이 잘못된 경우
         - 와 나 혹시 바보임? ```soup.response.findAll("a")``` -> ```soup.findAll("a")``` 해결
             - 이미 응답 값이 bs4 모듈에 맞춰 soup에 저장되어있던 상태. 다시 response를 받으려니 꼬였던 것.
+
+- ```from datetime import datetime``` 모듈의 기능을 통해 ```print(datetime.today())``` 오늘의 날짜 출력
+    - ```datetime.today().strftime("%Y년 %m월 %d일의 뉴스입니다.\n")```의 형태로 날짜를 출력하는 부분 strftime() 사용하여 저장할 수 있음
+- ```results = soup.findAll("a", "link_txt")``` : a 태그인 동시에 link_txt 클래스에 해당하는 것들을 가져옴
+- ```result.get_text()``` get_text() 함수를 통해 html상 태그 그대로 출력되었던 것을 text 형식으로 바꾸어 출력할 수 있음
+
+### 파일로 출력하기
+- ```open(fimename, mode)``` 내장 함수 : ex) ```open("rankresult.txt", "w")```
+    - r : read mode
+    - w : write mode - 원래 파일의 내용을 최근 내용이 모두 덮어쓰게 됨
+    - a : append mode - 기존 파일의 새로운 내용 덧붙임, 이어붙임
+    - 모드 변경을 통해 파일의 내용을 새로고침할지 덮어쓰기할지 정할 수 있음
+- ```search_rank_file.write(str(rank) + "번째 기사 : " + result.get_text() + "\n")``` : rank 변수는 순위를 저장하는 정수형이므로 문자열과 함께 사용 어려움
+    - sol. str() 형변환 함수를 사용함으로써 + 연산으로 붙여넣기 할 수 있도록 함
+    - **오류 해결** : rankresult.txt 파일에 저장된 한글이 깨지는 현상 -> 파일 오픈 시 encoding type 추가 : ```open("rankresult.txt", "w", encoding="utf-8")```
