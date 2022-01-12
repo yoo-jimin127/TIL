@@ -1,0 +1,58 @@
+* {
+    color: #333333;
+}
+
+p {
+    margin-bottom: 1px;
+}
+
+.photos {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#duhee {
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    border-radius:50%;
+    margin-right: 30px;
+}
+
+#jisook {
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    border-radius:50%;
+    margin-left: 30px;
+}
+
+#heart {
+    width:50px;
+    height:50px;
+}
+
+.gray {
+    color: #a0a0a0;
+}
+
+.special-day {
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+}
+
+.days-left {
+    text-align: right;
+}
+
+.date {
+    text-align: right;
+    color: #a0a0a0;
+}

@@ -1,0 +1,33 @@
+.background {
+    position: relative;
+    background-image: url('img/background.png');
+    background-size: 500px 330px;
+    width: 500px;
+    height: 330px;
+}
+
+#drone {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 100px;
+    left: 60px;
+}
+
+#bunker {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: 80px;
+    right: 20px;
+}
+
+#spit {
+    position: absolute;
+    display: none;
+    width: 50px;
+    height: 30px;
+    top: 140px;
+    left: 150px;
+    z-index: 2;
+}

@@ -1,0 +1,22 @@
+* {
+    text-align: center;
+}
+
+#introduce {
+    width: 800px;
+    height: 200px;
+    border-radius: 10px;
+    border: 2px solid skyblue;
+} 
+
+#introduce::placeholder {
+    width: 800px;
+    height: 200px;
+    border-radius: 10px;
+    border: 2px solid skyblue;
+}
+
+#count {
+    color: rgb(0, 101, 141);
+    font-weight: 600;
+}

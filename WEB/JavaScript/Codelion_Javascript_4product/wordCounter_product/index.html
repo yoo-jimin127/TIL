@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자기소개서 글자수 계산기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>자기소개서</h1>
+    <textarea class="form-control" rows="3" id="introduce" onkeydown="counter()">안녕하세요 저는 유지민입니다.</textarea>
+    <span id="count">(0/200)</span>
+    <script>
+        function counter() {
+            var content = document.getElementById('introduce').value;
+
+            if (content.length > 200) {
+                content = content.substring(0, 200); //200문자까지의 내용만 content에 담음
+                document.getElementById('introduce').value = content; //잘려진 200자의 텍스트를 textarea에 담음
+            }
+
+            document.getElementById('count').innerHTML = '(' + content.length + '/200)';
+        };
+        counter();
+    </script>
+</body>
+</html>

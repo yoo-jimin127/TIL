@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ministarcraft</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 id='hp'>HP : 3</h1>
+
+    <div class="background">
+        <img id="drone" src="img/drone.png" alt="drone">
+        <img id="spit" src="img/spit.png" alt="spit">
+        <img id="bunker" src="img/bunker.png" alt="bunker">
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
+    crossorigin="anonymous"></script>
+
+    <script>
+
+        var hp = 3;
+
+        // drone 선택 후 .click() 이벤트 익명함수
+        $('#drone').click(function() {
+            $('#spit').fadeIn('slow'); //침이 나타나는 작업
+            $('#spit').animate({
+                left: '+=250' //250만큼 침의 위치를 이동시켜줌
+            });
+            $('#spit').fadeOut(function() {
+                hp = hp -1;
+                $('#hp').text('HP : ' + hp); //침이 fadeOut된 다음 hp의 값이 업데이트될 수 있도록 생성한 익명함수
+
+                if (hp == 0) { //hp 값이 0이 될 떄 bunker가 사라지도록 하는 작업
+                    $('#bunker').fadeOut();
+                }
+            }); //침이 사라지는 작업
+            $('#spit').css({left: '150px'});
+        })
+    </script>
+</html>
