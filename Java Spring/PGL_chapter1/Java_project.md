@@ -26,6 +26,24 @@
     - Docker 활용 ver. : ```HW -> Host OS -> (LIBRARY, Application)```
     - 이전의 가상화 방식보다 docker 활용해 훨씬 가볍게 가능
 
-- Docker Application : 웹 어플리케ㅣ션 개발에 필요한 다양한 SW 설치 간소화
+- Docker Application : 웹 어플리케이션 개발에 필요한 다양한 SW 설치 간소화
 
+- 간단한 이미지 받아 사용 : ```docker run -d -p 80:80 docker/getting-started```
+    - ```docker``` : Docker Daemon에 요청을 보냄
+    - ```run``` : 컨테이너 실행
+    - ```-d``` : Detached, 컨테이너를 background에서 실행하는 옵션
+    - ```-p``` : Port, 컨테이너의 포트를 물리 서버의 포트와 연결
+    - ```docker/getting-started``` : 컨테이너로 실행할 이미지의 이름
 
+- ```127.0.0.1:80```에서 docker backend 구축
+
+### Client - Server Model
+- what is WEB ?
+    - HTML, CSS, JS : internet 의 Cornerstone - 인터넷 브라우저가 사용하는 언어
+    - HTML : 브라우저에 표시될 내용을 기술하는 언어
+    - CSS : 표현되는 형식을 정의하는 언어
+    - JS : 브라우저에 동작을 제공하는 언어
+- http를 통해 서버간 통신
+
+- Spring Boot : (Web) Application Framework
+- Spring Boot : HTTP 요청 등을 받으면 요청에 따른 응답을 돌려주는 Web Application을 만드는 Framework
