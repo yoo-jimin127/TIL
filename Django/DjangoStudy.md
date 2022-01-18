@@ -37,4 +37,38 @@
     - 모듈 : 파이썬으로 정의된 파일 (서로 다른 모듈의 내용을 가져다 쓰고 싶은 경우 : ```import``` 사용)
     - 패키지 : ```import package_name/module_name```
     - 라이브러리 : 미리 준비된 모듈 및 패키지 ex) python standard lib, python package index lib
-    
+
+    - pip : python package management system
+    ```
+    $ pip install PACKAGE   # 패키지 설치 
+    $ pip search PACKAGE    # 패키지 검색
+    $ pip install PACKAGE==1.0.5    # 특정 버전 지정하여 설치
+    $ pip uninstall PACKAGE     # 패키지 제거
+    $ pip freeze    # 현재 설치된 패키지와 버전 목록
+    ```
+
+### Web Service
+- World Wide Web : hyperlink를 사용해 비순차적으로 자원 사용
+- ```URL``` : 정보 자원이 어디 있는지 나타내는 표식
+- ```HTTP``` : 정보자원으로 접근하고 통신하게 해 주는 약속(프로토콜을 사용)
+    - ```GET``` : 갖다달라는 요청 (http 요청)
+    - ```POST``` : 처리해달라는 요청 (http 요청)
+- ```HTML``` : 응답으로서의 정보 자원 자체, 다른 정보 자원과 연결 매개체
+
+- server : 데이터 통신, 데이터 처리
+- Web browser : HTTP 통신, HTML 보기 좋은 형식으로 보이기
+- Web service : HTML과 URL을 미리 준비해놓고, 사용자 요청에 대한 응답을 보낼 수 있는 프로그램
+- Web Framework : 정형화 - 정형화 되어있는 웹 개발을 효율적으로 하기 위해 미리 만들어 놓은 웹 개발의 기능단위, 설계 단위의 집합
+    - 라이브러리와 다른 점 : 라이브러리 - 도구의 모음
+    - Framework : 명확한 목적을 달성하기 위해 이미 설계까지 만들어진 구조/뼈대
+
+### MVC, MTV
+- MVC, MTV 패턴 (**디자인 패턴**)
+    - Model : DB와 상호작용하는 부분
+    - View : 사용자들 눈에 보이는 부분 (사용자 인터페이스 담당 뷰뷴)
+    - Controller : 내부 동작의 논리를 담당하는 부분
+
+    - Model : DB와 상호작용하는 부분
+    - Template : 사용자들 눈에 보이는 부분 (사용자 인터페이스 담당 뷰뷴)
+    - View : 내부 동작의 논리를 담당하는 부분
+
