@@ -79,13 +79,21 @@
 
 - 장고 설치 : ```pip install django```
 - 장고 프로젝트 생성 : ```django-admin startproject myproject```
+- 장고 서버 켜기 : ```python manage.py runserver``` 
+- appication 생성 : ```python manage.py startapp dashboard```
 
 ### Django 내용
 - ```__init__.py``` : 패키지임을 알려주기 위한 파일, 패키지를 초기화해주는 역할, 약속된 이름
 - ```settings.py``` : 
+    - BASE_DIR : 프로젝트의 기본 위치, ROOT PATH
+    - SECRET_KEY : 암호 생성 시(해시 생성 시) 만들어주는 문자열
+    - DEBUG : 서버를 개발자 모드로 열 것인지, 배포 모드로 열 것인지에 대한 설정 (배포 시 False 로 설정해 넣을 것)
+    - INSTALLED_APPS : 본 프로젝트에 생성되어있는 앱
+    - DATABASES : 디폴트로 사용하게 될 데이터베이스에 대한 정보 (기본 설정 : sqlite)
 - ```urls.py``` : 각종 URL을 등록하고 관리하는 파일, 다른 URL에 대한 요청이 들어왔을 경우 그에 대한 로직을 정리하는 파일, 즉 URL 관리 파일 ex) ```www.codelion.net/classroom``` 
 - ```manage.py``` : 
-    1. 서버 켜기
-    2. application 만들기
-    3. database 초기화 및 변경사항 반영
-    4. 관리자 계정 만들기 
+    1. 서버 켜기 : ```python manage.py runserver```
+    2. application 만들기 : ```python manage.py startapp dashboard``` 
+        - 등록 : settings.py에 ```INSTALLED_APPS = [ 'application_name', ]``` 추가 or ```INSTALLED_APPS = [ ''application.apps.ApplicationConfig', ]```
+    3. database 초기화 및 변경사항 반영 : ```python manage.py migrate```
+    4. 관리자 계정 만들기 : ```python manage.py createsuperuser```
