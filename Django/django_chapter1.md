@@ -72,3 +72,20 @@
     - Template : 사용자들 눈에 보이는 부분 (사용자 인터페이스 담당 뷰뷴)
     - View : 내부 동작의 논리를 담당하는 부분
 
+### Django 가상 환경
+- 가상환경 생성 : ```python -m venv myvenv```
+- 가상환경 실행 : ```source myvenv/Scripts/activate```
+- 가상환경 끄기 : ```deactivate```
+
+- 장고 설치 : ```pip install django```
+- 장고 프로젝트 생성 : ```django-admin startproject myproject```
+
+### Django 내용
+- ```__init__.py``` : 패키지임을 알려주기 위한 파일, 패키지를 초기화해주는 역할, 약속된 이름
+- ```settings.py``` : 
+- ```urls.py``` : 각종 URL을 등록하고 관리하는 파일, 다른 URL에 대한 요청이 들어왔을 경우 그에 대한 로직을 정리하는 파일, 즉 URL 관리 파일 ex) ```www.codelion.net/classroom``` 
+- ```manage.py``` : 
+    1. 서버 켜기
+    2. application 만들기
+    3. database 초기화 및 변경사항 반영
+    4. 관리자 계정 만들기 
