@@ -49,4 +49,5 @@
 - Spring Boot : HTTP 요청 등을 받으면 요청에 따른 응답을 돌려주는 Web Application을 만드는 Framework
 
 ### Spring Boot 프로젝트 시작하기
-- 
+- Group : 도메인의 역순으로 (전체 총괄 구분)
+- Artifact : 개별적인 프로젝트 단위 (프로젝트 구분)
