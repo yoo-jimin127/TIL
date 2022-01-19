@@ -97,3 +97,19 @@
         - 등록 : settings.py에 ```INSTALLED_APPS = [ 'application_name', ]``` 추가 or ```INSTALLED_APPS = [ ''application.apps.ApplicationConfig', ]```
     3. database 초기화 및 변경사항 반영 : ```python manage.py migrate```
     4. 관리자 계정 만들기 : ```python manage.py createsuperuser```
+
+- 브라우저 상에 보이는 화면 : app 내에 templates 폴더를 생성하여 그 내부에 html 파일 생성
+- 요청이 들어온 경우 브라우저에 해당 화면을 보여줄 수 있도록 하는 작업 : view 단에 작성한 함수
+```
+def home(request):  # 요청이 들어왔을 때
+    return render(request, 'index.html')    # 그 요청에 index.html의 파일을 함께 rendering 해줌
+```
+    - 논리를 담당하는 함수를 만들었을 때, 해당 함수가 언제 실행될지를 urls.py에 정의해줌
+    - 어떤 url에 요청이 들어왔을 때, views.py에 만들어진 함수를 언제 실행할지에 대해 명시
+
+- ```    path('', myapp.views.home),``` : 아무런 주소없이 요청을 보냈을 경우 myapp의 views.py에 있는 파일의 home 함수를 실행시키도록 함. name=''은 별칭과 같은 순서
+
+**<생성 순서>**
+1. templates 폴더에 html 파일을 생성함
+2. views.py에 해당 html 파일을 띄우기 위한 함수를 작성함
+3. urls.py에 해당 view의 내용을 띄워주기 위해 url을 추가함
