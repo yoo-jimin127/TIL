@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ui id="list">
+        <li>empty</li>
+        <li>empty</li>
+        <li>empty</li>
+        <li>empty</li>
+        <li>empty</li>
+        <li>empty</li>
+    </ui>
+    <input type="button" value="execute" id="execute_btn" />
+    <script tupe="text/javascript">
+        function addEvent(target, eventType, eventHandler, useCapture) {
+            if (target.addEventListener) {
+                targer.addEventListener(eventType, eventHandler, useCapture?useCapture:false);
+            }
+            else if(target.attachEvent) {
+                var r = target.attachEvent("on"+eventType, eventHandler);
+            }
+        }
+
+        function clickHandler(event) {
+            var nav = document.getElementById('list');
+            for (var i = 0; i < nav.childNodes.length; i++) {
+                console.log(i);
+                var child = nav.childNodes[i];
+                if (child.nodeType == 5) 
+                    continue;
+                child.innerText = 'Coding Everyday';
+            }
+            event.target.className = 'selected';
+        }
+        addEvent(document.getElementById('execute_btn'), 'click', clickHandler);
+    </script>
+</body>
+</html>
