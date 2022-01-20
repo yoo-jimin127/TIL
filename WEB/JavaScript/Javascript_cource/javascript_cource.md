@@ -56,3 +56,58 @@ alert(0 === -0);                //true          // 0의 양수, 음수 값 존�
 alert(NaN === NaN);             //false         // 계산할 수 없는 값이기에 false 리턴
 ```
 - 부정을 의미하는 '!' -> ```alert("one"!="two");    //true``` 
+
+### 조건문
+- ```prompt('프롬프트 창에 넣고자 하는 내용');``` : 입력을 받을 수 있는 창이 뜨게 됨
+- ```alert(prompt('프롬프트 창에 넣고자 하는 내용'));``` : 입력으로 받은 값이 창에 뜸
+- 논리 연산자
+    - ```&&``` : AND 논리 연산
+    - ```||``` : OR 논리 연산
+- false로 간주하는 데이터형
+    - ```if (!'')``` : 빈 문자열
+    - ```if (!undefined)``` : undefined
+    - ```if (!a)``` : 값이 할당되지 않은 변수
+    - ```if (!null)``` : null
+    - ```if (!NaN)``` : NaN
+
+#### 반복문
+- ```document.write("Coding Everybody <br />");```
+- while문 : 변수의 선언, while문, 변수의 갱신 -> 3 과정의 시간이 소요될 뿐더러 번거로움
+- for문 : 초기화, 반복 조건, 갱신 -> 1 문장으로 간결한 작성 가능
+- 반복문의 제어 : break, continue를 사용하여 반복문 제어 가능
+    - ```break``` : 반복문의 종료
+    - ```continue``` : 그 순간에만 반복을 종료시키고 다시 반복
+
+### 함수
+- 하나의 로직을 재실행할 수 있도록 하는 것으로 코드의 재사용성을 높여줌
+```
+function 함수명([인자...[,인자]]) {
+    코드내용
+    return 반환값
+}
+```
+- 함수 : 재활용성, 유지보수, 가독성의 장점
+- 출력 : 여러 개의 return 이 있더라도, 최초의 return 값을 리턴한 뒤 함수 호출이 종료됨
+- ex) ```function func1() { return 1; return 2; return 3; return 4;}    // 1 ```
+
+- 함수의 정의 부분을 변수에 넣을 수 있음
+```
+var numbering = function (){
+    i = 0;
+    while(i < 10){
+        document.write(i);
+        i += 1;
+    }   
+}
+numbering();
+```
+- 익명함수 생성
+```
+(function () {
+    i = 0;
+    while(i < 10) {
+        document.write(i);
+        i+=1;
+    }
+})();
+```
