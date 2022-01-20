@@ -111,3 +111,71 @@ numbering();
     }
 })();
 ```
+
+### 배열
+- 연관되어있는 데이터를 모아 통으로 관리하기 위해 사용하는 데이터 타입
+- 가변적으로 계속 바뀌어 배열의 원소에 접근하도록 하고자 할 때
+    ```
+    for (var i = 0; i < members.length; i++) {
+        document.write(members[i].toUpperCase() + "<br />");
+    }
+    ```
+    - .length를 통해 배열의 크기를 알아내 조작할 것
+
+**<배열 조작>**
+- 배열의 끝지점에 원소 추가 : ```li.push('f');``` - 배열의 맨 끝 원소로 push() 내부의 요소가 추가됨
+- 배열을 합쳐 하나의 배열로 만들기 ex) ```var li = ['a','b','c']; li.concat(['d','e'])``` -> ```li      //['a','b','c','d','e']```
+- 배열의 시작지점에 원소 추가 : ```li.unshift('z');```
+- 배열의 특정 구간을 추출하거나, 특정 구간에 특정 배열 추가 : ```li.splice(1, 0, 'd');      // 1번째 인덱스로부터 0개 앞의 데이터까지의 내용을 뒤의 내용으로 채움```
+    - ```arr.splice(startIndex, howmany, element1, element2, ...)``` : startIndex, howmany 필수
+    - 값을 삭제하는 작업 + 삭제한 값을 리턴하는 작업 [splice docs](https://opentutorials.org/course/50/110)
+- 배열의 첫번째 원소 제거 : ```li.shift();``` - return된 값을 제거
+- 배열의 가장 마지막 원소 제거 : ```li.pop();``` - return된 값을 제거
+- 배열의 요소를 정렬 : ```li.sort();``` - original data가 사전순으로 정렬
+- 배열의 요소를 역순으로 정렬 : ```li.reverse();```
+- [다양한 기준으로 배열을 정렬하는 방법](https://opentutorials.org/course/50/109)
+
+### 객체
+- 인덱스로 문자를 사용하고 싶은 경우 사용하는 배열 (배열: 식별자 == 숫자)
+- ex 1) ```var grades = {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80};``` : 중괄호로 감싸 문자를 식별자로 값을 저장함
+- ex 2)
+    ```
+    var grades = {};
+    grades['egoing'] : 10;
+    grades['k8805'] : 6;
+    grades['sorialgi'] : 80;
+    ```
+- ex 3) 
+    ```
+    var grades = new Object();
+    grades['egoing'] : 10;
+    grades['k8805'] : 6;
+    grades['sorialgi'] : 80;
+    ```
+- ```grades['k8805']``` == ```grades['k88' + '05']``` == ```grades.k8805``` != ```grades.'k88' + '05'```
+
+- 배열의 각 요소들은 순서를 가지고 있음
+```
+var grades = {'egoing': 10, 'k8805': 6, 'sorialgi': 80};
+for(key in grades) {
+    document.write("<li>key : "+key+" value : "+grades[key]+"</li>");
+}
+```
+- 배열의 값에서도 위와 같은 방법으로 접근 가능 (for in문)
+```
+for (var name in arr) {
+    console.log(arr[name]);
+}
+```
+- , 를 통해 여러개의 값을 출력할 수 있게 됨, 하나의 객체 안에 data로 list와 function을 가지고 있음 **객체 지향 프로그래밍**
+```
+var grades = {
+    'list': {'egoing': 10, 'k8805': 6, 'sorialgi': 80},
+    'show' : function(){
+        for(var name in this.list){
+            document.write(name+':'+this.list[name]+"<br />");
+        }
+    }
+};
+grades.show();
+```
