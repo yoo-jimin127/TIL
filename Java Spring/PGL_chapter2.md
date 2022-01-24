@@ -39,3 +39,5 @@
     ```
     - 어느 시점에서 이 라이브러리가 필요한지에 대해 dependencies로 정의
     - gradle만의 빌드 과정을 정의하는 작업이 있다 (maven과의 차이점)
+
+### Spring Boot 실행하기
