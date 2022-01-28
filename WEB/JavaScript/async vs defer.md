@@ -2,7 +2,7 @@
 
 ### script를 <head>에 포함
 1. Parsing HTML before <script> tag
-2. blocked : <script> ~ </script>
+2. blocked : ₩<script> ~ </script>₩
     - fetching JS
     - executing JS
 3. Parsing HTML after control Javascript
@@ -18,7 +18,7 @@
 - 단점: javascript에 의존적인 페이지인 경우 페이지를 받은 뒤에도 사용자가 javascript의 로딩을 기다려야함
 
 ### head + async 속성
-- ex) head 태그 내부에 <script asyn src='main.js'></script>
+- ex) head 태그 내부에 ₩<script asyn src='main.js'></script>₩
 - async : bool 형식의 속성 값 - default value : true
 1. Parsing HTML과 feching JS를 **병렬적으로 실행**
 2. fetching JS가 끝나면 그 때 blocked 상태로 전환
@@ -30,7 +30,7 @@
 - 단점: HTML parsing 도중 언제든 JS 실행이 이루어질 수 있음 - 따라서 로딩 시간은 여전히 길 수 있음
 
 ### head + defer 속성
-- ex) head 태그 내부에 <script defer src='main.js'></script>
+- ex) head 태그 내부에 ₩<script defer src='main.js'></script>₩
 1. parsing HTML과 병렬적으로 fetching JS
 2. Page is ready
 3. executing JS
