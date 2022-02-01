@@ -36,6 +36,59 @@ import './App.css';
 import { useSelector } from 'react-redux';
 
 function App() {
-const STATE_NAME = useSelector( (state) = > state );
+    const STATE_NAME = useSelector( (state) = > state );
+
+    return (
+        <div className="App>
+            <p> state value : { STATE_NAME }</p>
+        </div>
+    );
 }
+
+export default App;
 ```
+
+- component간 state 수정 방법을 생성해둠 (`if` 사용) -> component는 수정 요청만을 사용함 -> 버그 수정 시 용이
+ex) index.js
+```
+    import { Provider } from 'react-redux';
+    import { createStore } from 'redux';
+
+    const weight = 100;
+
+    function reducer(state = weight, action){
+        if (action.type === '증가'){
+            state++;
+            return state
+        } else if (action.type === '감소'){
+            state--;
+            return state
+        } else {
+            return state
+        }
+    }
+```
+
+- 컴포넌트에서 수정 요청을 하기 위해서는 dispatch 사용
+ex) App.js
+```
+import './App.css';
+import { useSelector } from 'react-redux';
+
+function App() {
+    const STATE_NAME = useSelector( (state) = > state );
+
+    return (
+        <div className="App>
+            <p> state value : { STATE_NAME }</p>
+            <button onClick={()=>{ dispatch({type : '증가'}) }}>더하기</button>
+        </div>
+    );
+}
+
+export default App;
+```
+<그 외 상태 관리 라이브러리>
+- MobX
+- Overmind.js
+- Recoil
