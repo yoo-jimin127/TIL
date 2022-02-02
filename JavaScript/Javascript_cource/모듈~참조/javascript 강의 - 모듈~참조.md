@@ -1,4 +1,4 @@
-# 인프런 javascript 
+# 인프런 javascript + NomadCoder Vanilla JS 
 
 ------
 
@@ -32,3 +32,46 @@ console.log('The area of a circle of radius 4 is ' + circle.area(4));
 - 로드 될 대상으로부터 로드의 주체가 모듈을 불러와 활용할 수 있음
 
 - 라이브러리 : jquery ```$(%id_name tag).text('str');```
+
+### 데이터 가져오기
+- HTML의 element를 가져오기 위해서는 getElementById, getElementByClassName, querySelector 등을 사용해 가져올 수 있음
+```const title = document.getElementByTagName("h1");``` 통해 태그 이름을 인자로 입력하여 해당 태그를 가지고 있는 값을 가져올 수 있음
+- 가장 효과적으로 element를 가져올 수 있는 방법 : ```querySelector```, ```querySelectorAll``` - element를 css 방식으로 검색할 수 있음
+    - ex) `<div class="hello"><h1>Grab me!</h1></div>` -> `const title = document.querySelector(".hello h1")`
+    - ex) **유용 기능** `const title = document.querySelector("div.hello:first-child h1")` : 첫번째 자식을 가져올 수 있음
+    - 여러개의 요소를 배열 형태로 가져오고 싶은 경우 : `querySelectorAll()`를 통해 같은 className, idName, tag를 가진 요소들을 가져올 수 있음
+
+### 이벤트
+- 모든 요소들이 javascript의 object
+- javascript로 html의 css 요소들을 바꿀 수 있음 ex) `title.style.color = "blue";`
+```
+const title = document.querySelector("div.hello:first-child h1");
+
+function handleTitleClick() {
+    console.log("title was clicked!");
+}
+
+title.addEventListener("click", handleTitleClick);
+```
+- **주의** : addEventListener에서 function을 넘겨줄 때 ()를 포함하지 않음. 
+    - why? : 해당 element가 click이 되었을 때 javascript가 함수를 실행하도록 하기 위해 함수만을 넘겨줌.
+- 적용 가능한 event : [MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript), [Web API](https://developer.mozilla.org/ko/docs/Web/API)
+    - ex) `mouseenter`, `mouseleave`
+
+- 이벤트 적용의 2가지 방식
+    1. `title.onclick = handleTitleClick;` : onclick() 사용
+    2. `title.addEventListener("click", hancleTitleClick);` : addEventListener() 사용
+    - addEventListener()를 더 많이 사용 - why? : `removeEventListener()`를 통해 event listener를 지울 수 있는 장점이 있음
+
+- window event 추가
+    - ex) `window.addEventListener("resize", handleWindowResize);`
+    ```
+    function handleWindowResize() {
+        document.body.style.backgroundcolor = "tomato";
+    }
+    ```
+    - 태그를 resize할 수 없음, window는 resize 가능
+    - `document.body`는 가능, 하지만 `document.div`, `document.h1` 등은 불가능(querySelector 등 사용) -> head, body, title 등의 중요한 태그들은 document를 통해 가져올 수 있음
+
+    - ex) `window.addEventListener("copy", handleWindowCopy);` -> `function handleWidowCopy() { alert ("copier!"); }` : 내용 복사 기능 가능
+    - ex) 네트워크 연결 상태를 확인하기 위한 event listener : `addEventListener("offline", FUNCTION_NAME)`, `addEventListener("online", FUNCTION_NAME)`
