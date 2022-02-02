@@ -75,3 +75,63 @@ title.addEventListener("click", handleTitleClick);
 
     - ex) `window.addEventListener("copy", handleWindowCopy);` -> `function handleWidowCopy() { alert ("copier!"); }` : 내용 복사 기능 가능
     - ex) 네트워크 연결 상태를 확인하기 위한 event listener : `addEventListener("offline", FUNCTION_NAME)`, `addEventListener("online", FUNCTION_NAME)`
+
+```
+const h1 = document.querySelector("div.hello:first-child h1");
+
+function handleTitleClick() {
+    const currentColor = h1.style.color;
+    let newColor;
+
+    if (currentColor === "blue") {
+        newColor = "tomato";
+    } else {
+        newColor = "blue";
+    }
+    h1.style.color = newColor;
+}
+h1.addEventListener("click", handleTitleClick);
+```
+
+### CSS
+- css 요소는 css에서 style을 입히도록 함. -> javascript에서 이를 가져오기 위해서는
+    - ex) `style.css` - `.active { color : tomato; }`
+        - `app.js` - `function hendleTitleClick() { h1.className = "active"; }`
+
+- level 1 : 순수 비교 연산자 사용
+```
+function handleTitleClick() {
+    const clickedClass = "clicked";
+    if (h1.className === clickedClass) {
+        h1.className = "";
+    } else {
+        h1.className = clickedClass;
+    }
+}
+h1.addEventListener("click", handleTitleClick);
+```
+- raw code를 줄여 에러 발생을 방지함
+
+- level 2 : classList를 대상으로 contains() 함수 사용
+- `if (h1.classList.contains(clickedClass)) {` : classList에서 () 내부의 클래스명이 포함되어있다면 이를 지워주는 방식
+```
+function handleTitleClick() {
+    const clickedClass = "clicked";
+    if (h1.classList(clickedClass)) {
+        h1.classList.remove(clickedClass);
+    } else {
+        h1.classList.add(clickedClass);
+    }
+}
+h1.addEventListener("click", handleTitleClick);
+```
+
+- level 3 : toggle() 사용
+- `toggle()`을 사용해 위 코드를 간소화시킬 수 있음
+```
+function handleTitleClick() {
+    const clickedClass = "clicked";
+    h1.classList.toggle("clicked");
+}
+h1.addEventListener("click", handleTitleClick);
+```
