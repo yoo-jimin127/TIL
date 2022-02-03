@@ -135,3 +135,25 @@ function handleTitleClick() {
 }
 h1.addEventListener("click", handleTitleClick);
 ```
+
+### momentum
+- HTML 자동 제공 기능
+```
+<input
+    required
+    maxlength="15"
+    type="text" 
+    placeholder="What is your name?" />
+```
+
+- function을 만든 뒤 하나의 argument를 받도록 js에 설정
+- 모든 함수의 가장 첫번째 인자는 event에 대한 정보를 담아 전달해줌. (실행된 event 관련 정보)
+    - ex) 주체, 대상, 호출 시간 등의 정보 : `preventDefault()` 함수를 통해 이를 불러올 수 있음
+    - JS에서 이벤트의 내용을 채워줌
+    - JS : 기본 동작으로 이동하는 것을 막는 행위를 허용함
+```
+function onLoginSubmit(event) {
+    arg.preventDefualt();
+    console.log(event);
+}
+```
