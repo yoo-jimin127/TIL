@@ -169,3 +169,14 @@ function onLoginSubmit(event) {
 - local storage를 사용해 값을 저장할 수 있도록 함
 - [local storage MDN](https://developer.mozilla.org/ko/docs/Web/API/Window/localStorage)
 - key &value 만으로 저장, 삭제, 읽기 가능
+
+### clock
+- `setInterval()` : [주기적으로 함수를 실행하는 함수](https://developer.mozilla.org/en-US/docs/Web/API/setInterval)
+    - `setInterval(sayHello, 5000);` : 기본 동작이 반복적으로 일어남 
+    - 실행 중 다른 setInterval로 인해 함수가 호출되는 경우 기존에 실행되던 함수가 종료됨
+- `setTimeout()` : [실행할 함수와 interval 간격을 입력해 실행하는 함수](https://developer.mozilla.org/ko/docs/Web/API/setTimeout)
+    - `setTimeout(sayHello, 5000);` : 기본 동작이 한번만 일어남
+    - 실행 중 다른 setTimeout으로 인해 함수가 호출되어도 기존에 실행되었던 함수에 영향을 주지 않음
+
+- `padStart()` : [string을 일정한 포맷으로 설정해주는 함수](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/String/padStart)
+    - cf) `padEnd()` : 끝부분에 추가
