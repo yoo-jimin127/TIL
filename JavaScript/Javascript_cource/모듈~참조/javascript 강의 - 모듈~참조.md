@@ -180,3 +180,52 @@ function onLoginSubmit(event) {
 
 - `padStart()` : [string을 일정한 포맷으로 설정해주는 함수](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/String/padStart)
     - cf) `padEnd()` : 끝부분에 추가
+
+### javascript로 element 추가
+```
+const bgImage = document.createElement("img");
+bgImage.src = `/img/${choosenImage}`;
+document.body.appendChild(bgImage);
+```
+- `createElement()` 함수를 추가한 뒤, `<img>` 태그인 경우 해당 변수의 src에 이미지 경로를 넣어줌
+
+- `const toDoInput = toDoForm.querySelector("input");` === `const toDoInput = document.querySelector("#todo-form input");`
+```
+    const li = document.createElement("li");
+    const span = document.createElement("span");
+    li.appendChild(span);
+    span.innerText = newToDo;
+```
+- li 태그와 span 태그를 생성한 뒤, li 태그의 child로 span태그를 추가해주는 작업 (HTML을 JAVASCRIPT에서 자유자재로 생성할 수 있음)
+
+```
+const li = event.target.parentElement;
+li.remove();
+```
+- event의 target은 선택된 요소의 property를 제공함. 이를 변수에 넣고 remove()해줄 경우 해당 element가 삭제될 수 있음 (삭제 기능 구현)
+
+### todolist 요소를 local storage에 저장
+- localstorage : 텍스트만 저장할 수 있음 (배열은 저장 불가능) -> 텍스트를 배열의 형태로 저장시켜주어야 함
+- 배열에 값 넣는 방식 ex) `const array = [];` -> `array.push(element);`
+- `JSON.stringify()` : [텍스트를 json 문자열로 변환시켜주는 함수](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+- `JSON.parse()` : [JSON 문자열의 구문을 분석하고 그 결과에서 javascript 값 또는 객체를 생성하는 함수](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)
+- `forEach()` : 해당 배열의 각각의 요소에 접근해줌
+    - array의 item들에 대해 한 개의 function만 실행할 수 있도록 함
+```
+function printHi(item) {
+    console.log("Hi ${item}");
+}
+```
+==
+- `ARRAY.forEach((item) => console.log("Hi ${item}));` : ARRAY의 각 item에 대해 실행
+- 더욱 간결하게 코드를 작성할 수 있음 by using arrow function
+
+### local storage에서 요소를 삭제하는 방법
+- 객체 형식으로 text와 id를 주어 식별자 역할을 하자.
+    - paintToDo() 에서 newToDo.text, newToDo.id 형식으로 주어 text형식으로 화면에 출력될 수 있도록 함
+- `filter()` : [주어진 함수의 테스트를 통과하는 모든 요소를 모아 새로운 배열로 반환하는 함수](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
+    - true를 리턴하는 값만 새로운 배열에 저장됨
+
+### 날씨 및 위치 정보
+- `navigator.geolocation.getCurrentPosition();` : [현재 위치를 가져오기 위해 사용하는 함수](https://developer.mozilla.org/ko/docs/Web/API/Geolocation/getCurrentPosition)
+- `fetch()` : [javascript에서 대신 요청을 보내는 것](https://developer.mozilla.org/ko/docs/Web/API/Fetch_API/Using_Fetch) 
