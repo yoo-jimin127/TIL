@@ -157,3 +157,15 @@ function onLoginSubmit(event) {
     console.log(event);
 }
 ```
+
+- `loginForm.classList.add("hidden");` : classList에 add() 함수를 사용하여 클래스를 생성하도록 할 수 있음
+- string만 포함된 변수는 대문자로 표기하고 string을 저장하고 싶을 때 사용. (하나의 변수 지정 관습)
+
+- string과 변수를 합치는 2가지 방법
+    1. `greeting.innerText = "Helllo " + username;` : + 기호를 사용해 연결해줌
+    2. ```greeting.innerText = `Helllo ${username}`;``` : 백틱 기호를 사용해 연결해줌 (단, 변수를 표기할 때에는 `${변수명}`과 같은 방식으로 표기하는 규칙 적용)
+
+### local storage
+- local storage를 사용해 값을 저장할 수 있도록 함
+- [local storage MDN](https://developer.mozilla.org/ko/docs/Web/API/Window/localStorage)
+- key &value 만으로 저장, 삭제, 읽기 가능
