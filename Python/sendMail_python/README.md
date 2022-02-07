@@ -55,13 +55,13 @@
     - rb : read binary
     - wb : write binary
     - ab : append binary
-```
+```python
 image = open("codelion.png", "rb")
 image.read()
 ```
 - binary 형태로 출력됨
 - close() 없이 file을 open하고 읽는 방법
-```
+```python
 with open("codelion.png", "rb") as image :
     image_file = image.read()
 ```
@@ -94,7 +94,7 @@ with open("codelion.png", "rb") as image :
         - ```{2,3}``` : 앞의 조건이 최소 2회부터 최대 3번까지 반복됨
 
 - ```import re``` : 정규표현식 검사 (regular expression)
-```
+```python
 reg = "^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$"
 print(re.match(reg, "codelion.example@gmail.com"))       -> <re.Match object; span=(0, 26), match='codelion.example@gmail.com'>
 print(re.match(reg, "codelionexamplegmailcom"))     -> None

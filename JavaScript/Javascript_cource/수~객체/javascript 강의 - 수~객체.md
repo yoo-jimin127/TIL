@@ -3,7 +3,7 @@
 ------
 
 ### 숫자와 문자
-```
+```javascript
     Math.pow(3,2);
     9
     Math.round(10.6);
@@ -34,7 +34,7 @@
 - 연산자 : 값에 대해 작업을 컴퓨터에게 지시하기 위한 기호
 - ```==``` : equal operator - 데이터가 같으면 true
 - ```===``` : strict equal operator - 데이터와 데이터형 모두 같아야  true
-```
+```javascript
 alert(1==2)             //false
 alert(1==1)             //true
 alert("one"=="two")     //false 
@@ -44,7 +44,7 @@ alert(1=='1');              //true
 alert(1==='1');             //false
 ```
 [== 와 ===](https://dorey.github.io/JavaScript-Equality-Table/)
-```
+```javascript
 alert(null == undefined);       //true
 alert(null === undefined);      //false
 alert(true == 1);               //true
@@ -80,7 +80,7 @@ alert(NaN === NaN);             //false         // 계산할 수 없는 값이�
 
 ### 함수
 - 하나의 로직을 재실행할 수 있도록 하는 것으로 코드의 재사용성을 높여줌
-```
+```javascript
 function 함수명([인자...[,인자]]) {
     코드내용
     return 반환값
@@ -91,7 +91,7 @@ function 함수명([인자...[,인자]]) {
 - ex) ```function func1() { return 1; return 2; return 3; return 4;}    // 1 ```
 
 - 함수의 정의 부분을 변수에 넣을 수 있음
-```
+```javascript
 var numbering = function (){
     i = 0;
     while(i < 10){
@@ -102,7 +102,7 @@ var numbering = function (){
 numbering();
 ```
 - 익명함수 생성
-```
+```javascript
 (function () {
     i = 0;
     while(i < 10) {
@@ -115,7 +115,7 @@ numbering();
 ### 배열
 - 연관되어있는 데이터를 모아 통으로 관리하기 위해 사용하는 데이터 타입
 - 가변적으로 계속 바뀌어 배열의 원소에 접근하도록 하고자 할 때
-    ```
+    ```javascript
     for (var i = 0; i < members.length; i++) {
         document.write(members[i].toUpperCase() + "<br />");
     }
@@ -139,14 +139,14 @@ numbering();
 - 인덱스로 문자를 사용하고 싶은 경우 사용하는 배열 (배열: 식별자 == 숫자)
 - ex 1) ```var grades = {'egoing' : 10, 'k8805' : 6, 'sorialgi' : 80};``` : 중괄호로 감싸 문자를 식별자로 값을 저장함
 - ex 2)
-    ```
+    ```javascript
     var grades = {};
     grades['egoing'] : 10;
     grades['k8805'] : 6;
     grades['sorialgi'] : 80;
     ```
 - ex 3) 
-    ```
+    ```javascript
     var grades = new Object();
     grades['egoing'] : 10;
     grades['k8805'] : 6;
@@ -155,20 +155,20 @@ numbering();
 - ```grades['k8805']``` == ```grades['k88' + '05']``` == ```grades.k8805``` != ```grades.'k88' + '05'```
 
 - 배열의 각 요소들은 순서를 가지고 있음
-```
+```javascript
 var grades = {'egoing': 10, 'k8805': 6, 'sorialgi': 80};
 for(key in grades) {
     document.write("<li>key : "+key+" value : "+grades[key]+"</li>");
 }
 ```
 - 배열의 값에서도 위와 같은 방법으로 접근 가능 (for in문)
-```
+```javascript
 for (var name in arr) {
     console.log(arr[name]);
 }
 ```
 - , 를 통해 여러개의 값을 출력할 수 있게 됨, 하나의 객체 안에 data로 list와 function을 가지고 있음 **객체 지향 프로그래밍**
-```
+```javascript
 var grades = {
     'list': {'egoing': 10, 'k8805': 6, 'sorialgi': 80},
     'show' : function(){

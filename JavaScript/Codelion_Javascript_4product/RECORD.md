@@ -115,7 +115,7 @@
 - ```$('#hp').text('HP : ' + hp);``` : .text() 함수를 사용하여 text 내부의 값을 변경해줌 (자동 형변환 가능)
 
 ### callback 함수
-```
+```javascript
     $('#spit').fadeOut(function() {
         hp = hp -1;
         $('#hp').text('HP : ' + hp); //침이 fadeOut된 다음 hp의 값이 업데이트될 수 있도록 생성한 익명함수
@@ -132,7 +132,7 @@
 
 ### 객체(Object)
 - 여러 값을 담는 자료형
-```
+```javascript
     var person = {
         name: 'namename',
         age: 23

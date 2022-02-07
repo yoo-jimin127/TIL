@@ -18,14 +18,14 @@
 - 데이터 형식의 안전성을 보장하는 데 사용
 - string, integer, double, 사용자 정의 클래스형에 사용
 
-```
+```java
     ArrayList strList = new ArrayList();
     strList.add("first");
     strList.add("second");
     strList.add(3);
 ```
 
-```
+```java
     ArrayList<String> strList = new ArrayList<String>();
     strList.add("first");
     strList.add("second");

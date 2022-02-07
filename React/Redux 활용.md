@@ -6,7 +6,7 @@
 
 
 ex) index.js
-```
+```javascript
     import { Provider } from 'react-redux';
     import { createStore } from 'redux';
 
@@ -31,7 +31,7 @@ ex) index.js
 
 component 파일에서 store에 있던 state를 사용하기 위해서는
 ex) App.js
-```
+```javascript
 import './App.css';
 import { useSelector } from 'react-redux';
 
@@ -50,7 +50,7 @@ export default App;
 
 - component간 state 수정 방법을 생성해둠 (`if` 사용) -> component는 수정 요청만을 사용함 -> 버그 수정 시 용이
 ex) index.js
-```
+```javascript
     import { Provider } from 'react-redux';
     import { createStore } from 'redux';
 
@@ -71,7 +71,7 @@ ex) index.js
 
 - 컴포넌트에서 수정 요청을 하기 위해서는 dispatch 사용
 ex) App.js
-```
+```javascript
 import './App.css';
 import { useSelector } from 'react-redux';
 

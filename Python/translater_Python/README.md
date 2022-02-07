@@ -29,7 +29,7 @@
     - src는 생략 가능 (옵션에 해당)
     - dest에 해당하는 값은 각 국가의 키워드로 넣어줘야함 ex) ko, en
 
-```
+```python
 result = translator.translate(sentence, 'en')
 print(result)
 ```

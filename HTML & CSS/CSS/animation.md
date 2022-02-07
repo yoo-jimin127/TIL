@@ -10,7 +10,7 @@
 - `animation-timing-function` : 중간 상태들의 전환을 어떤 시간 간격으로 진행할지 지정
 - `animation-fill-mode` : 애니메이션 시작되기 전이나 끝나고 난 뒤 어떤 값이 적용될지 지정하는 속성
 
-```
+```css
 /* 단일 속성 */ 
     .object { animation-name: 1s; 
     animation-duration: 2s; 

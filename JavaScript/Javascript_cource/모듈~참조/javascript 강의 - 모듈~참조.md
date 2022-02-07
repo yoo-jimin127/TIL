@@ -9,7 +9,7 @@
 
 - Node.js 에서의 모듈의 노드 (서버에서 사용되는 js)
 - ```node.circle.js```(로드 될 대상)
-```
+```javascript
 var PI = Math.PI;
 exports.area = function (r) {
     return PI * r * r;
@@ -25,7 +25,7 @@ exports.circumference = function (r) {
 ```
 
 - ```node.demo.js```(로드의 주체)
-```
+```javascript
 var circle = require('./node.circle.js');
 console.log('The area of a circle of radius 4 is ' + circle.area(4));
 ```
@@ -44,7 +44,7 @@ console.log('The area of a circle of radius 4 is ' + circle.area(4));
 ### 이벤트
 - 모든 요소들이 javascript의 object
 - javascript로 html의 css 요소들을 바꿀 수 있음 ex) `title.style.color = "blue";`
-```
+```javascript
 const title = document.querySelector("div.hello:first-child h1");
 
 function handleTitleClick() {
@@ -76,7 +76,7 @@ title.addEventListener("click", handleTitleClick);
     - ex) `window.addEventListener("copy", handleWindowCopy);` -> `function handleWidowCopy() { alert ("copier!"); }` : 내용 복사 기능 가능
     - ex) 네트워크 연결 상태를 확인하기 위한 event listener : `addEventListener("offline", FUNCTION_NAME)`, `addEventListener("online", FUNCTION_NAME)`
 
-```
+```javascript
 const h1 = document.querySelector("div.hello:first-child h1");
 
 function handleTitleClick() {
@@ -99,7 +99,7 @@ h1.addEventListener("click", handleTitleClick);
         - `app.js` - `function hendleTitleClick() { h1.className = "active"; }`
 
 - level 1 : 순수 비교 연산자 사용
-```
+```javascript
 function handleTitleClick() {
     const clickedClass = "clicked";
     if (h1.className === clickedClass) {
@@ -114,7 +114,7 @@ h1.addEventListener("click", handleTitleClick);
 
 - level 2 : classList를 대상으로 contains() 함수 사용
 - `if (h1.classList.contains(clickedClass)) {` : classList에서 () 내부의 클래스명이 포함되어있다면 이를 지워주는 방식
-```
+```javascript
 function handleTitleClick() {
     const clickedClass = "clicked";
     if (h1.classList(clickedClass)) {
@@ -128,7 +128,7 @@ h1.addEventListener("click", handleTitleClick);
 
 - level 3 : toggle() 사용
 - `toggle()`을 사용해 위 코드를 간소화시킬 수 있음
-```
+```javascript
 function handleTitleClick() {
     const clickedClass = "clicked";
     h1.classList.toggle("clicked");
@@ -138,7 +138,7 @@ h1.addEventListener("click", handleTitleClick);
 
 ### momentum
 - HTML 자동 제공 기능
-```
+```html
 <input
     required
     maxlength="15"
@@ -151,7 +151,7 @@ h1.addEventListener("click", handleTitleClick);
     - ex) 주체, 대상, 호출 시간 등의 정보 : `preventDefault()` 함수를 통해 이를 불러올 수 있음
     - JS에서 이벤트의 내용을 채워줌
     - JS : 기본 동작으로 이동하는 것을 막는 행위를 허용함
-```
+```javascript
 function onLoginSubmit(event) {
     arg.preventDefualt();
     console.log(event);
@@ -182,7 +182,7 @@ function onLoginSubmit(event) {
     - cf) `padEnd()` : 끝부분에 추가
 
 ### javascript로 element 추가
-```
+```javascript
 const bgImage = document.createElement("img");
 bgImage.src = `/img/${choosenImage}`;
 document.body.appendChild(bgImage);
@@ -190,7 +190,7 @@ document.body.appendChild(bgImage);
 - `createElement()` 함수를 추가한 뒤, `<img>` 태그인 경우 해당 변수의 src에 이미지 경로를 넣어줌
 
 - `const toDoInput = toDoForm.querySelector("input");` === `const toDoInput = document.querySelector("#todo-form input");`
-```
+```javascript
     const li = document.createElement("li");
     const span = document.createElement("span");
     li.appendChild(span);
@@ -198,7 +198,7 @@ document.body.appendChild(bgImage);
 ```
 - li 태그와 span 태그를 생성한 뒤, li 태그의 child로 span태그를 추가해주는 작업 (HTML을 JAVASCRIPT에서 자유자재로 생성할 수 있음)
 
-```
+```javascript
 const li = event.target.parentElement;
 li.remove();
 ```
@@ -211,7 +211,7 @@ li.remove();
 - `JSON.parse()` : [JSON 문자열의 구문을 분석하고 그 결과에서 javascript 값 또는 객체를 생성하는 함수](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)
 - `forEach()` : 해당 배열의 각각의 요소에 접근해줌
     - array의 item들에 대해 한 개의 function만 실행할 수 있도록 함
-```
+```javascript
 function printHi(item) {
     console.log("Hi ${item}");
 }

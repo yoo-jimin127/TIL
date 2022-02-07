@@ -18,7 +18,7 @@ https://assets.nflxext.com/ffe/siteui/vlv3/9737377e-a430-4d13-ad6c-874c54837c49/
     - 좌로부터 nn%의 비율로 black color linear gradient가 좌 -> 우의 방향으로 그라데이션 됨 `section:before` - section의 전에, 즉 section의 앞에, section의 윗 화면에
 - 즉 배경 이미지 위에 그라데이션이 덧씌워지는 것이라 볼 수 있음
 
-```
+```css
 section:before {
     content: '';
     background: linear-gradient(to right, black, transparent);
