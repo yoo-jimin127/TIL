@@ -35,3 +35,39 @@ const btn = React.createElement("button", {
     }, "click me");
 ```
 - React : interactive한 event를 처리하는 것을 목적으로 함. -> event listener를 `onMouseEnter()`, `onClick()`과 같이 on을 붙여 등록함
+
+
+### JSX
+- javascript의 확장 문법
+- Babel을 사용하여 JSX로 작성된 코드를 브라우저가 이해할 수 있도록 변경함
+```jsx
+const Btn = (
+    <button id="clickBtn" 
+    style={{
+        backgroundColor="tomato",
+        }} 
+        onClick={() => console.log("button clicked")}
+    >
+        Click me
+        </button>
+    );
+```
+- 위 arrow function을 만드는 방식은
+```jsx
+function Btn() { 
+    return (
+        <button id="clickBtn" onClick ={...}></button>
+    );
+}
+```
+함수를 지정해 return 해주는 것과 같은 역할을 함
+
+- JSX 문법으로 생성한 html 요소에 타 html 요소를 넣고자 할 때
+    1. HTML 요소를 함수화 시킴 `arrow function` 사용 ex) `const Btn = () => ();`
+        - **컴포넌트의 첫 글자는 항상 대문자여야 함**
+            - 소문자인 경우 react랑 JSX가 해당 컴포넌트를 HTML 태그명이라고 판단 ex) `<Button /> !=== <button />`
+        ```jsx
+        const Container = () => (<div><Title /> <Btn /></div>);
+        ReactDOM.render(<Container />, root);
+        ```
+        - 위와 같은 방식(`<Title />`, `<Container />`)으로 코드를 작성해주면 해당 태그에 위에서 선언한 함수가 그대로 호출되는 효과를 가져옴 (컴포넌트 활용의 효율성)
