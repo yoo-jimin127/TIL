@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <body><div id="root"></div></body>
+    
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const root = document.getElementById("root");
+
+        function MinutesToHours() {
+            const [amount, setAmount] = React.useState(0);
+            const [inverted, setInverted] = React.useState(false);
+
+            const onChange = (event) => {   //minutes에 입력값이 주어진 경우 반영해주는 작업
+                setAmount(event.target.value);
+            };
+            const reset = () => {
+                setAmount(0);
+            };
+            const onInvert = () => {
+                reset();
+                setInverted((current) => !current);   // 현재 state를 바탕으로 부정명제
+            };
+            return (
+                <div>
+                    <div>
+                        <label htmlFor="amount">Minutes</label>
+                        <input 
+                            value={inverted ? amount * 60 : amount}     // inverted의 bool 값에 따라 값 지정
+                            id="amount" 
+                            placeholder="Minutes" 
+                            type="number"
+                            onChange={onChange}
+                            disabled={inverted}    // inverted의 value에 따라 enabled & disabled 변화
+                        />
+                        <h4>You want to convert {amount}</h4>
+                    </div>
+                    <div>
+                    <label htmlFor="hours">Hours</label>
+                    <input 
+                        value={inverted ? amount : Math.round(amount/60)} 
+                        id="hours" 
+                        placeholder="Hours"  
+                        type="number"
+                        disabled={!inverted}
+                        onChange={onChange}
+                        />
+                    </div>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onInvert}>{inverted ? "Turn Back" : "Invert"}</button>
+                </div>
+            );
+        }
+        function KmToMiles() {
+            const [amount, setAmount] = React.useState(0);
+            const [inverted, setInverted] = React.useState(false);
+
+            const onChange = (event) => {   //km에 입력값이 주어진 경우 반영해주는 작업
+                setAmount(event.target.value);
+            };
+            const reset = () => {
+                setAmount(0);
+            };
+            const onInvert = () => {
+                reset();
+                setInverted((current) => !current);   // 현재 state를 바탕으로 부정명제
+            };
+            return (
+                <div>
+                    <div>
+                        <label htmlFor="amount">Km</label>
+                        <input 
+                            value={inverted ? amount * (0.62137) : amount}     // inverted의 bool 값에 따라 값 지정
+                            id="amount" 
+                            placeholder="Km" 
+                            type="number"
+                            onChange={onChange}
+                            disabled={inverted}    // inverted의 value에 따라 enabled & disabled 변화
+                        />
+                        <h4>You want to convert {amount}</h4>
+                    </div>
+                    <div>
+                    <label htmlFor="mile">Mile</label>
+                    <input 
+                        value={inverted ? amount : amount/(0.62137)} 
+                        id="mile" 
+                        placeholder="Mile"  
+                        type="number"
+                        disabled={!inverted}
+                        onChange={onChange}
+                        />
+                    </div>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onInvert}>{inverted ? "Turn Back" : "Invert"}</button>
+                </div>
+            );
+        }
+        
+        function App() {
+            const [index, setIndex] = React.useState("xx");   // set default value
+
+            const onSelect = (event) => {   // event listener
+                setIndex(event.target.value);
+            };
+
+            return (
+                <div>
+                    <h1>Unit Converter</h1>
+                    <select value={index} onChange={onSelect}>
+                        <option value="xx">Select your units</option>
+                        <option value="0">Minutes & Hours</option>
+                        <option value="1">Km & Miles</option>
+                    </select>
+                    <hr />
+                    {index === "xx" ? "Please select your unit" : null }
+                    {index === "0" ? <MinutesToHours /> : null }
+                    {index === "1" ? <KmToMiles /> : null}
+                </div>
+            );
+        }
+        ReactDOM.render(<App />, root);
+    </script>
+</html>
