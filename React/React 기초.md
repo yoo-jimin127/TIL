@@ -71,3 +71,37 @@ function Btn() {
         ReactDOM.render(<Container />, root);
         ```
         - 위와 같은 방식(`<Title />`, `<Container />`)으로 코드를 작성해주면 해당 태그에 위에서 선언한 함수가 그대로 호출되는 효과를 가져옴 (컴포넌트 활용의 효율성)
+
+### CRA
+- Create-React-App 의 작업 포인트 : 분할 & 정복
+- `npm i prop-types`통해 proptypes 설치 -> `import PropTypes from "prop-types";`를 통해 proptypes import
+```js
+Button.PropTypes = {
+    text: PropTypes.string.isRequired,
+};
+```
+- 위와 같이 text prop의 타입을 지정해줄 수 있음
+
+### CRA에서의 css 모듈
+- `style.css`로 지정할 경우 페이지의 모든 것들에 적용됨
+- CRA의 작업 포인트 : 분할 & 정복
+    - 컴포넌트의 이름을 따름 or 안따름 상관 없이 css 모듈 파일을 생성 `xxx.module.css`
+        - css 모듈을 사용하는 파일에서 import 해주면 상관 없음. 하지만 가급적 컴포넌트의 이름과 동일하게 적용하여 구별을 용이하게 하자.
+    - `Button.module.css`
+    ```css
+    .btn {
+        color: white;
+        background-color: tomato;
+    }
+    ```
+    - index.js에 `import styles from "./Button.module.css";` 스타일시트 파일 import
+    ```js
+        function Button ({text}) {
+        return <button className={styles.btn}>{text}</button>;
+    }
+    ```   
+- create-react-app이 해당 CSS 코드를 javascript 오브젝트로 변환시켜줌
+- 해당 javascript 오브젝트는 btn을 그 내부에 가지고 있는 것 -> 무작위적인 랜덤 클래스를 가지고 있음
+- style이 모듈러가 되는 것
+- 컴포넌트를 독립적으로 사용해 그에 해당하는 독립적인 css 모듈
+- **같은 class 이름을 사용**한다고 해도 **HTML내에서는 랜덤 방식으로 사용**하기에 문제 X
