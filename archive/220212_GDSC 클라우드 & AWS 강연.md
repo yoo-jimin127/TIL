@@ -27,3 +27,10 @@
 - 물리적 데이터 구성은 AWS가 자동적으로 해줌
 - 사용자 : 클라우드 환경에서의 네트워크를 구성해주어야 함
 - [보안을 위한 네트워크 특강](https://youtu.be/bZZiWNFSPJk)
+
+### 컴퓨팅 서비스
+- EC2 : 가상머신이 주어지는 (EC2 하나마다 하나의 가상머신이 주어짐)
+- ECS : container를 보다 간편하게 배포할 수 있도록 해주는 서비스
+- Elastic Beanstalk
+- AWS Lambda
+- Amazon Lightsail
