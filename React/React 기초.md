@@ -105,3 +105,74 @@ Button.PropTypes = {
 - style이 모듈러가 되는 것
 - 컴포넌트를 독립적으로 사용해 그에 해당하는 독립적인 css 모듈
 - **같은 class 이름을 사용**한다고 해도 **HTML내에서는 랜덤 방식으로 사용**하기에 문제 X
+
+### Effects
+- state를 변경할 때 모든 코드들은 다시 실행됨
+- 특정 코드들이 첫번째 component render에서만 실행되도록 하고 싶은 경우
+    - state의 변화가 일어나는 경우에도 해당 코드가 다시 실행되지 않도록 하는 방법 : `useEffect()` 사용
+- `useEffect()`함수: useEffect(한번만 실행시키고자 하는 코드, 변화를 감지할 대상-dependencies)
+    - 두번째 인자가 변화할 때 첫번째 인자에 넘긴 코드를 실행시킴
+        - 두번째 인자에 담기는 요소 : useState() 사용 시 객체를 담을 배열 속 첫번째 인자 ex) `const [keyword, setKeyword] = React.useState(0)`
+    - [참고 코드](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_accessibility)
+
+- useEffect() 함수가 컴포넌트의 첫번째 render 시점에 함수를 호출함
+    - 코드가 한번만 실행될 수 있도록 보호함
+
+- 코드의 특정 부분만이 변화하였을 때 원하는 코드들을 실행할 수 있는 방법
+    
+```js
+  useEffect(() => {
+    console.log("run only once.");
+  }, []);
+  useEffect(() => {
+    console.log("run only 'keyword' changes.");
+  }, [keyword]);
+  useEffect(() => {
+    console.log("run only 'counter' changes.");
+  }, [counter]);
+  useEffect(() => {
+    console.log("run 'keyword' & 'counter' changes.");
+  }, [keyword, counter]);
+```
+- useState() & useEffect() 함수를 사용해 특정 코드의 상태가 변경될 때마다 특정 코드만을 실행하도록 분기할 수 있음
+
+### cleanup function
+1번 방법.
+```js
+function Content() {
+  useEffect(() => {
+    console.log("Created");
+    return () => console.log("Destroyed");
+  }, []);
+  return (
+    <h1>Content when showing is True</h1>
+  )
+}
+```
+- 컴포넌트가 create & destroy 되었을 때 이를 필터링해주는 작업 -> return ()을 통해 생성과 소멸에 다른 결과를 보낼 수 있음
+
+- 위의 코드와 동일한 작업을 수행하는 코드 (비추)
+2번 방법.
+```js
+function Content() {
+  function CreateFunc() {
+    console.log("Created");
+    return DestroyFunc;
+  }
+  function DestroyFunc() {
+    console.log("Destroyed");
+  }
+  useEffect(CreateFunc, []);
+  return (
+    <h1>Content when showing is True</h1>
+  )
+}
+```
+3번 방법.
+```js
+  useEffect(function () {
+    console.log("Created");
+    return function () {
+      console.log("Destroyed");
+    }
+```
