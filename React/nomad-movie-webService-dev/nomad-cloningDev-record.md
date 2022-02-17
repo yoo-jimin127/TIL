@@ -34,3 +34,91 @@
 </ul>
 ```
 - item과 index를 넣어 key에 대해 넣어줄 prop까지 넘겨줌으로써 위의 warning 해결
+
+### 영화 웹 서비스
+```js
+  useEffect(() => {
+    fetch("https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year")
+    .then((response) => response.json())
+    .then((json) => {
+      setMovies(json.data.movies);
+      setLoading(false);
+    });
+  }, []); 
+```
+- `.then()`보다 async-await를 사용해 보다 보편적으로 사용하는 추세 (보다 효율적인 코드 작성 가능)
+
+```js
+const getMovies = async() => {
+    const response = await fetch(
+      `https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year`
+    )
+    const json = await response.json();
+    setMovies(json.data.movies);
+    setLoading(false)
+  };
+  
+  useEffect(() => {
+    getMovies();
+  }, []);
+```
+- 개선된 코드
+```js
+const getMovies = async() => {
+    const json = await (
+      await fetch(
+      `https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year`
+    )
+    ).json();
+    setMovies(json.data.movies);
+    setLoading(false)
+  };
+```
+- 한번에 보다 효율적으로 작성할 수 있음 (request와 json을 한번에)
+
+- `function Movie({title, medium_cover_image, summary, genres}) ` 해당 인자를 Movie 컴포넌트에 넘겨줌으로써 App.js로부터 인자들을 받아옴
+  - movie 컴포넌트는 해당 props를 모두 부모 컴포넌트로부터 받아옴
+
+- key는 react.js에서만 map 안에서 컴포넌트들을 렌더링할 때 사용
+``js
+{movies.map((movie) => (
+  <Movie 
+     key={movie.id}
+     title={movie.title}
+     mediumCoverImage={movie.medium_cover_image}
+     summary={movie.summary}
+     genres={movie.genres}
+   />
+))}
+```
+- `function Movie({title, mediumCoverImage, summary, genres})` : App.js에서 넘겨주는 props의 키워드와 동일한 키워드로 컴포넌트에서 받아와야함
+
+- proptypes의 지정
+```js
+Movie.propTypes = {
+    mediumCoverImage : PropTypes.string,
+    title : PropTypes.string.isRequired,
+    summary : PropTypes.string.isRequired,
+    genres : PropTypes.arrayOf(PropTypes.string).isRequired,
+}
+```
+- 배열의 경우 arrayOf(배열 인자의 proptypes)
+
+### React router
+- 페이지 전화을 위한 작업
+- `npm install react-router-dom`
+- App.js에서 router를 렌더링하여 보여줄 것
+```js
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+```
+- react-router-dom : 컴포넌트들의 모음집
+- `BrowserRouter` : 라우터에는 Hash 라우터와 Browser 라우터가 존재함
+- `Router` : 최상단에 렌더링해준 뒤 그 내부에 유저에게 보여주고 싶은 컴포넌트들을 렌더링함 ( by. 유저가 위치한 url에 따라)
+- `Routes` : 라우터를 찾는 역할, 라우터는 URL을 의미, 한번에 하나의 Route만 렌더링하기 위해 사용(여러개의 라우터를 렌더링할 수 있음)
+- Router에서 다른 Router로 이동하고 싶을 때 사용하는 방법: `Link` 사용
+- `Link` : 브라우저의 새로고침 없이도 유저를 다른 페이지로 이동시켜주는 컴포넌트
+
