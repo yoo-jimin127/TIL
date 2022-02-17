@@ -1,5 +1,6 @@
-### 노마드코더 클론코딩 개발 일지
+## 노마드코더 클론코딩 개발 일지
 
+### to do list
 - `setToDos((currentArray) => [toDo, ...currentArray]);` : toDo의 내용과 currentArray의 내용을 합쳐 하나의 배열에 담아 setToDos에 넘기는 과정
 ```js
   const [toDo, setToDo] = useState("");
@@ -17,7 +18,7 @@
 - 수정하는 함수를 사용할 때 
     - 값을 함수 내부의 인자로 넣어 보낼 수 있음 ex) `setToDo("")`
     - 함수의 인자로 함수를 보내는 방법
-        - 함수를 보낼 때 react.s는 함수의 첫번째 인자로 현재 state를 보냄
+        - 함수를 보낼 때 react.js는 함수의 첫번째 인자로 현재 state를 보냄
         - 현재 state를 계산하거나 새로운 state를 만드는데 사용할 수 있음 ex) ``setToDos((currentArray) => [toDo, ...currentArray]);`
 
 - `map()` 함수 : array의 element를 바꾸고 싶을 때 배열 내부의 모든 item에 대해 함수를 실행하고자 할 때 map()을 사용
