@@ -1,5 +1,7 @@
 ## 노마드코더 클론코딩 개발 일지
 
+------
+
 ### to do list
 - `setToDos((currentArray) => [toDo, ...currentArray]);` : toDo의 내용과 currentArray의 내용을 합쳐 하나의 배열에 담아 setToDos에 넘기는 과정
 ```js
@@ -34,6 +36,8 @@
 </ul>
 ```
 - item과 index를 넣어 key에 대해 넣어줄 prop까지 넘겨줌으로써 위의 warning 해결
+
+------
 
 ### 영화 웹 서비스
 ```js
@@ -80,7 +84,7 @@ const getMovies = async() => {
   - movie 컴포넌트는 해당 props를 모두 부모 컴포넌트로부터 받아옴
 
 - key는 react.js에서만 map 안에서 컴포넌트들을 렌더링할 때 사용
-``js
+```js
 {movies.map((movie) => (
   <Movie 
      key={movie.id}
@@ -104,6 +108,8 @@ Movie.propTypes = {
 ```
 - 배열의 경우 arrayOf(배열 인자의 proptypes)
 
+------
+
 ### React router
 - 페이지 전화을 위한 작업
 - `npm install react-router-dom`
@@ -122,3 +128,4 @@ import {
 - Router에서 다른 Router로 이동하고 싶을 때 사용하는 방법: `Link` 사용
 - `Link` : 브라우저의 새로고침 없이도 유저를 다른 페이지로 이동시켜주는 컴포넌트
 
+### React-router의 동적 URL 제공 기능
