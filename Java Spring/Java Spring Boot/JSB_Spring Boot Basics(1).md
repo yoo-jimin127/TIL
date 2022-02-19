@@ -82,4 +82,11 @@
 - Hard ware -> Web Server -> Spring Boot
 - NGINX : load balencing
 
+### Spring IoC
+- Java의 interface
+    
+- Spring IoC Container와 DI
+
+- Spring과 Spring Boot의 차이
+
 
