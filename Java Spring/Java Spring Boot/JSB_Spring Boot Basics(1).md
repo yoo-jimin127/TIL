@@ -40,6 +40,8 @@
     - 어느 시점에서 이 라이브러리가 필요한지에 대해 dependencies로 정의
     - gradle만의 빌드 과정을 정의하는 작업이 있다 (maven과의 차이점)
 
+------
+
 ### Spring Boot 실행하기
 - 일반적인 웹 서비스의 배포 구조
     - 사용자 브라우저에 주소를 보내면 물리적 컴퓨터(서버)에 주소의 내용을 띄워주는 역할
@@ -82,11 +84,32 @@
 - Hard ware -> Web Server -> Spring Boot
 - NGINX : load balencing
 
+------
+
 ### Spring IoC
 - Java의 interface
-    
+    - 인터페이스를 잘 활용하면 서로 다른 구현체가 같은 목적을 위해 동작하도록 만들 수 있음
+    - 사용하고자 하는 객체의 실제 자료형과 무관하게 동작하도록 만들 수 있음
+    - 함수의 인자와 반환값은 interface를 사용함
+    - inputStream의 구현체는 많지만 다 inputStream의 기능을 가지고 있음 -> inputStream을 필요로 하는 기능에는 구분없이 사용할 수 있음
+
 - Spring IoC Container와 DI
+    - **IoC : Inversion of Control - 제어 역전**
+        spring framework : application framework
+        제어 역전 : 개발자의 코드를 프레임워크가 사용하도록 제어가 역전되는 상태를 IoC라고 함
+        Java Spring IoC Container : 개발자가 작성한 코드 + 설정 정보를 가져와 완전한 웹 서비스를 만듦
+        개발자 작성 코드 + 설정 정보 = Bean
+        Spring IoC Container에 여러개의 Bean이 들어있음
+
+    - **DI : Dependency Injection - 의존성 주입**
+        이미 존재하는 Bean을 필요한 시점에 다시 주입시켜 사용하는 것을 DI(의존성 주입)이라 함 
 
 - Spring과 Spring Boot의 차이
+    - annotation을 사용해 spring framework의 활용도가 높아짐
+    
+    - Spring : 개발자가 작성한 코드 + 설정 정보 (XML형태로 설정을 만듦) = Beans
+        실행을 위해 Tomcat과 같은 프로그램이 필요함 (Java Web Application(WAR 파일))
 
+    - Sprint Boot : - Spring : 개발자가 작성한 코드 + 설정 정보 (Spring Boot Starter에 정의되어있음) = Beans
+        Tomcat과 같은 서버 프로그램이 내장되어 Jar의 형태로 실행이 가능함
 
