@@ -87,3 +87,4 @@ Content-Tyoe: text/html
     7-2. 데이터를 포함한 View 제작
 8. 사용자에게 View 제공
 ``
+![image](https://user-images.githubusercontent.com/66112716/154837283-81328914-9f5a-4012-b084-61a6828b2188.png)
