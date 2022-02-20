@@ -106,10 +106,11 @@
 
 - Spring과 Spring Boot의 차이
     - annotation을 사용해 spring framework의 활용도가 높아짐
-    
+
     - Spring : 개발자가 작성한 코드 + 설정 정보 (XML형태로 설정을 만듦) = Beans
         실행을 위해 Tomcat과 같은 프로그램이 필요함 (Java Web Application(WAR 파일))
 
     - Sprint Boot : - Spring : 개발자가 작성한 코드 + 설정 정보 (Spring Boot Starter에 정의되어있음) = Beans
         Tomcat과 같은 서버 프로그램이 내장되어 Jar의 형태로 실행이 가능함
+        
 
