@@ -66,3 +66,24 @@ Content-Tyoe: text/html
     ]
 }
 ```
+
+------
+
+### Controller와 RestController
+- Spring MVC 패턴
+    - Model : 서비스 데이터 자체
+    - View : 사용자가 확인하는 데이터의 표현
+    - Controller : 사용자의 입출력을 다루는 부분
+
+``
+1. 외부 요청 발생
+2. 요청 경로 확인을 위해 전달
+3. Controller로 전달
+4. Model 조작
+5. 갱신된 데이터 전달
+6. 응답 전달
+7. 응답을 Client로 전송
+    7-1. 데이터 전송 or
+    7-2. 데이터를 포함한 View 제작
+8. 사용자에게 View 제공
+``
