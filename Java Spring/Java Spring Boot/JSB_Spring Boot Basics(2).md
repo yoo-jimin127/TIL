@@ -130,3 +130,9 @@ public class SampleRestController {
 ```
 
 - 기본적으로 어떠한 형태의 응답이든 데이터의 일종임 -> byte or 응답의 output stream에 작성을 해주면 잘 해결해줌
+
+------
+
+### HTML Template
+- Static Contents : 이미 작성이 완료되어 변하지 않는 파일들 (HTML, CSS, Javascript)
+- Dynamic Web Page : 서버에서 HTML 문서의 내용을 데이터에 따라 다르게 작성하여 제공되는 페이지
