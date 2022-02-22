@@ -75,7 +75,7 @@ Content-Tyoe: text/html
     - View : 사용자가 확인하는 데이터의 표현
     - Controller : 사용자의 입출력을 다루는 부분
 
-``
+```
 1. 외부 요청 발생
 2. 요청 경로 확인을 위해 전달
 3. Controller로 전달
@@ -86,5 +86,47 @@ Content-Tyoe: text/html
     7-1. 데이터 전송 or
     7-2. 데이터를 포함한 View 제작
 8. 사용자에게 View 제공
-``
+```
 ![image](https://user-images.githubusercontent.com/66112716/154837283-81328914-9f5a-4012-b084-61a6828b2188.png)
+
+```java
+@Controller
+public class SampleController {
+}
+```
+- Controller라는 인터페이스를 달아줌으로써 해당 클래스 객체가 Bean으로써 IoC의 관리를 받게 됨
+
+- `@RequestMapping()` : 경로 설정을 위해 사용하는 annotation
+
+```java
+@Controller
+public class SampleControler { }
+```
+- 요청 경로를 설정하기 위해 Controller Annotation을 사용함
+
+
+```java
+@RequestMapping("/profile")
+public String profile() {
+    logger.info("in profile");
+    return "profile.html";
+}
+```
+- RequestMapping을 이용해 경로에 따라 실행될 함수를 지정할 수 있음
+- Method 별로 별도의 Annotation이 존재함 (ex - GetMapping, PostMapping)
+- HTML 외에 데이터 전송을 위해 Body와 MediaType을 설정할 수 있음
+
+- Rest Controller - Controller + ResponseBody
+```java
+@RestController
+@RequestMapping("/rest")
+public class SampleRestController {
+    private static final Logger logger = LoggerFactory.getLogger(SampleRestController.class);
+
+    @GetMapping("sample-playload")
+    public SamplePlayload samplePlayload(){
+        return new SamplePlayload("jimin", 23, "developer");
+    }
+```
+
+- 기본적으로 어떠한 형태의 응답이든 데이터의 일종임 -> byte or 응답의 output stream에 작성을 해주면 잘 해결해줌
