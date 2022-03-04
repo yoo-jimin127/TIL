@@ -129,3 +129,28 @@ import {
 - `Link` : 브라우저의 새로고침 없이도 유저를 다른 페이지로 이동시켜주는 컴포넌트
 
 ### React-router의 동적 URL 제공 기능
+- 다이나믹 : URL에 변수를 주어 동적으로 이동할 수 있도록 하는 기능
+ex) Routing 시 path에 `/movie/:id`와 같이 콜론(:) 뒤 id를 입력해줄 경우 URL에 변수를 넘겨주었을 때 해당 페이지로 라우팅됨
+- id 값을 알아내 해당 id로 url 요청을 보낼 수 있도록 함
+- `useParams()` 함수를 사용해 각 페이지마다 변경되는 url의 변수 값을 parameter로 받아올 수 있음
+  - 사용법 `import { useParams } from "react-router-dom";`
+```js
+const { id } = useParams();
+console.log(id);
+```
+- object 타입으로 넘어오는 params를 그 내용만 가지고 와서 조작할 수 있도록 함
+
+- await는 async 함수 내부에 있으면 사용할 수 없음
+```js
+const { id } = useParams();
+const getMovie = async () => {
+    const json = await (
+      await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
+    ).json();
+    console.log(json);
+  };
+useEffect(() => {
+    getMovie();
+}, [])
+```
+- async를 사용해 useEffect() 처리를 할 때 함수명만 넘겨주도록 함
