@@ -154,3 +154,12 @@ useEffect(() => {
 }, [])
 ```
 - async를 사용해 useEffect() 처리를 할 때 함수명만 넘겨주도록 함
+
+### Publishing
+- `gh-pages` : `npm i gh-pages` 입력을 통해 설치 - 결과물을 github pages에 업로드할 수 있도록 해주는 패키지
+- package.json -> script -> build : 웹 사이트의 production ready code를 실행 -> production ready : 코드가 압축되고 모든게 최적화 됨
+
+- package.json에 hompages 코드 추가
+1. `"homepages" : "https://github_username.github.io/Repository_name_existing_sourcecode"`
+2. package.json의 scripts 부분에 `"deploy": "gh-pages -d build",`, `"predeploy": "npm run build"` 추가
+3. `npm run deploy` 입력 후 확인
