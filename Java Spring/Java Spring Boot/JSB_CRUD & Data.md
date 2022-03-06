@@ -53,3 +53,36 @@ Delete : 삭제
     - Service
         - 비즈니스 로직이 구현된 부분임을 알림
     - 모든 Bean에 Component를 사용해도 작동하기는 함
+
+### Database 다뤄보기
+- Java spring boot : JPA ORM 제공
+
+- 관계형 데이터베이스와 ERD
+    - codd의 12규칙을 따르고자 하는 Database
+    - Table 형태로 데이터를 저장하며, 관계형 연산자로 테이블 형태의 데이터 반환
+    - 관계형 데이터 : primary key를 가짐 (이 값이 있다면 하나의 row를 가져올 수 있는 값)
+
+    - ERD : Entity - Relationship Diagram
+    - 관계형 데이터베이스 서버 : 서버 소프트웨어 + 물리 서버 <-> 서버에 접속하기 위한 클라이언트
+
+ex)
+```sql
+insert into board(name) values('general');
+
+insert into post(title, content, writer, board) 
+values('Hello MySQL!', 'This is first post.', 'jimindev', 1);
+
+select * from post;
+
+insert into post(title, content, writer, board) 
+values('Hello RDB!', 'using SQL!.', 'jimindev', 2);
+
+select * from post where writer like 'jimin%';
+
+update post set title = "Hello Update!" where id = 2;
+select * from post where id = 2;
+delete from post where id = 3;
+
+truncate post;
+select * from board a inner join post b on a.id = b.board;
+```
