@@ -16,4 +16,6 @@ Mybatis
 ### ORM
 관계형 데이터베이스의 한계 : 관계형 데이터베이스에서 사용하는 자료의 형태가 객체 지향 관점에서 맞지 않아 생기는 간극
     - Object Relational Mapping : 관계형 데이터를 객체로 표현하는 프로그래밍 기법
-    
+
+### JPA 활용하기
+[실습코드](https://github.com/yoo-jimin127/Java_Spring_Boot_Course/tree/main/5%EC%A3%BC%EC%B0%A8%20%EC%8B%A4%EC%8A%B5%EC%BD%94%EB%93%9C/jpa/jpa)
