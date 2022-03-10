@@ -60,7 +60,8 @@ function Btn({setText}) {
             );
         }
 ```
-- 위의 changeValue() 함수 및 onClick은 이벤트 리스너가 아닌 **하나의 prop** -> 컴포넌트의 정의부에 들어간다면 그것은 이벤트 리스너 맞음
+- 위의 changeValue() 함수 및 onClick은 이벤트 리스너가 아닌 **하나의 prop** <br>
+-> 컴포넌트의 정의부에 들어간다면 그것은 이벤트 리스너 맞음<br>
     - 커스터마이징한 컴포넌트에 넣는 모든 것은 HTML태그에 반영되지 않음, 컴포넌트를 정의하는 부분에서 prop을 받아 반영해줘야 완성
 
 ### props memo

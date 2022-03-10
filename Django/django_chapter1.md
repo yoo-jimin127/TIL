@@ -24,6 +24,7 @@
     except 발생 오류 :
         # 발생 오류가 발생했을 경우 실행할 코드
     ```
+    
     ```try ... except ... finally``` : 프로그램을 멈춤 없이 실행시킬 수 있음
     - [파이썬 예외 관련 자료](https://docs.python.org/ko/3/tutorial/errors.html)
 

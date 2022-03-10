@@ -8,10 +8,10 @@
     - 자원의 제공, 제작, 갱신 등
     - 부수적인 기능은 서비스 별로 다르게 만들어짐
 
-Create : 생성
-Read : 조회
-Update : 갱신
-Delete : 삭제
+`Create` : 생성
+`Read` : 조회
+`Update` : 갱신
+`Delete` : 삭제
 
 -----
 ### CRUD와 RESTful
