@@ -29,19 +29,40 @@
 
     <script type="text/babel">
         const rootElement = document.getElementById("root");
+        const state = {keyword: "", typing: false, result: ""};
 
-        function random() {
-            const number = Math.floor(Math.random() * (10 - 1) + 1);
-            const element = (
+        const App = () => {
+            function handleChange(event) {
+                setState({ typing: true, keyword:event.target.value });
+            }
+
+            function handleClick() {
+                setState({
+                    typing: false,
+                    result: `we find results of ${state.keyword}`
+                });
+            }
+
+            return (
                 <>
-                <button>{number}</button>
-                <button>{number}</button>
+                    <input onChange={handleChange} />
+                    <button onClick={handleClick}>search</button>
+                    <p>{state.typing ? `looking for ${state.keyword} ...` : state.result}</p>
                 </>
             )
-            ReactDOM.render(element, rootElement);
+        };
+
+        function setState(newState) {
+            Object.assign(state, newState);
+            render();
         }
 
-        setInterval(random, 1000);
+        function render() {
+            ReactDOM.render(<App />, rootElement);
+        }
+
+        render();
+
     </script>
 </body>
 </html>
