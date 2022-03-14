@@ -21,22 +21,31 @@
             </>
         );
 
-        const Paint = ({ title, description }) => (
-            <>
-            <h1>{title}</h1>
-            <h3>{description}</h3>
-            </>
-        );
+        const Text = ({ text }) => {
+            // text가 대문자로 시작할 경우 h1, 소문자로 시작할 경우 h3
+            if (text.charAt(0) === text.charAt(0).toUpperCase()) {
+                return <h1>{text}</h1>
+            } else {
+                return <h3>{text}</h3>
+            }
 
-        const Good = () => <h3>Good</h3>;
+                        // return (
+            //     <>
+            //         <h1>{text}</h1>
+            //         <h3>{text}</h3>
+            //     </>
+            // );
+        };
+
+        function Number({ number, selected }) {
+            return selected ? <h1>{number}</h1> : <h3>{number}</h3>
+        }
 
         const element = (
             <>
-            <Paint title="Good" description="good" />
-            <Paint title="Bad" description="bad" />
-            <Paint title="So so" description="so so" />
-            <Good />
-            {Paint({ title: "Bad", description: "bad"})}
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
+                <Number number={number} selected={number === 3} />
+            ))}
             </>
         )
 
