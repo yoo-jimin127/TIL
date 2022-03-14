@@ -14,23 +14,34 @@
 
     <script type="text/babel">
         const rootElement = document.getElementById("root");
-        const element = <React.Fragment
-            children={[
-                <h1>Hi</h1>,
-                <h3>Bye</h3>,
-                <h5>Children</h5>
-            ]}
-        />
-        // const element = React.createElement("h1", {
-        //     className : "title",
-        //     children : ["Hello, world", "it's me"]});
+        const paint = (title, description) => (
+            <>
+            <h1>{title}</h1>
+            <h3>{description}</h3>
+            </>
+        );
 
+        const Paint = ({ title, description }) => (
+            <>
+            <h1>{title}</h1>
+            <h3>{description}</h3>
+            </>
+        );
+
+        const Good = () => <h3>Good</h3>;
+
+        const element = (
+            <>
+            <Paint title="Good" description="good" />
+            <Paint title="Bad" description="bad" />
+            <Paint title="So so" description="so so" />
+            <Good />
+            {Paint({ title: "Bad", description: "bad"})}
+            </>
+        )
 
         ReactDOM.render(element, rootElement);
-        // const rootElement = document.getElementById("root");
-        // const element = document.createElement("h1");
-        // element.textContent = "Hello, world";
-        // rootElement.appendChild(element);
+
     </script>
 </body>
 </html>
