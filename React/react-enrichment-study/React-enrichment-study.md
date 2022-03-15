@@ -133,3 +133,99 @@ function setState(newState) {
 ```
 - `Object.assign` : 객체 내용 복사
 - 전역 변수 : `ReactDOM.render`
+
+### 컴포넌트 상태 다루기
+- DOM : 논리 트리
+- 컴포넌트 : 앨리먼트들의 집합
+- 앨리먼트 : 컴포넌트의 구성 요소
+- `useState` : 상태값을 관리해주는 훅
+
+### 컴포넌트 사이드 이펙트 다루기
+- 사이드 이펙트 == 부수효과
+- `window.localStorage.setItem("keyword", event.target.value);` 사용으로 로컬 스토리지에 저장
+- `const [keyword, setKeyword] = React.useState(window.localStorage.getItem("keyword"));` 사용으로 로컬 스토리지의 저장 값으로 state 설정
+- `useState` : lazy initialize
+- `useEffect` : dependency array
+    - dependency array를 아무것도 주지 않을 경우 모든 변화에 반응
+
+### 커스텀 훅 만들기
+- `use{Name}` : 훅의 반복 - custom Hook 사용
+```js
+function useLocalStorage(itemName, value) {
+    const [state, setState] = React.useState(() => {
+        return window.localStorage.getItem(itemName) || value;
+    })
+    React.useEffect(() => {
+        window.localStorage.setItem(itemName, state);
+    }, [state])
+    return [state, setState];
+}
+```
+- `use{Name}` 형식으로 커스텀 훅을 생성한 뒤 인자로 값을 넣어줌 ex) 인자에 여러 값을 넣는 이유 : false와 같은 string이 아닌 값에 대한 처리
+```js
+const [keyword, setKeyword] = useLocalStorage("keyword");
+const [typing, setTyping] = useLocalStorage("typing", false) ;
+const [result, setResult] = useLocalStorage("result");
+```
+
+### hook flow 이해하기 (App - Child)
+- `useState`로 만들어진 set 함수는 인자로 이전 값이 들어옴 -> prev로 들어온 값을 저장
+```js
+function handleClick() {
+    setShow((prev) => !(prev));
+}
+```
+- 첫번째 인자로 들어온 useState의 값을 바탕으로 set 함수를 설정
+- render가 끝난 다음에 effect가 실행
+- hook flow : hook들의 호출 타이밍
+- useState : setState시 prev가 주입됨
+
+- 부모가 다 그려짐 -> children이 그려짐 -> children 다 그려진 뒤 children의 useEffect까지 발생 -> App의 useEffect 도착
+    - App의 useEffect를 넣어둔 경우 children의 렌더링 + useEffect 완료 된 뒤 App의 useEffect 실행
+
+- useEffect : cleanUp - 이전에 생성한 side effect 생성해놓은 것 모두 지우고 다시 생성
+![image](https://user-images.githubusercontent.com/66112716/158378388-510f8e20-333e-450c-ab4c-cb24ca2b58c4.png)
+
+- useEffect : render가 끝난 뒤 실행
+- update 시 : useEffect clean up / useEffect
+- dependency array : 전달받은 값의 변화가 있는 경우에만
+
+### React Element에 스타일 입히기
+- class만 써줘도 됨 : 이미 존재하고 있음 -> className으로 써줄 것 (이미 reserving 되어있는 태그들은 class로도 읽혀지지만, 다른 태그 중 제대로 class의 식별이 이루어지지 않는 경우가 있음)
+    - React는 html에서 이미 선점하고 있는 키워드의 사용을 지양함
+- `console.log(JSON.stringify(props));` : string화 시켜줌
+```js
+function Button(props) {
+    console.log(JSON.stringify(props));
+    return <button {...props} />;
+}
+```
+![image](https://user-images.githubusercontent.com/66112716/158411494-d0f01305-fe03-42f8-bf6c-9c5bb7566387.png)
+- 위와 같이 작성 시 props 내부의 요소들이 버튼에 반영됨
+
+- 잘못된 코드 예시
+```js
+function Button({props}) {
+    console.log(JSON.stringify(props));
+    return <button className="button" {...props} />;
+}
+```
+
+- className, color, style, rest를 인자로 주어 스타일 지정
+```js
+function Button({ className= "", color, style, ...rest}) {
+    return (
+        <button 
+        className={`button ${className} ${color}`}
+        style={style} 
+        {...rest} 
+        />
+    )
+}
+```
+- 스타일의 우선순위
+    - style props가 더 우세
+    - className 후세
+
+- className : 문자열
+- style : 객체, 카멜케이스, className보다 먼저
