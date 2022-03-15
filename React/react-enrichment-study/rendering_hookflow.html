@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const rootElement = document.getElementById("root");
+
+        const Child = () => {
+            console.log("   Child render start")
+            const [text, setText] = React.useState(() => {
+                console.log("   Child useState");
+                return "";
+            });
+
+            React.useEffect(() => {
+                console.log("   Child useEffect, no deps");
+
+                return () => {
+                    console.log("   Child useEffect [CleanUp], no deps");
+                }
+            });
+
+            React.useEffect(() => {
+                console.log("   Child useEffect, empty deps");
+
+                return () => {
+                    console.log("   Child useEffect [CleanUp], empty deps");
+                }
+            }, []);
+
+            React.useEffect(() => {
+                console.log("Child useEffect, [text] deps");
+
+                return () => {
+                    console.log("   Child useEffect [CleanUp], [text] deps");
+                }
+            }, [text]);
+
+            function handleChange(event) {
+                setText(event.target.value);
+            }
+
+            const element = (
+                <>
+                    <input onChange={handleChange} />
+                    <p>{text}</p>
+                </>
+            )
+            console.log("   Child render end");
+            return element;
+        };
+
+        const App = () => {
+            console.log("App render start");
+            const [show, setShow] = React.useState(() => {
+                console.log("App useState call")
+                return false
+            });
+
+            React.useEffect(() => {
+                console.log("App useEffect, no deps");
+
+                return () => {
+                    console.log("App useEffect [CleanUp], no deps");
+                }
+            });
+
+            React.useEffect(() => {
+                console.log("App useEffect, empty deps");
+
+                return () => {
+                    console.log("App useEffect [CleanUp], empty deps");
+                }
+            }, []);
+
+            React.useEffect(() => {
+                console.log("App useEffect, [show] deps");
+
+                return () => {
+                    console.log("App useEffect [CleanUp], [show] deps");
+                }
+            }, [show]);
+
+            function handleClick() {
+                setShow((prev) => !(prev));
+            }
+
+            console.log("App render end");
+            return (
+                <>
+                <button onClick={handleClick}>Search</button>
+                {show ? <Child /> : null}
+                </>
+                )
+            };
+        ReactDOM.render(<App />, rootElement);
+
+    </script>
+</body>
+</html>
