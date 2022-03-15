@@ -12,56 +12,37 @@
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
     <div id="root"></div>
 
-    
-    <!-- <script>
-        const rootElement = document.getElementById("root");
-
-        function random() {
-            const number = Math.floor(Math.random() * (10 - 1) + 1);
-            const element = `
-            <button>${number}</button>
-            `;
-            rootElement.innerHTML = element;    
-        }
-    
-        setInterval(random, 1000);
-    </script> -->
-
     <script type="text/babel">
         const rootElement = document.getElementById("root");
-        const state = {keyword: "", typing: false, result: ""};
 
         const App = () => {
+            const [keyword, setKeyword] = React.useState("");
+            const [typing, setTyping] = React.useState(true);
+            const [result, setResult] = React.useState("");
+
+            // const keywordState = React.useState("");
+            // const leyword = keywordState[0];
+            // const setKeyword = keywordState[1];
+
             function handleChange(event) {
-                setState({ typing: true, keyword:event.target.value });
+                setKeyword(event.target.value);
             }
 
             function handleClick() {
-                setState({
-                    typing: false,
-                    result: `we find results of ${state.keyword}`
-                });
+                setTyping(false);
+                setResult(`We find results of ${keyword}`);
             }
 
             return (
                 <>
                     <input onChange={handleChange} />
                     <button onClick={handleClick}>search</button>
-                    <p>{state.typing ? `looking for ${state.keyword} ...` : state.result}</p>
+                    <p>{typing ? `Looking for ${keyword}...` : result}</p>
                 </>
             )
         };
 
-        function setState(newState) {
-            Object.assign(state, newState);
-            render();
-        }
-
-        function render() {
-            ReactDOM.render(<App />, rootElement);
-        }
-
-        render();
+        ReactDOM.render(<App />, rootElement);
 
     </script>
 </body>
