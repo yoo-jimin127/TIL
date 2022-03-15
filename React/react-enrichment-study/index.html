@@ -16,16 +16,28 @@
         const rootElement = document.getElementById("root");
 
         const App = () => {
-            const [keyword, setKeyword] = React.useState("");
-            const [typing, setTyping] = React.useState(true);
+            const [keyword, setKeyword] = React.useState(() => {
+                console.log("initialized");
+                return window.localStorage.getItem("keyword")
+            });
+            const [typing, setTyping] = React.useState(false);
             const [result, setResult] = React.useState("");
+
+            console.log("render");
 
             // const keywordState = React.useState("");
             // const leyword = keywordState[0];
             // const setKeyword = keywordState[1];
+            React.useEffect(() => {
+                console.log("effect");
+                window.localStorage.setItem("keyword", keyword)
+            }, [keyword]);
+
 
             function handleChange(event) {
+                window.localStorage.setItem("keyword", event.target.value);
                 setKeyword(event.target.value);
+                setTyping(true);
             }
 
             function handleClick() {
@@ -35,7 +47,7 @@
 
             return (
                 <>
-                    <input onChange={handleChange} />
+                    <input onChange={handleChange} value={keyword} />
                     <button onClick={handleClick}>search</button>
                     <p>{typing ? `Looking for ${keyword}...` : result}</p>
                 </>
