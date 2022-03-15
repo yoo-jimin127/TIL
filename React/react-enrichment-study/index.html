@@ -15,24 +15,22 @@
     <script type="text/babel">
         const rootElement = document.getElementById("root");
 
-        const App = () => {
-            const [keyword, setKeyword] = React.useState(() => {
-                console.log("initialized");
-                return window.localStorage.getItem("keyword")
+        function useLocalStorage(itemName, value) {
+            const [state, setState] = React.useState(() => {
+                return window.localStorage.getItem(itemName) || value;
             });
-            const [typing, setTyping] = React.useState(false);
-            const [result, setResult] = React.useState("");
 
-            console.log("render");
-
-            // const keywordState = React.useState("");
-            // const leyword = keywordState[0];
-            // const setKeyword = keywordState[1];
             React.useEffect(() => {
-                console.log("effect");
-                window.localStorage.setItem("keyword", keyword)
-            }, [keyword]);
+                window.localStorage.setItem(itemName, state);
+            }, [state]);
 
+            return [state, setState];
+        }
+
+        const App = () => {
+            const [keyword, setKeyword] = useLocalStorage("keyword");
+            const [typing, setTyping] = useLocalStorage("typing", false) ;
+            const [result, setResult] = useLocalStorage("result");
 
             function handleChange(event) {
                 window.localStorage.setItem("keyword", event.target.value);
