@@ -229,3 +229,96 @@ function Button({ className= "", color, style, ...rest}) {
 
 - className : 문자열
 - style : 객체, 카멜케이스, className보다 먼저
+
+### Ref로 DOM 다루기
+- DOM과 Element : 브라우저가 불러온 웹 페이지 - Document
+- `useRef` 훅을 사용해 DOM에 대해 처리를 즉각적으로 할 수 있도록 함
+
+- useRef 훅을 사용하기 이전
+```js
+React.useEffect(() => {
+    document.getElementById("input").focus();
+}, []
+return (
+<>
+<input id="input" />
+</>
+)
+```
+
+- useRef를 사용한 코드
+```js
+const App = () => {
+    const inputRef = React.useRef();
+    React.useEffect(() => {
+        inputRef.current.focus();
+    }, [])
+    return (
+    <>
+    <input ref={inputRef} />
+    </>
+    
+}
+```
+- `Ref명.current.FUNCTION()`으로 접근
+
+- vanilla JS : document.get~ / document.query...
+- React : useRef / ref
+
+### form 다루기
+- 기본적 form : label, input, form
+- onSubmit : `event.preventDefault()`
+- event.target.elements : `console.dir(element)`
+
+- uncontrolled vs controlled
+- `if (phoneNumber.startsWith(0))` : `startsWith()` 함수를 사용해 문자열의 시작 값을 기준으로 판별할 수 있음
+
+```js
+const handleChange = (event) => {
+    setPhoneNumber(event.target.value);
+    
+    if (phoneNumber.startsWith(0)) {
+        setMessage("Phone Number is valid");
+    } else {
+        setMessage("Phone Number should starts with 0");
+    }
+}
+```
+- 위와 같이 state를 설정한 뒤
+```js
+<button 
+    type="submit" 
+    disabled = {phoneNumber.length === 0 || message !== "Phone Number is valid"}>
+    Submit
+</button>
+```
+- 다음과 같이 disabled를 설정해줄 경우 phoneNumber의 길이가 0을 초과해도 버튼이 abled해지지 않음
+    - 이유 : sync가 맞지 않기 때문, 두 state간 시차가 존재
+
+```js
+const handleChange = (event) => {
+    if (event.target.value.startsWith(0)) {
+        setMessage("Phone Number is valid");
+    } else {
+        setMessage("Phone Number should starts with 0");
+
+    setPhoneNumber(event.target.value);
+}
+```
+- 위와 같이 코드를 수정하여 반영되도록 함
+
+- 유효하지 않은 값의 입력 자체를 허용하지 않고자 할 때
+```js
+<input 
+    id="phone" 
+    name="phone" 
+    onChange={handleChange}
+    value={phoneNumber}
+/>
+```
+- input의 value 값에 state를 넣어줌으로써 controlled하게 관리함
+
+- validation 체크 : `onChange` 에서 다룸
+- controlled : input의 value를 직접 관리
+
+
