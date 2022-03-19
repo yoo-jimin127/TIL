@@ -321,4 +321,43 @@ const handleChange = (event) => {
 - validation 체크 : `onChange` 에서 다룸
 - controlled : input의 value를 직접 관리
 
+### Error 다루기
+- javascript의 에러로 애플리케이션 전체가 정상적으로 렌더링되지 않는 경우를 대비해 `ErrorBoundary` 사용
+```js
+class ErrorBoundary extends React.Component {
+    state = { error : null };
+    static getDerivedStateFromError(error) {
+        return {error}
+    }          
+    
+    render() {
+        const {error} = this.state;
+        if (error) {
+            return this.props.fallback;
+        }
+        return this.props.children;
+    }
+}
+```
+- ErrorBoundary를 사용해 돌려줄 폴백 UI를 명시해준 뒤
+```js
+const Child = () => {
+    throw new Error("Something wrong ...");
+    return <p>Child ... </p>
 
+const App = () => {
+    return (
+        <>
+            <p>App ... </p>
+            <ErrorBoundary fallback={<p> Error occured ... </p>}>
+                <Child />
+            </ErrorBoundary>
+        </>
+    )
+}
+```
+- `ErrorBoundary`로 감싸준 뒤 fallback 메시지 전달
+- 에러가 발생할 경우 상태값을 처리하는 로직을 class component에서 제공하기에 React.Component 상속
+
+- Error Boundary : Catch Error 해서 보여줌
+- Fallback : Error가 발생했을 때 보여줄 컴포넌트
