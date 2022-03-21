@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const rootElement = document.getElementById("root")
+    
+        const todos = [
+            {id:1, value: "Wash dishes"},
+            {id:2, value: "Clean the bed"},
+            {id:3, value: "Running"},
+            {id:4, value: "Learning"}
+        ]
+
+        const App = () => {
+            const [items, setItems] = React.useState(todos);
+
+            const handleDoneClick = (todo) => {
+                setItems((items) => items.filter((item) => item !== todo));
+            }
+
+            const handleRestoreClick = () => {
+                setItems((items) => [...items, 
+                todos.find((item) => !items.includes(item))
+            ]);
+            }
+
+            return (
+                <>
+                {items.map((todo) => (
+                    <div key={todo.id}>
+                        <span>{todo.value}</span>
+                        <button onClick={() => handleDoneClick(todo)}>Done</button>
+                    </div>
+                    ))}
+                    <button onClick={handleRestoreClick}>Restore</button>
+                </>
+            )
+        }
+
+        ReactDOM.render(<App />, rootElement);
+    </script>
+</body>
+</html>
