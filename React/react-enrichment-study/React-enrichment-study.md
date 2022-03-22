@@ -361,3 +361,54 @@ const App = () => {
 
 - Error Boundary : Catch Error 해서 보여줌
 - Fallback : Error가 발생했을 때 보여줄 컴포넌트
+
+### Key와 Rerendering
+- key - value : key는 value를 특정하는 이름
+- DB, Dictionary, Json, Object ...
+- `<button onClick={() => handleDoneClick(todo)}>Done</button>` : onClick에 인자를 추가해 넘김
+```js
+const handleDoneClick = (todo) => {
+    setItems((items) => items.filter((item) => item !== todo));
+}
+```
+
+- 삭제된 항목을 다시 불러오고자 할 때
+```js
+const handleRestoreClick = () => {
+    setItems((items) => [...items, 
+    todos.find((item) => !items.includes(item))
+]);
+}
+```
+- todos에는 있지만 items에는 없는 것을 다시 화면에 출력
+- key값을 제대로 줄 경우 react의 재조정이 효율적으로 일어남 [React 재조정](https://ko.reactjs.org/docs/reconciliation.html)
+    - 재사용 : key를 제대로 줘야 재사용 가능
+    - 제대로 준다 : 중복 없음, 바뀌지 않음
+
+### 상태 끌어올리기 (State lifting up)
+- 형제 컴포넌트의 상태가 궁금할 경우 : 필요하면 부모로 lifting up
+- props drilling : 과도한 lifting은 drilling을 야기
+```js
+const App = () => {
+    const [id, setId] = React.useState("");
+    
+    const handleIdChange = (event) => {
+        setId(event.target.value);
+    
+    const [pw, setPw] = React.useState("")
+    const handlePwChange = (event) => {
+        setPw(event.target.value) ;
+    
+    const handleLoginClick = () => 
+    
+    return (
+        <>
+            <Id id={id} handleIdChange={handleIdChange} />
+            <br />
+            <Password id={pw} handlePwChange={handlePwChange} />
+            <button disabled={id.length === 0 || pw.length === 0} onClick={handleLoginClick}>LOGIN</button>
+        </>
+    )
+}
+```
+- 

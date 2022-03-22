@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const rootElement = document.getElementById("root");
+
+        const Id = ({handleIdChange}) => {
+
+            return (
+                <>
+                <label>ID : </label>
+                <input onChange={handleIdChange} />
+                </>
+            )
+        }
+
+        const Password = ({handlePwChange}) => {
+
+            return (
+                <>
+                <label>PW : </label>
+                <input type="password" onChange={handlePwChange} />
+                </>
+            )
+        }
+
+        const App = () => {
+            const [id, setId] = React.useState("");
+            
+            const handleIdChange = (event) => {
+                setId(event.target.value);
+            }
+
+            const [pw, setPw] = React.useState("");
+
+            const handlePwChange = (event) => {
+                setPw(event.target.value) ;
+            }
+
+
+            const handleLoginClick = () => {
+                setId(event.target.value);
+                console.log(`length: ${event.target.value.length > 0}`);
+            }
+
+            return (
+                <>
+                    <Id id={id} handleIdChange={handleIdChange} />
+                    <br />
+                    <Password id={pw} handlePwChange={handlePwChange} />
+                    <button disabled={id.length === 0 || pw.length === 0} onClick={handleLoginClick}>LOGIN</button>
+                </>
+            )
+        }
+
+        ReactDOM.render(<App />, rootElement);
+    </script>
+</body>
+</html>
