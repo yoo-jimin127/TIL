@@ -411,4 +411,20 @@ const App = () => {
     )
 }
 ```
-- 
+
+### Data Fetch 해보기
+```js
+fetch('http://example.com/movies.json')
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(JSON.stringify(myJson));
+  });
+```
+- fetch 함수 내부에 받아올 값 or 리소스의 주소,
+- `.then`을 사용하여 함수를 넣어주면 해당 값이 담김
+- `json()`을 사용하여 json으로 사용
+
+- fetch API : 네트워크 통신 도구
+- 상황별 핸들링 : 로딩 / 데이터 / 에러
