@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <title>Document</title>
 </head>
 <body>
@@ -27,10 +30,10 @@
                     })
                     .then(function(myJson) {
                       setData(myJson);
-                    // console.log(JSON.stringify(myJson))
+                    console.log(JSON.stringify(myJson))
                     })
                     .catch((error) => console.log(error))
-                    alert(error)
+                    // alert(error)
                 }, []);
 
                 if (error != null) {
@@ -45,7 +48,7 @@
                 <>
                 <div>
                     <p>People</p>
-                    {data.people.map((person) => (
+                    {data.people && data.people.map((person) => (
                         <div>
                             <span> name: {person.name} </span>
                             <span> age: {person.age} </span>
