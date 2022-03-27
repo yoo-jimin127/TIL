@@ -428,3 +428,10 @@ fetch('http://example.com/movies.json')
 
 - fetch API : 네트워크 통신 도구
 - 상황별 핸들링 : 로딩 / 데이터 / 에러
+
+---
+
+### CRA
+- Node : 로컬에서 리액트 앱이 돌아갈 수 있도록 해주는 환경
+    - npm(node package manager)도 자동으로 설치됨
+    - npm이 설치되면 npx(node package runner)도 자동으로 설치됨
