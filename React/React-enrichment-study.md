@@ -435,3 +435,25 @@ fetch('http://example.com/movies.json')
 - Node : 로컬에서 리액트 앱이 돌아갈 수 있도록 해주는 환경
     - npm(node package manager)도 자동으로 설치됨
     - npm이 설치되면 npx(node package runner)도 자동으로 설치됨
+
+### JSX
+- JSX : 리액트 앨리먼트를 생성하는 문법, javascript의 확장 문법
+- **camelCase**를 사용해 JSX 사용
+    - props는 camelCase를 사용할 것
+- 태그는 자식을 포함할 수 있음
+- Babel은 JSX를 `React.createElement()` 형식으로 불러옴
+
+### Props
+- component와 props
+- 자신의 출력에 다른 컴포넌트를 참조할 수 있음
+
+- 컴포넌트의 합성 : 여러개를 하나의 컴포넌트에 넣는 것
+- 컴포넌트의 추출 : 유의미한 값들로 추출해 새로운 컴포넌트를 만드는 것(재사용성을 높이기 위한 방법 중 하나)
+
+- props : 컴포넌트에 전달되는 단일 객체
+- 순수함수처럼 동작 : props 자체를 수정해서는 안됨
+- 컴포넌트 합성 : 여러 컴포넌트를 모음
+- 컴포넌트 추출 : 여러 고셍서 사용되거나 복잡한 경우
+
+### State와 Life cycle
+- 
