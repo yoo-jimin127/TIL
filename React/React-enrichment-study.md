@@ -486,3 +486,9 @@ fetch('http://example.com/movies.json')
  - 합성 이벤트 : 인터페이스는 같지만 직접 대응되지 않음
  - Bubble / Capture : Capture > target > Bubble
  - return false : `e.preventDefault()` 해줘야 함
+
+### 조건부 렌더링
+- if : `if(condition){return A} else {return B}`
+- && : `condition && A, falsy 주의`
+- 삼항연산자 : `condition ? A : B`
+- 아예 안그리고 싶은 경우 : `return null;`
