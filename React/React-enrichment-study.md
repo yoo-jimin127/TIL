@@ -456,4 +456,33 @@ fetch('http://example.com/movies.json')
 - 컴포넌트 추출 : 여러 고셍서 사용되거나 복잡한 경우
 
 ### State와 Life cycle
-- 
+- 컴포넌트 내의 상태 : 자신의 출력 값을 변경
+- Class Component : State LifeCycle
+- Functional Component : 훅으로 관리
+- 유의사항 : 직접 수정 X, 비동기적일 수 있음
+
+### 컴포넌트 생명주기
+- `render()` : React.Component의 하위 class에서 반드시 정의해야 하는 메서드
+- 컴포넌트 생명주기
+    1. 마운트
+        - `Constructor()`
+        - `render()`
+        - `componentDidMount()`
+
+    2. 업데이트
+        - `render()`
+        - `componentDidUpdate()`
+
+    3. 마운트 해제
+        - `componentWillUnmount()`
+
+- **state에 props를 복사해서는 안됨**
+- constructor : state 초기화 및 메서드 바인딩
+- componentDidMount : DOM 노드 초기화 및 데이터 fetch
+- componentWillUnmount : 타이머 제거 및 요청 취소 및 구독 해제
+- Functional Component : hook으로 대부분 구현 가능
+
+### 이벤트
+ - 합성 이벤트 : 인터페이스는 같지만 직접 대응되지 않음
+ - Bubble / Capture : Capture > target > Bubble
+ - return false : `e.preventDefault()` 해줘야 함
