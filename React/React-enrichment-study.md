@@ -492,3 +492,16 @@ fetch('http://example.com/movies.json')
 - && : `condition && A, falsy 주의`
 - 삼항연산자 : `condition ? A : B`
 - 아예 안그리고 싶은 경우 : `return null;`
+
+### List
+- map : 배열의 개별 요소를 순회
+- default key : 안주면 react는 index를 사용함 (warning O)
+- 고유성 : 형제 사이에서만 고유하면 됨
+- key oprops : key는 props로 넘어가지 않음
+
+### Form
+- HTML 폼 엘리먼트는 폼 엘리먼트 자체가 내부 상태를 가짐, 따라서 React의 다른 DOM 엘리먼트와 다르게 동작
+- Controlled component : input의 value를 state로 관리
+- 다중 입력 : event.target.value
+- Uncontrolled Component : form element 자체의 내부 상태 활용
+- defaultValue, ref : 기본값 / value 확인
