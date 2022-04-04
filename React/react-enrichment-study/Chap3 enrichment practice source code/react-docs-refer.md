@@ -97,3 +97,7 @@ function reducer(state, action) {
 - `useReducer` : useState 대체 state / reducer / action
 - `useCallback & useMemo` : memorization
 - `useRef` : current라는 상자. 내용의 변경은 알려주지 않음. 콜백 ref 사용
+
+### Composition
+- typeof : type chack
+- 확장성 : 다양한 상황을 품을 수 있음
