@@ -1,7 +1,7 @@
 import React, {memo, Profiler} from 'react';
 import "./CommentItem.css";
 
-function CommentItem({title, content, likes}) {
+function CommentItem({title, content, likes, onClick}) {
     function onRenderCallback(
         id, // 방금 커밋된 Profiler 트리의 "id"
         phase, // "mount" (트리가 방금 마운트가 된 경우) 혹은 "update"(트리가 리렌더링된 경우)
@@ -16,6 +16,7 @@ function CommentItem({title, content, likes}) {
     }
 
     const handleClick = () => {
+        onClick();
         alert(`${title} clicked`);
     }
 
