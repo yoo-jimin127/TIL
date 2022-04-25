@@ -121,3 +121,10 @@ function reducer(state, action) {
 - `profiler` : 리액트 성능 분석 도구
 - `callback` : useCallback
 - `value` : useMemo
+
+### Context
+- 컴포넌트 트리를 넘어 데이터를 공유할 수 있는 방법
+- 컴포넌트 트리 제약 : props drilling의 한계 해소
+- 재사용성 : Context를 사용할 경우 재사용하기 어려움
+- API : `createContext`, `Provider`, `Consumer`
+- `useContext` : `Consumer` 대체
