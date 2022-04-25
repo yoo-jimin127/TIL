@@ -116,3 +116,8 @@ function reducer(state, action) {
 - `React.memo` : **동일한 props**로 렌더링한다면, `React.memo`를 사용해 **성능 향상** 가능
   - memo 사용 시 React는 컴포넌트를 렌더링하지 않고 **마지막으로 렌더링된 결과**를 **재사용**
     - 성능 최적화를 확인하기 위해 `profiler API`를 사용해 React 애플리케이션이 렌더링하는 빈도와 렌더링 비용을 측정하자
+
+- `React.memo` : HOC/Props 비교하여 메모
+- `profiler` : 리액트 성능 분석 도구
+- `callback` : useCallback
+- `value` : useMemo
