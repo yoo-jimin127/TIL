@@ -128,3 +128,8 @@ function reducer(state, action) {
 - 재사용성 : Context를 사용할 경우 재사용하기 어려움
 - API : `createContext`, `Provider`, `Consumer`
 - `useContext` : `Consumer` 대체
+
+### Portal
+- DOM 계층 구조 바깥에 있는 DOM 노드로 자식을 렌더링하는 방법
+- `createPortal` : 부모 컴포넌트 DOM 트리로부터 벗어남
+- 이벤트 : portal에 있더라도 Event는 트리로 전파됨
