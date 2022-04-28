@@ -133,3 +133,7 @@ function reducer(state, action) {
 - DOM 계층 구조 바깥에 있는 DOM 노드로 자식을 렌더링하는 방법
 - `createPortal` : 부모 컴포넌트 DOM 트리로부터 벗어남
 - 이벤트 : portal에 있더라도 Event는 트리로 전파됨
+
+### Render props
+- 재사용의 한 방법 (Composition / HOC / render props ... )
+- render props : React 컴포넌트 간 코드 공유를 위해 함수 props를 이용하는 테크닉
