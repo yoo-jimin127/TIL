@@ -150,3 +150,22 @@ function reducer(state, action) {
 - propsTypes : 개발 모드에서만 동작 - 유효하지 않은 prop에 대한 경고
 - custom : `RegExp` 등으로 사용자 정의 가능
 - children 제한 : 원래 제약 없던 갯수 제약 가능
+
+### Reconciliation - 재조정
+- UI 갱신에 대한 React의 접근법
+- React : O(n) 복잡도의 휴리스틱 알고리즘
+  1. 서로 다른 타입의 두 엘리먼트는 서로 다른 트리를 만들어냄
+  2. 개발자가 key prop을 통해, 여러 렌더링 사이에서 어떤 자식 엘리먼트가 변경되지 않아야 할지 표시해줄 수 있음
+- 루트부터 비교 : 무엇을 렌더링할 지 알려주는 함수
+- 트리를 파괴 : 부모가 바뀌었을 경우 트리를 버림
+- keys : 자식 재귀 처리 시 효율성 확보
+
+- virtual DOM : **가상**의 표현을 메모리에 저장하고 **실제** DOM과 **동기화**하는 과정 === **재조정**
+
+- Design Principles
+  - 리액트가 무엇을 하고 무엇을 하지 않는지에 대한 개발 철학
+  - 리액트의 스케줄링 업데이트 (setState가 비동기적인 이유)
+
+- virtual DOM : 실제 DOM과 동기화 할 가상 표현
+- 재조정 : 실제 DOM과 Virtual DOM의 동기화
+- React Fiber : 스택 reconciler 대체한 재조정 엔진
