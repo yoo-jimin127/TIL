@@ -144,3 +144,9 @@ function reducer(state, action) {
 - render props : 무엇을 렌더링할지 알려주는 함수
 - render일 필요 없음, children
 - PureComponent : props, state 비교하여 성능 최적화
+
+### PropTypes
+- Props의 타입을 확인하는 도구 (Flow, TypeScript같은 정적 타이핑 도구)
+- propsTypes : 개발 모드에서만 동작 - 유효하지 않은 prop에 대한 경고
+- custom : `RegExp` 등으로 사용자 정의 가능
+- children 제한 : 원래 제약 없던 갯수 제약 가능
