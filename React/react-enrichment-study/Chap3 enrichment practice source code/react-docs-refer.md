@@ -137,3 +137,10 @@ function reducer(state, action) {
 ### Render props
 - 재사용의 한 방법 (Composition / HOC / render props ... )
 - render props : React 컴포넌트 간 코드 공유를 위해 함수 props를 이용하는 테크닉
+- `React.PureComponent` : pure props & state가 바뀌지 않을 경우 다시 그리지 않도록 하는 것
+  - props로 함수를 보낼 경우 계속 props가 바뀌게 됨
+  - 따라서 purecomponent에 render props를 적용할 것이 아니라 `React.Component`로 만들어놓는 것이 효과적
+
+- render props : 무엇을 렌더링할지 알려주는 함수
+- render일 필요 없음, children
+- PureComponent : props, state 비교하여 성능 최적화
