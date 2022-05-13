@@ -1,3 +1,4 @@
+
 // Shorthand property name
 
 {
