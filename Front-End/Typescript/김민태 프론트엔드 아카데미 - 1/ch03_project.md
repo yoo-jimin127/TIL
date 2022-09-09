@@ -75,3 +75,76 @@ for (let i = 0; i < 10; i++) {
 
 ### 라우터를 통한 화면 처리
 - 라우터 : 화면 중계기
+- 여러개의 화면을 가지고 있는 UI 화면 구성
+
+### 페이징 구현
+- 페이지 구현 : 현재 페이지의 인덱스 정보 - 변수를 통해 인덱싱
+- 공유되는 자원 : 전역 변수보다 객체로 관리하는 것이 효율성 좋음
+    - ex) 여러 함수에 의해 공유되는 값
+
+### 템플릿 렌더링
+- 동일한 형태에서 세부적인 차이를 가지는 템플릿을 찍어내는 렌더링 방식
+```js
+    let template = `
+        <div>
+        <h1>Hacker News</h1>
+            <ul>
+                {{__news_feed__}}
+            </ul>
+            <div>
+                <a href="#/page/{{__prev_page__}}">이전 페이지</a>
+                <a href="#/page/{{__next_page__}}">다음 페이지</a>
+            </div>
+        </div>
+    `;
+    template = template.replace('{{__news_feed__}}', newsList.join('')); // template replace - news list content
+    template = template.replace('{{__prev_page__}}', store.currentPage > 1 ? store.currentPage - 1 : 1); // prev page 
+    template = template.replace('{{__next_page__}}', store.currentPage + 1); // next page
+    
+    container.innerHTML = template; 
+```
+- DOM API 사용하는 것보다 명확한 구조의 확인 가능
+- 코드의 분리를 통해 복잡도 감소
+
+- 템플릿 한계점 : 마킹된 값의 개수만큼 replace 필요
+    - 마킹된 데이터와 복잡도 비례
+    - `handlebars` 라이브러리 등 템플릿 라이브러리 제공
+
+### tailwind.css
+- class로 접근하는 방법
+    - ex) margin : m 축약 표기(x axis : mx, y axis : my), padding : p 축약 표기(padding-top: pt, padding-bottom: pb)
+
+```js
+    /** comment function */
+    function makeComment(comments, called = 0) {
+        const commentString = []; //comment array
+        for (let i = 0; i < comments.length; i++) {
+            commentString.push(`
+                <div style="padding-left: ${called * 40}px;" class="mt-4">
+                    <div class="text-gray-400">
+                        <i class="fa fa-sort-up mr-2"></i>
+                        <strong>${comments[i].user}</strong> ${comments[i].time_ago}
+                    </div>
+                    <p class="text-gray-700">${comments[i].content}</p>
+                </div>
+            `);
+            
+            // 대댓글 처리
+            if (comments[i].comments.length > 0) {
+                commentString.push(makeComment(comments[i].comments, called + 1));
+            }
+        }
+        return commentString.join('');
+    }
+```
+- 함수 인자 접근을 통한 차등 스타일링 적용
+
+### 상태를 통한 방문 페이지 표시
+- 접근 1 : 글 별 id를 통해 방문한 데이터 구조 생성 후 저장하는 방법
+- 접근 2 : 속성 추가를 통한 뉴스 피드 수정 (의존성 down, 효율적)
+```js
+    // 최초 접근의 경우
+    if (newsFeed.length === 0) {
+        newsFeed = store.feeds = getData('GET', URL_ADDR, false);
+    }
+```
