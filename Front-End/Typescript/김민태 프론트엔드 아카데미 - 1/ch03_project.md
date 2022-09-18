@@ -134,7 +134,7 @@ for (let i = 0; i < 10; i++) {
                 commentString.push(makeComment(comments[i].comments, called + 1));
             }
         }
-        return commentString.join('');
+        return commentString.join(''); 
     }
 ```
 - 함수 인자 접근을 통한 차등 스타일링 적용
