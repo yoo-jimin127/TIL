@@ -84,13 +84,6 @@ const Text = ({ text }) => {
         return <h1>{text}</h1>
     } else {
         return <h3>{text}</h3>
-    
-                // return (
-    //     <>
-    //         <h1>{text}</h1>
-    //         <h3>{text}</h3>
-    //     </>
-    // );
 };
 ```
 - interpolation : 여러 언어를 섞어 사용하는 것 (JSX와 JS)
