@@ -10,7 +10,7 @@ let numArr :number[] = [1, 2, 3]; // number type array create
 function returnAny(message: any) :any {
     console.log(message);
 }
-returnAny('ANY value return');
+returnAny('any value return');
 
 // unknown type : 타입 가드를 통해 타입을 한정시킬 때 사용
     // 변수, 상수, 함수, 또는 클래스가 어딘가에 이미 선언되어 있음을 알린다.
