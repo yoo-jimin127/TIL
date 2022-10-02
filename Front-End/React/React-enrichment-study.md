@@ -217,8 +217,8 @@ function Button({ className= "", color, style, ...rest}) {
 }
 ```
 - 스타일의 우선순위
-    - style props가 더 우세
-    - className 후세
+    - **style props**가 더 우세
+    - **className** 후세
 
 - className : 문자열
 - style : 객체, 카멜케이스, className보다 먼저
