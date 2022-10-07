@@ -56,10 +56,10 @@
             - 브라우저가 아니더라도 javascript를 실행시키는 환경이 추가 (ex. node.js)
 
 - CSR과 SSR
-    - CSR (Client Side Rendering) : 
+    - **CSR** (Client Side Rendering) : 
         - Javascript가 실행되며 필요한 HTML 요소를 그때그때 만드는 방법
         - 브라우저에서 실행되는 Javascript의 실행 결과로 UI를 주도적으로 만드는 방법
-    - SSR (Server Side Rendering) :
+    - **SSR** (Server Side Rendering) :
         - 웹 서버 주도적으로 HTML을 만들어 브라우저에 전송하는 방법
 
 - `<canvas>` 태그(그래픽 구현 영역 제공 ex. 2D, 3D) + api : 그래픽 시스템 구현
