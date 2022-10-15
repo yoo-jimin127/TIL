@@ -6,7 +6,7 @@
     - 중복 제거
     - 복잡한 if문 제거
     - ...   
-    - [] 시간이 지날수록 코드가 좋아지는 프로젝트
+    - [ ] 시간이 지날수록 코드가 좋아지는 프로젝트
 
 - 프리퀄과 원칙
     - Agile Software Development: `Principles`, `Patterns`, and `Practices` - PPP
