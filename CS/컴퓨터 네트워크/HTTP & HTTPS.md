@@ -3,7 +3,7 @@
 ## ✅ HTTP (Hyper Text Transfer Protocol)
 - 서버/클라이언트 모델을 따라 데이터를 주고 받기 위한 프로토콜
 - 인터넷 상에서 하이퍼텍스트를 교환하기 위한 통신 규약
-- Using Port number : 80 port
+- Using Port : 80 port
     - HTTP 서버 : 80번 포트에서 요청을 기다림
     - 클라이언트 : 80번 포트로 요청 전송
 - 애플리케이션 레벨의 프로토콜, **TCP/IP 위에서 작동**
@@ -66,7 +66,7 @@ HTTP : 애플리케이션 레벨의 프로토콜, **TCP/IP 위에서 작동** <b
 
 ## ✅ HTTPS (Hyper Text Transfer Protocol Secure)
 - HTTP에 **데이터 암호화**가 추가된 프로토콜
-- Using Port number : 443 port
+- Using Port : 443 port
 - 네트워크 상에서 제 3자가 중간에 정보를 볼 수 없도록 데이터 암호화
 
 ### ▶️ HTTPS의 암호화 방법
