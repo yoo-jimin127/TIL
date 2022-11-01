@@ -96,7 +96,7 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
             constructor(m_dsc) {
                 this.m_dsc = m_dsc;
             }
-            function setName(name) {
+            setName(name) {
                 m_dsc = name;
             }
         }
@@ -104,9 +104,9 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
         // ⭕️
         class Part {
             constructor(description) {
-                description;
+                this.description = description;
             }
-            function setDescription(description) {
+            setDescription(description) {
                 this.description = description;
             }
         }

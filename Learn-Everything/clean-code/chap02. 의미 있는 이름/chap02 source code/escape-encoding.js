@@ -3,7 +3,8 @@ class Part {
     constructor(m_dsc) {
         this.m_dsc = m_dsc;
     }
-    function setName(name) {
+    
+    setName(name) {
         m_dsc = name;
     }
 }
@@ -11,9 +12,10 @@ class Part {
 // ⭕️
 class Part {
     constructor(description) {
-        description;
+        this.description = description;
     }
-    function setDescription(description) {
+    
+    setDescription(description) {
         this.description = description;
     }
 }
