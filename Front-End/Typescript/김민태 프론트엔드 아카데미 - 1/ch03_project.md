@@ -342,3 +342,64 @@ interface Store {
         - class의 독립성 증가
         - `extends` : 다중 상속 지원 X
         - mixin을 사용해 상위 클래스 n개를 상속받을 수 있음
+
+### 뷰 클래스로 코드 구조 개선
+1. 공통된 목적 추출
+    - UI 업데이트 함수
+    - UI 업데이트를 위한 보조적 작업 수행 함수
+    - 라우터 함수
+2. 클래스 생성 (camel-case 작성)
+
+- `bind()` : 
+    - 메소드가 호출되면 새로운 함수 생성
+    - 받게되는 첫 인자의 value로는 this 키워드를 설정하고, 이어지는 인자들은 바인드된 함수의 인수에 제공됨
+    ```ts
+    class Router {
+    routeTable: RouteInfo[];
+    defaultRoute : RouteInfo | null;
+
+    constructor() {
+        window.addEventListener('hashchange', this.route.bind(this));
+
+        this.routeTable= [];
+        this.defaultRoute = null;
+    }
+    ...
+    }
+    ```
+
+- 접근 제어
+    - `protected`, `public` ... : 기본 값 public
+    - 외부 접근
+        - View 클래스 외부의 인스턴스 객체로 접근하는 경우
+            1. 상속받은 자식 class 안에서 접근하는 경우
+            2. 상속관계가 없는 바깥쪽에서 인스턴스 객체에 접근하는 경우
+                - `private` 속성 접근자 : 자식에서도 접근하지 못하도록
+
+                ```ts
+                const router: Router = new Router();
+                const newsFeedView = new NewsFeedView('root');
+                const newsDetailView = new NewsDetailView('root');
+
+                newsDetailView.container // 상속관계가 없는 바깥쪽에서 인스턴스 객체 접근 제어
+                ```
+
+- 코드 파일의 분리
+    - src
+        - core
+            - api
+            - router
+            - view
+        - page
+            - pages...
+        - types
+            - index
+        - app
+        - config
+
+    - 모듈 스펙 : `import` / `export`
+        - `import` : 다른 파일에 있는 특정 class or 값을 가져오는 문법
+        - `export` : 해당 파일을 import할 수 있도록 부여하는 권한 문법
+
+### 전역 상태 관리
+- `getter`와 `setter`
