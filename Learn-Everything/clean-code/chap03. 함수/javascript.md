@@ -13,7 +13,7 @@ function testableHtml(pageData, includeSuiteSetup){
         if (pageData.hasAttribute("Test")){
             if (includeSuiteSetup){
             	    const suiteSetup = PageCrawlerImpl.getInheritedPage(SuiteResponder.SUITE_SETUP_NAME, wikiPage);
-                if (suiteSetup != NULL){
+                if (suiteSetup != null){
                     pagePath = suiteSetup.getPageCrawler().getFullPath(suiteSetup);
                     pagePathName = PathParser.render(pagePath);
                     buffer.append("!include -setup .");
@@ -22,7 +22,7 @@ function testableHtml(pageData, includeSuiteSetup){
                 }
             }
             const setup = PageCralwerImpl.getInheritedPage("Setup", wikiPage);
-            if (setup != NULL){
+            if (setup != null){
             	const setupPath = wikiPage.getPageCrawler().getFullPath(setup);
                 const setupPathName = PathParser.render(setupPath);
                 buffer.append("!include -setup .");
@@ -32,7 +32,7 @@ function testableHtml(pageData, includeSuiteSetup){
         }
         buffer.append(pageData.getContent())
         if (pageData.hasAttribute("Test")){
-            PageData teardown = PageCrawlerImpl.getInheritedPage("TearDown", wikiPage);
+            const teardown = PageCrawlerImpl.getInheritedPage("TearDown", wikiPage);
             if (teardown != NULL){
             	const tearDownPath = wikiPage.getPageCralwer().getFullPath(teardown);
                 const tearDownPathName = PathParser.render(tearDownPath);
@@ -52,7 +52,7 @@ function testableHtml(pageData, includeSuiteSetup){
             }
         }
     }
-    pageData.setContent(str(buffer));
+    pageData.setContent(String(buffer));
     return pageData.getHtml();
     }
 ```
@@ -67,8 +67,8 @@ function renderPageWithSetupsAndTeardowns(pageData, isSuite){
     try{
     	const isTestPage = pageData.hasAttribute("Test");
         if (isTestPage){
-            testPage = pageData.getWikiPage();
-            newPageContent = StringBuffer();
+            const testPage = pageData.getWikiPage();
+            const newPageContent = StringBuffer();
             includeSetupPages(testPage, newPageContent, isSuite);
             newPageContent.append(pageData.getContent());
             includeTeardownpages(testPage, newPageContent, isSuite);
@@ -155,7 +155,7 @@ function calculatePay(e){
     case "SALARIED":
         return calculateSalariedPay(e);
     default:
-        raise(InvalidEmployeeType(e.type));
+        console.log(InvalidEmployeeType(e.type));
     }
 }
 ```
@@ -357,7 +357,7 @@ class UserValidator{
 
 ```js
 function set(attribute, value){
-    pass
+    // pass
 }
 // ------------------------------------------
 if set("username", "unclebob") ...
@@ -506,11 +506,11 @@ public enum Error{
 ```js
 class SetUpTeardownIncluder{
     constructor(pageData, isSuite, testPage, newPageContent, pageCrawler) {
-    	this.pageData = 0	// PageData type
-        this.isSuite = 0		// bool type
-        this.testPage = 0	// WikiPage type
-        this.newPageContent = ""
-        this.pageCrawler = 0	// PageCrawler type
+    	this.pageData = 0;	// PageData type
+        this.isSuite = 0;		// bool type
+        this.testPage = 0;	// WikiPage type
+        this.newPageContent = "";
+        this.pageCrawler = 0;	// PageCrawler type
     }
 
     SetUpTearDownIncluder(){
