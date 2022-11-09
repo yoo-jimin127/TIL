@@ -4,9 +4,9 @@
 
 \- 가장 기본적인 단위가 함수.
 
-```c++
+```js
 # 좋지 않은 코드
-string testableHtml(PageData pageData, bool includeSuiteSetup){
+testableHtml(pageData, includeSuiteSetup){
     try{
     	PageData wikiPage = pageData.getWikiPage()
         Buffer buffer = StringBuffer();
@@ -61,9 +61,9 @@ string testableHtml(PageData pageData, bool includeSuiteSetup){
 
 \- 아래 코드는 메서드 몇 개를 추출하고, 이름 몇 개를 변경하고, 구조를 조금 변경한 형태
 
-```c++
+```js
 # 위 코드 리팩터링 버전
-string renderPageWithSetupsAndTeardowns(PageData pageData,bool isSuite){
+renderPageWithSetupsAndTeardowns(pageData, isSuite){
     try{
     	PageData isTestPage = pageData.hasAttribute("Test");
         if (isTestPage){
@@ -87,14 +87,15 @@ string renderPageWithSetupsAndTeardowns(PageData pageData,bool isSuite){
 
 \- **각 함수가 이야기 하나를 표현할 수 있도록, 명백하게 구성해야 함.**
 
-```c++
+```js
 # 리-리팩토링한 코드
-string renderPageWithSetupsAndTeardowns(PageData pageData,bool isSuite)
+renderPageWithSetupsAndTeardowns(pageData, isSuite) {
     try{
     	if (isTestPage(pageData))
             includeSetupAndTeardownPages(pageData, isSuite);
     }
     return pageData.getHtml();
+}
 ```
 
 #### 블록과 들여쓰기
@@ -143,8 +144,8 @@ string renderPageWithSetupsAndTeardowns(PageData pageData,bool isSuite)
 
 \- **다형성(polymorphism)** 을 이용하여 각 switch문을 저차원 클래스에 숨기고 절대로 반복하지 않는 방법이 있다.
 
-```c++
-Money calculatePay(Employee e){
+```js
+calculatePay(e){
     etype = e.type
     switch (etype){
     case "COMMISSIONED":
@@ -171,26 +172,26 @@ Money calculatePay(Employee e){
 
 - 위 함수와 **구조가 동일한 함수가 무한정 존재할 수 있음**. (ex. isPayday(e:Employee, date:Date)와 deliverPay(e:Employee, pay:Money)
 
-```c++
+```js
 # 위 코드의 문제점 해결
 class Employee(){
-    bool isPayday(){
+    isPayday(){
     	pass
     }
-    Money calculatePay(){
+    calculatePay(){
 	    pass
     }
-    void deliveryPay(Money pay){
+    deliveryPay(pay){
 	    pass
     }
 }
 class EmployeeFactory(){
-    void makeEmployee(EmployeeRecord r){
+    makeEmployee(r){
     	pass
     }
 }
 class EmployeeFactoryImpl(EmployeeFactory){
-    void makeEmployee(EmployeeRecord r){
+    makeEmployee(r){
         switch (r.type){
     	case "COMMISIONED":
             return CommisionedEmployee(r);
@@ -275,11 +276,11 @@ class EmployeeFactoryImpl(EmployeeFactory){
 
 \- **인수가 2~3개 필요하다면 일부를 독자적인 클래스 변수로 선언할 가능성을 짚어봐야 한다.**
 
-```c++
-Circle makeCircle(float x, float y,float radius){
+```js
+makeCircle(x, y, radius){
     pass
 }
-Circle makeCircle(Point center,float radius){
+makeCircle(center, radius){
     pass
 }
 ```
@@ -310,11 +311,10 @@ Circle makeCircle(Point center,float radius){
 
 \- 많은 경우 **시간적인 결합(temporal coupling)** 이나 **순서 종속성(order dependency)을 초래**한다.
 
-```python
-# UserValidator.cpp
+```js
 class UserValidator{
-    Cryptographer cryptographer = "";	# Cryptographer type
-    bool checkPassword (string userName,string password){
+    const cryptographer = "";
+    checkPassword (userName, password){
     	user = UserGateway.findByName(userName);
         if (user != User.NULL){
             codedPhrase = user.getPhraseEncodedByPassword();
@@ -353,18 +353,18 @@ class UserValidator{
 
 \- 함수는 뭔가를 수행하거나, 뭔가에 답하거나 둘 중 하나만 해야 한다. **객체 상태를 변경하거나, 객체 정보를 반환하거나 둘 중 하나.**
 
-```c++
-bool set(string attribute,string value){
+```js
+set(attribute, value){
     pass
 }
 # ------------------------------------------
-if set("username", "unclebob")) ...
+if set("username", "unclebob") ...
 ```
 \- 위의 함수는 이름이 attribute인 속성을 찾아 값을 value로 설정한 후 성공하면 true, 실패하면 false 반환.
 \- "set"이라는 단어가 동사인지 형용사인지 분간하기 어려워 함수를 호출하는 코드만 봐서는 의미가 모호함
 \- 함수를 구현한 개발자는 "set"을 동사로 의도했지만, if문 안에 넣고 보면 형용사로 느껴진다.
 \- 진짜 해결책은 **명령과 조회를 분리**해 혼란을 애초에 뿌리뽑는 방법이다.
-```c++
+```js
 if (attributeExists("username"))
     setAttribute("username", "unclebob");
 ```
@@ -373,7 +373,7 @@ if (attributeExists("username"))
 
 \- **명령 함수에서 오류 코드를 반환하는 방식은 명령/조회 분리 규칙을 미묘하게 위반**한다.
 
-```c++
+```js
 if (deletePage(page) == E_OK)
     pass
 ```
@@ -382,7 +382,7 @@ if (deletePage(page) == E_OK)
 
 \- 오류 코드를 반환하면 호출자는 오류 코드를 곧바로 처리해야 한다는 문제에 부딪힌다.
 
-```c++
+```js
 if (deletePage(page) == E_OK){
     if (registry.deleteReference(page.name) == E_OK){
     	if (configKeys.deleteKey(page.name.makeKey()) == E_OK)
@@ -400,7 +400,7 @@ return E_ERROR;
 
 \- **오류 코드 대신 예외를 사용하면 오류 처리 코드가 원래 코드에서 분리되므로 코드가 깔끔해진다.**
 
-```c++
+```js
 try{
     deletePage(page);
     registry.deleteReference(page.name);
@@ -417,8 +417,8 @@ catch (Exception as e){
 
 \- 그러므로 **try/catch 블록을 별도 함수로 뽑아내는 편이 좋다.**
 
-```c++
-void delete(Page page){
+```js
+delete(page){
     try{
     	deletePageAndAllReferences(page);
     }
@@ -426,12 +426,12 @@ void delete(Page page){
     	logError(e);
     }
 }
-void deletePageAndAllReferences(Page page){
+deletePageAndAllReferences(page){
     deletePage(page);
     registry.deleteReference(page.name);
     configKeys.deleteKey(page.name.makeKey());
 }
-void logError(Exception e){
+logError(e){
     logging.info(e.getMessage());
 }
 ```
@@ -501,8 +501,7 @@ public enum Error{
 
 \- **작성하는 함수가 분명하고 정확한 언어로 깔끔하게 같이 맞아떨어져야 이야기를 풀어가기가 쉬워진다는 사실을 기억하길 바란다!**
 
-```c++
-# 위에 import 부분 생략
+```js
 class SetUpTeardownIncluder{
     SetUpTearDownIncluder(){
     	this.pageData = 0	// PageData type
@@ -511,76 +510,76 @@ class SetUpTeardownIncluder{
         this.newPageContent = ""
         this.pageCralwer = 0	// PageCrawler type
     }
-    string render(PageData pageData){
+    render(pageData){
     	return this.render(pageData, false);
     }
-    string render(PageData pageData,bool isSuite){
+    render(pageData, isSuite){
     	return this.SetupTeardownIncluder(pageData).render(isSuite);
     }
-    setUpTearDownIncluder(PageData pageData){
+    setUpTearDownIncluder(pageData){
     	this.pageData = pageData;
         this.testPage = pageData.getWikiPage();
         this.pageCrawler = testPage.getPageCrawler();
         this.newPageContent = "";
     }
-    string render(bool isSuite)
+    render(isSuite)
     	this.isSuite = isSuite;
         if (this.isTestPage())
             this.includeSetupAndTeardownPages();
         return this.pageData.getHtml();
-    bool isTestPage(){
+    isTestPage(){
     	return this.pageData.hasAttribute("Test");
     }
-    void includeSetupAndTeardownPages(){
+    includeSetupAndTeardownPages(){
     	this.includeSetupPages();
         this.includePageContent();
         this.includeTeardownPages();
         this.updatPageContent();
     }
-    void includeSetupPages(){
+    includeSetupPages(){
     	if this.isSuite{
 	        this.includeSuiteSetupPage();
             this.includeSetupPage();
         }
     }
-    void includeSuiteSetupPage(){
+    includeSuiteSetupPage(){
     	this.include(SuiteResponder.SUITE_SETUP_NAME, "-setup");
     }
-    void includeSetupPage(){
+    includeSetupPage(){
     	this.include("SetUp", "-setup");
     }
-    void includePageContent(){
+    includePageContent(){
     	this.newPageContent.append(pageData.getContent())
     }
-    void includeTeardownPages(this){
+    includeTeardownPages(this){
     	this.includeTearDownPage();
         if (this.isSuite)
             this.includeSuiteTeardownPage();
     }
-    void includeTeardownPage(this){
+    includeTeardownPage(this){
     	this.include("TearDown", "-teardown");
     }
-    void includeSuiteTeardownPage(this){
+    includeSuiteTeardownPage(this){
     	this.include(SuiteResponder.SUITE_TEARDOWN_NAME, "-teardown");
     }
-    void updatePageContent(){
+    updatePageContent(){
     	this.pageData.setContent(str(newPageContent));
     }
-    void include(string pageName,string arg){
+    include(pageName,arg){
     	this.inheritedPage = this.findInheritedPage(pageName);
         if (this.inheritedPage != NULL){
 	        this.pagePathName = this.getPathNameForPage(this.inheritedPage);
             this.buildIncludeDirective(this.pagePathName, arg);
         }
     }
-    void findInheritedPage(string pageName){
+    findInheritedPage(pageName){
     	return this.PageCrawlerImpl.getInheritedPage(pageName, this.testPage);
     }
-    void getPathNameForPage(WikiPage page){
+    getPathNameForPage(page){
     	this.pagePath = this.pageCrawler.getFullPath(page);
         return this.PathParser.render(this.pagePath);
     }
-    void buildIncludeDirective(string pagePathName,string arg){
+    buildIncludeDirective(pagePathName, arg){
     	this.newPageContent.append("\n!include ");
         this.newPageContent.append(arg);
         this.newPageContent.append(" .");
