@@ -365,40 +365,40 @@ if set("username", "unclebob") ...
 - 함수를 구현한 개발자는 "set"을 동사로 의도했지만, if문 안에 넣고 보면 형용사로 느껴진다.
 - 진짜 해결책은 **명령과 조회를 분리**해 혼란을 애초에 뿌리뽑는 방법이다.
 ```js
-if (attributeExists("username"))
-    setAttribute("username", "unclebob");
+if (element.hasAttributes("username"))
+    element.setAttribute("username", "unclebob");
 ```
 
 ### **오류 코드보다 예외를 사용하라!**
 
-\- **명령 함수에서 오류 코드를 반환하는 방식은 명령/조회 분리 규칙을 미묘하게 위반**한다.
+- **명령 함수에서 오류 코드를 반환하는 방식은 명령/조회 분리 규칙을 미묘하게 위반**한다.
 
 ```js
 if (deletePage(page) == E_OK)
-    pass
+    // pass
 ```
 
-\- 위 코드는 동사/형용사 혼란을 일으키지 않는 대신 여러 단계로 중첩되는 코드를 야기한다.
+- 위 코드는 동사/형용사 혼란을 일으키지 않는 대신 여러 단계로 중첩되는 코드를 야기한다.
 
-\- 오류 코드를 반환하면 호출자는 오류 코드를 곧바로 처리해야 한다는 문제에 부딪힌다.
+- 오류 코드를 반환하면 호출자는 오류 코드를 곧바로 처리해야 한다는 문제에 부딪힌다.
 
 ```js
 if (deletePage(page) == E_OK){
     if (registry.deleteReference(page.name) == E_OK){
     	if (configKeys.deleteKey(page.name.makeKey()) == E_OK)
-	        logging.info("page deleted")
+	        consolel.log("page deleted")
         else
-	        logging.info("configKey not deleted");
+	        console.log("configKey not deleted");
     else
-    	logging.info("deleteReference from registry failed");
+    	console.log("deleteReference from registry failed");
     }
 else:
-    logging.info("delete failed");
+    console.log("delete failed");
 }
-return E_ERROR;
+throw new Error();
 ```
 
-\- **오류 코드 대신 예외를 사용하면 오류 처리 코드가 원래 코드에서 분리되므로 코드가 깔끔해진다.**
+- **오류 코드 대신 예외를 사용하면 오류 처리 코드가 원래 코드에서 분리되므로 코드가 깔끔해진다.**
 
 ```js
 try{
@@ -406,23 +406,23 @@ try{
     registry.deleteReference(page.name);
     configKeys.deleteKey(page.name.makeKey());
 }
-catch (Exception as e){
-    logging.info(e.getMessage());
+catch (e){
+    logError(e);
 }
 ```
 
 #### Try/Catch 블록 뽑아내기
 
-\- try/catch 블록은 원래 추하다... 코드 구조에 혼란을 일으키며 정상 동작과 오류 처리 동작을 뒤섞는다
+- try/catch 블록은 원래 추하다... 코드 구조에 혼란을 일으키며 정상 동작과 오류 처리 동작을 뒤섞는다
 
-\- 그러므로 **try/catch 블록을 별도 함수로 뽑아내는 편이 좋다.**
+- 그러므로 **try/catch 블록을 별도 함수로 뽑아내는 편이 좋다.**
 
 ```js
 delete(page){
     try{
     	deletePageAndAllReferences(page);
     }
-    catch (Exception as e){
+    catch (e){
     	logError(e);
     }
 }
@@ -432,23 +432,23 @@ deletePageAndAllReferences(page){
     configKeys.deleteKey(page.name.makeKey());
 }
 logError(e){
-    logging.info(e.getMessage());
+    connsole.error(e);
 }
 ```
 
-\- 위에서 delete 함수는 모든 오류를 처리하기 때문에 코드를 이해하기 쉽다.
+- 위에서 delete 함수는 모든 오류를 처리하기 때문에 코드를 이해하기 쉽다.
 
-\- **정상 동작과 오류 처리 동작을 분리하면 코드를 이해하고 수정하기 쉬워진다.**
+- **정상 동작과 오류 처리 동작을 분리하면 코드를 이해하고 수정하기 쉬워진다.**
 
 #### 오류 처리도 한 가지 작업이다
 
-\- **오류를 처리하는 함수는 오류만 처리해야** 마땅하다.
+- **오류를 처리하는 함수는 오류만 처리해야** 마땅하다.
 
-\- 함수에 키워드 try가 있다면 함수는 try문으로 시작해 catch/finally 문으로 끝나야 한다.
+- 함수에 키워드 try가 있다면 함수는 try문으로 시작해 catch/finally 문으로 끝나야 한다.
 
 #### Error.java 의존성 자석
 
-\- 오류 코드를 반환한다는 이야기는, 클래스든 열거형 변수든, 어디선가 오류 코드를 정의한다는 뜻이다.
+- 오류 코드를 반환한다는 이야기는, 클래스든 열거형 변수든, 어디선가 오류 코드를 정의한다는 뜻이다.
 
 ```java
 public enum Error{
@@ -461,54 +461,62 @@ public enum Error{
 }
 ```
 
-\- 위와 같은 클래스는 의존성 자석(magnet)이다.
+- 위와 같은 클래스는 의존성 자석(magnet)이다.
 
-\- Error enum이 변한다면 이를 사용하는 클래스 전부를 다시 컴파일하고 다시 배치해야 하기 때문에 클래스 변경이 어려워진다.
+- Error enum이 변한다면 이를 사용하는 클래스 전부를 다시 컴파일하고 다시 배치해야 하기 때문에 클래스 변경이 어려워진다.
 
-\- 그래서 새 오류 코드를 추가하는 대신 기존 오류 코드를 재사용하여 예외를 사용하게 된다.
+- 그래서 새 오류 코드를 추가하는 대신 기존 오류 코드를 재사용하여 예외를 사용하게 된다.
 
-\- **오류 코드 대신 예외를 사용**하면 새 예외는 Exception 클래스에서 파생되므로 **재컴파일/재배치 없이도 새 예외 클래스 추가 가능**
+- **오류 코드 대신 예외를 사용**하면 새 예외는 Exception 클래스에서 파생되므로 **재컴파일/재배치 없이도 새 예외 클래스 추가 가능**
 
 ### **반복하지 마라!**
 
-\- 중복은 문제다. 코드 길이가 늘어날 뿐 아니라 알고리즘이 변하면 여러 곳을 다 손봐야 하고, 어느 한 곳이라도 빠뜨릴 경우 오류 발생 가능
+- 중복은 문제다. 코드 길이가 늘어날 뿐 아니라 알고리즘이 변하면 여러 곳을 다 손봐야 하고, 어느 한 곳이라도 빠뜨릴 경우 오류 발생 가능
 
-\- **중복을 없애면 모듈 가독성이 크게 높아짐**
+- **중복을 없애면 모듈 가독성이 크게 높아짐**
 
-\- 구조적 프로그래밍, AOP(Aspect Oriented Programming), COP(Component Oriented Programming) 모두 어떤 면에서 중복 제거 전략.
+- 구조적 프로그래밍, AOP(Aspect Oriented Programming), COP(Component Oriented Programming) 모두 어떤 면에서 중복 제거 전략.
 
 ### **구조적 프로그래밍**
 
-\- Dijkstra의 구조적 프로그래밍 원칙 : 모든 함수와 함수 내 모든 블록에 입구와 출구가 하나만 존재해야 한다. 함수는 return 문이 하나여야 하고, 루프 안에서 break, continue, goto 사용해선 안됨.
+- Dijkstra의 구조적 프로그래밍 원칙 : 모든 함수와 함수 내 모든 블록에 입구와 출구가 하나만 존재해야 한다. 함수는 return 문이 하나여야 하고, 루프 안에서 break, continue, goto 사용해선 안됨.
 
-\- 함수를 작게 만든다면 간혹 return, break, continue를 여러 차례 사용해도 단일 입/출구 규칙보다 의도를 표현하기 쉬워져서 괜찮다.
+- 함수를 작게 만든다면 간혹 return, break, continue를 여러 차례 사용해도 단일 입/출구 규칙보다 의도를 표현하기 쉬워져서 괜찮다.
 
-\- goto문은 큰 함수에서만 의미가 있으므로, 작은 함수에서는 피해야만 한다.
+- goto문은 큰 함수에서만 의미가 있으므로, 작은 함수에서는 피해야만 한다.
 
 ### **함수를 어떻게 짜죠?**
 
-\- 처음에는 길고 복잡하고, 들여쓰기 단계도 많고 중복된 루프도 많지만 코드를 다듬고, 이름을 바꾸고, 함수를 만드는 과정 등을 거침으로써 좋은 함수를 얻을 수 있게 된다.
+- 처음에는 길고 복잡하고, 들여쓰기 단계도 많고 중복된 루프도 많지만 코드를 다듬고, 이름을 바꾸고, 함수를 만드는 과정 등을 거침으로써 좋은 함수를 얻을 수 있게 된다.
 
-\- **처음부터 딱 나오는 건 아니기 때문에... 괜찮다! 수정하면 된다!**
+- **처음부터 딱 나오는 건 아니기 때문에... 괜찮다! 수정하면 된다!**
 
 ### **결론**
 
-\- 모든 시스템은 특정 응용 분야 시스템을 기술할 목적으로 프로그래머가 설계한 도메인 특화 언어로 만들어진다.
+- 모든 시스템은 특정 응용 분야 시스템을 기술할 목적으로 프로그래머가 설계한 도메인 특화 언어로 만들어진다.
 
-\- 함수는 그 언어에서 동사며, 클래스는 명사다.
+- 함수는 그 언어에서 동사며, 클래스는 명사다.
 
-\- master 프로그래머는 시스템을 구현할 프로그램이 아니라 풀어갈 이야기로 여긴다. 이것이 진짜 목표!
+- master 프로그래머는 시스템을 구현할 프로그램이 아니라 풀어갈 이야기로 여긴다. 이것이 진짜 목표!
 
-\- **작성하는 함수가 분명하고 정확한 언어로 깔끔하게 같이 맞아떨어져야 이야기를 풀어가기가 쉬워진다는 사실을 기억하길 바란다!**
+- **작성하는 함수가 분명하고 정확한 언어로 깔끔하게 같이 맞아떨어져야 이야기를 풀어가기가 쉬워진다는 사실을 기억하길 바란다!**
 
 ```js
 class SetUpTeardownIncluder{
+    constructor(pageData, isSuite, testPage, newPageContent, pageCrawler) {
+    	this.pageData = 0	// PageData type
+        this.isSuite = 0		// bool type
+        this.testPage = 0	// WikiPage type
+        this.newPageContent = ""
+        this.pageCrawler = 0	// PageCrawler type
+    }
+
     SetUpTearDownIncluder(){
     	this.pageData = 0	// PageData type
         this.isSuite = 0		// bool type
         this.testPage = 0	// WikiPage type
         this.newPageContent = ""
-        this.pageCralwer = 0	// PageCrawler type
+        this.pageCrawler = 0	// PageCrawler type
     }
     render(pageData){
     	return this.render(pageData, false);
