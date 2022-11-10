@@ -8,12 +8,12 @@
     - 따로 주석이 필요하다면 의도를 분명히 드러난 것이 아님.
     - 의도가 드러나는 이름을 사용하면 코드의 이해와 변경이 쉬워짐.
         - `const d; // 경과 시간(단위: 날짜)` ❌
-        - ```js
-            const elapsedTimeInDays;
-            const daysSinceCreation;
-            const daysSinceModification;
-            const fileAgeInDays;
-        ```
+   ```js
+       const elapsedTimeInDays;
+       const daysSinceCreation;
+       const daysSinceModification;
+       const fileAgeInDays;
+   ```
 
 ### ✅ 그릇된 정보를 피하라
 - if 여러 계정을 그룹으로 묶는 경우, 실제 List가 아닌 경우 `accountList` ❌
