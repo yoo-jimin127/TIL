@@ -7,7 +7,6 @@
     - 존재 이유?
     - 수행 기능?
     - 사용 방법?
-<<<<<<< HEAD
 
 - 따로 주석이 필요하다면 의도를 분명히 드러난 것이 아님
 - 의도가 드러나는 이름을 사용하면 코드의 이해와 변경이 쉬워짐
@@ -64,17 +63,6 @@ function getFlaggedCells() {
 	return flaggedCells;
 }
 ```
-=======
-    - 따로 주석이 필요하다면 의도를 분명히 드러난 것이 아님.
-    - 의도가 드러나는 이름을 사용하면 코드의 이해와 변경이 쉬워짐.
-        - `const d; // 경과 시간(단위: 날짜)` ❌
-   ```js
-       const elapsedTimeInDays;
-       const daysSinceCreation;
-       const daysSinceModification;
-       const fileAgeInDays;
-   ```
->>>>>>> 9a5b2114a72cd232fb7b992c575f73f065fde207
 
 ### ✅ 그릇된 정보를 피하라
 - 널리 쓰이는 으미가 있는 단어를 다른 의미로 사용하지 말 것
@@ -87,9 +75,7 @@ function getFlaggedCells() {
 - 이름으로 그릇된 정보를 제공하는 최악의 예) 소문자 L or 대문자 O 변수
     - ex)
     ```js
-    const a = 1;
-    if (O === 1) a = O1;
-    else 1 = 01;
+	@@ -27,22 +81,24 @@
     ```
 
 ### ✅ 의미 있게 구분하라
@@ -114,10 +100,7 @@ let updateArray = (sourceArray, destinationArray) => {
 ```
 - 연속된 숫자의 덧붙임 및 불용어 추가 x
     - 불용어 : 의미가 불분명하거나 중복되는 단어 ex) `nameString`, `ageVariable`
-        - `moneyAmount` vs `money`
-        - `customerInfo` vs `customer`
-        - `accountData` vs `account`
-        - `theMessage` vs `message`
+	@@ -53,6 +109,8 @@
     - 읽는 사람이 차이를 알도록 이름을 지을 것.
 
 ### ✅ 발음하기 쉬운 이름을 사용하라
@@ -126,8 +109,7 @@ let updateArray = (sourceArray, destinationArray) => {
 ```js
 // ❌
 const yyyymmdd = new Date();
-
-// ⭕️
+	@@ -61,10 +119,27 @@ const yyyymmdd = new Date();
 const currentDate = new Date();
 ```
 
@@ -155,21 +137,7 @@ class Customer {
 
 ```js
 // ❌
-for (let j = 0; j < 34; j++) {
-    s += (t[j]*4)/5;
-}
-
-// ⭕️
-let realDayPerIdealDay = 4;
-const WORK_DAYS_PER_WEEK = 5;
-let sum = 0;
-for (let j = 0; j < NUMBER_OF_TASKS; j++) {
-    let realTaskDays = taskEstimate[j] * realDaysPerIdealDay;
-    let realTaskWeeks = (realTaskDays / WORK_DAYS_PER_WEEK);
-    sum += realTaskWeeks;
-}
-```
-- `sum` 변수 : 최소한의 검색을 가능하도록 함
+	@@ -86,6 +161,21 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
 - 이름을 의미있게 지을 경우 → 함수가 길어짐 → 검색의 용이성 ↑
 
 ### ✅ 인코딩을 피하라
@@ -191,23 +159,14 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
 - ❌ 리스트
     - 헝가리식 표기법 ex) `phoneNumber phoneString;`
     - 멤버 변수 접두어    
-        - ex)
-        ```js
-        // ❌
-        class Part {
-            constructor(m_dsc) {
-                this.m_dsc = m_dsc;
-            }
+	@@ -99,7 +189,7 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
             setName(name) {
                 m_dsc = name;
             }
         } // 예전에 작성한 방식
-
         // ⭕️
         class Part {
-            constructor(description) {
-                this.description = description;
-            }
+	@@ -109,12 +199,13 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
             setDescription(description) {
                 this.description = description;
             }
@@ -221,16 +180,7 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
 
 ### ✅ 자신의 기억력을 자랑하지 마라
 - 문자 하나만 사용하는 변수 이름은 가급적 피할 것
-    - 예외) 반복 횟수를 세는 변수 i, j, k ⭕️ (l은 ❌)
-
-- 클래스 이름 : 클래스 및 객체의 이름은 **명사** 또는 **명사구**가 적합
-    - ex) 좋은 예 ⭕️ : `Customer`, `WikiPage`, `Account`, `AddressParser`
-    - ex) 나쁜 예 ❌ : `Manager`, `Processor`, `Data`, `Info`
-
-- 메서드 이름 : 메서드 이름은 **동사** 또는 **동사구**가 적합
-    - ex)
-    ```js
-    name = employee.getName();
+	@@ -131,6 +222,11 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
     customer.setName('mike');
     if (paycheck.isPosted()) ...
     ```
@@ -242,9 +192,7 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
     - 생성자의 중복 정의가 필요한 경우 : 정적 팩토리 메서드 사용
 
 ### ✅ 기발한 이름은 피하라
-- 구어체 혹은 속어를 이름으로 사용하지 말 것
-    - 재미난 이름보다 명료한 이름 선택
-        - ex) `whack()` 대신 `kill()`, `eatMyShort()` 대신 `abort()`
+	@@ -140,6 +236,7 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
 
 ### ✅ 한 개념에 한 단어를 사용하라
 - 추상적인 개념 하나에 단어 하나를 선택해 이를 고수할 것
@@ -252,9 +200,7 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
 
 ### ✅ 말장난을 하지 마라
 - 일관성을 고려해 기능적으로 다른 요소를 하나의 명칭으로 통일하지 말 것
-    - ex) 기존 값 두 개를 더하는 메서드 `add()`
-        - if) 집합에 값 하나를 추가하는 메서드를 추가한다면? -> `insert()` 또는 `append()`가 적합
-- 코드를 이해하기 쉽게 작성
+	@@ -149,34 +246,92 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
 
 ### ✅ 해법 영역에서 가져온 이름을 사용하라
 - 기술 개념에는 **기술 이름**을 선택할 것
@@ -307,7 +253,6 @@ class GuessStatisticsMessage {
         this.verb = verb;
         this.pluralModifier = pluralModifier;
     }
-
   make(candidate, count) {
     this.createPluralDependentMessageParts(count);
     const tmp = `There ${this.verb} ${this.number} ${candidate} ${
