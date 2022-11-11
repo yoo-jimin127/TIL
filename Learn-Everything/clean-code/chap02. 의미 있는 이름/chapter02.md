@@ -75,7 +75,9 @@ function getFlaggedCells() {
 - 이름으로 그릇된 정보를 제공하는 최악의 예) 소문자 L or 대문자 O 변수
     - ex)
     ```js
-	@@ -27,22 +81,24 @@
+    let a = 1;
+    if (O === l) a = O1;
+    else l = 01;
     ```
 
 ### ✅ 의미 있게 구분하라
@@ -109,7 +111,6 @@ let updateArray = (sourceArray, destinationArray) => {
 ```js
 // ❌
 const yyyymmdd = new Date();
-	@@ -61,10 +119,27 @@ const yyyymmdd = new Date();
 const currentDate = new Date();
 ```
 
@@ -137,7 +138,20 @@ class Customer {
 
 ```js
 // ❌
-	@@ -86,6 +161,21 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
+for (let j = 0; j < 34; j++) {
+    s += (t[j]*4)/5;
+}
+
+// ⭕️
+let realDayPerIdealDay = 4;
+const WORK_DAYS_PER_WEEK = 5;
+let sum = 0;
+for (let j = 0; j < NUMBER_OF_TASKS; j++) {
+    let realTaskDays = taskEstimate[j] * realDaysPerIdealDay;
+    let realTaskWeeks = (realTaskDays / WORK_DAYS_PER_WEEK);
+    sum += realTaskWeeks;
+}
+```
 - 이름을 의미있게 지을 경우 → 함수가 길어짐 → 검색의 용이성 ↑
 
 ### ✅ 인코딩을 피하라
@@ -159,19 +173,29 @@ class Customer {
 - ❌ 리스트
     - 헝가리식 표기법 ex) `phoneNumber phoneString;`
     - 멤버 변수 접두어    
-	@@ -99,7 +189,7 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
-            setName(name) {
-                m_dsc = name;
-            }
-        } // 예전에 작성한 방식
-        // ⭕️
-        class Part {
-	@@ -109,12 +199,13 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
-            setDescription(description) {
-                this.description = description;
-            }
-        } // 이런 식으로 쓰는 것을 권장
-        ```
+```js
+// ❌
+class Part {
+    constructor(m_dsc) {
+        this.m_dsc = m_dsc; // 설명문자열, m_은 멤버 변수를 뜻함.
+    }
+    
+    setName(name) {
+        m_dsc = name;
+    } // 예전에는 이렇게 썼음
+}
+
+// ⭕️
+class Part {
+    constructor(description) {
+        this.description = description;
+    }
+    
+    setDescription(description) {
+        this.description = description;
+    } // 이런 식으로 쓰는 것을 권장
+}
+```
 
 - **인터페이스 클래스와 구현 클래스**
     - 인터페이스 클래스 이름과 구현 클래스 이름 중 하나를 인코딩해야 하는 경우 ? 
@@ -180,19 +204,12 @@ class Customer {
 
 ### ✅ 자신의 기억력을 자랑하지 마라
 - 문자 하나만 사용하는 변수 이름은 가급적 피할 것
-	@@ -131,6 +222,11 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
-    customer.setName('mike');
-    if (paycheck.isPosted()) ...
-    ```
-    ```js
-    const fulcrumPoint = Complex.FromRealNumber(23.0);
-    const fulcrumPoint = new Complex(23.0);
-    //아래보다 위 코드가 더 좋다.
-    ```
-    - 생성자의 중복 정의가 필요한 경우 : 정적 팩토리 메서드 사용
+- 생성자의 중복 정의가 필요한 경우 : 정적 팩토리 메서드 사용
 
 ### ✅ 기발한 이름은 피하라
-	@@ -140,6 +236,7 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
+- 구어체 혹은 속어를 이름으로 사용하지 말 것
+    - 재미난 이름보다 명료한 이름 선택
+        - ex) `whack()` 대신 `kill()`, `eatMyShort()` 대신 `abort()`
 
 ### ✅ 한 개념에 한 단어를 사용하라
 - 추상적인 개념 하나에 단어 하나를 선택해 이를 고수할 것
@@ -200,7 +217,9 @@ class Customer {
 
 ### ✅ 말장난을 하지 마라
 - 일관성을 고려해 기능적으로 다른 요소를 하나의 명칭으로 통일하지 말 것
-	@@ -149,34 +246,92 @@ for (let j = 0; j < NUMBER_OF_TASKS; j++) {
+    - ex) 기존 값 두 개를 더하는 메서드 `add()`
+        - if) 집합에 값 하나를 추가하는 메서드를 추가한다면? -> `insert()` 또는 `append()`가 적합
+- 코드를 이해하기 쉽게 작성
 
 ### ✅ 해법 영역에서 가져온 이름을 사용하라
 - 기술 개념에는 **기술 이름**을 선택할 것
