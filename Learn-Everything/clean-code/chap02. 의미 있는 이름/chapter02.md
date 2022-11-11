@@ -8,7 +8,7 @@
     - 수행 기능?
     - 사용 방법?
 
-- 따로 주석이 필요하다면 의도를 분명히 드러난 것이 아님
+- 따로 주석이 필요하다면 의도를 분명히 드러낸 것이 아님
 - 의도가 드러나는 이름을 사용하면 코드의 이해와 변경이 쉬워짐
     - `const d; // 경과 시간(단위: 날짜)` ❌
         - 측정하려는 값과 단위를 표현하는 이름이 필요함
@@ -18,8 +18,6 @@
     const daysSinceModification;
     const fileAgeInDays;
 ```
-    - 위와 같이 의도가 들어나는 이름은 코드의 이해 및 변경이 쉬워짐
-
 ```js
 function getThem() {
 	const list1 = [];
@@ -102,7 +100,10 @@ let updateArray = (sourceArray, destinationArray) => {
 ```
 - 연속된 숫자의 덧붙임 및 불용어 추가 x
     - 불용어 : 의미가 불분명하거나 중복되는 단어 ex) `nameString`, `ageVariable`
-	@@ -53,6 +109,8 @@
+        - `moneyAmount` vs `money`
+        - `customerInfo` vs `customer`
+        - `accountData` vs `account`
+        - `theMessage` vs `message`
     - 읽는 사람이 차이를 알도록 이름을 지을 것.
 
 ### ✅ 발음하기 쉬운 이름을 사용하라
@@ -111,6 +112,7 @@ let updateArray = (sourceArray, destinationArray) => {
 ```js
 // ❌
 const yyyymmdd = new Date();
+// ⭕️
 const currentDate = new Date();
 ```
 
