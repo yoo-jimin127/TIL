@@ -7,6 +7,7 @@
     - 존재 이유?
     - 수행 기능?
     - 사용 방법?
+<<<<<<< HEAD
 
 - 따로 주석이 필요하다면 의도를 분명히 드러난 것이 아님
 - 의도가 드러나는 이름을 사용하면 코드의 이해와 변경이 쉬워짐
@@ -63,6 +64,17 @@ function getFlaggedCells() {
 	return flaggedCells;
 }
 ```
+=======
+    - 따로 주석이 필요하다면 의도를 분명히 드러난 것이 아님.
+    - 의도가 드러나는 이름을 사용하면 코드의 이해와 변경이 쉬워짐.
+        - `const d; // 경과 시간(단위: 날짜)` ❌
+   ```js
+       const elapsedTimeInDays;
+       const daysSinceCreation;
+       const daysSinceModification;
+       const fileAgeInDays;
+   ```
+>>>>>>> 9a5b2114a72cd232fb7b992c575f73f065fde207
 
 ### ✅ 그릇된 정보를 피하라
 - 널리 쓰이는 으미가 있는 단어를 다른 의미로 사용하지 말 것
