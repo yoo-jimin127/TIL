@@ -133,7 +133,7 @@
       - `WHERE`절 생략 시 해당 테이블에 저장된 모든 데이터 삭제
  ```sql
  DELETE FROM 테이블이름
- WHERE 필드이름=데이터값;
+  WHERE 필드이름=데이터값;
  ```
  
 ### ▶️ SELECT
@@ -142,16 +142,14 @@
    - 테이블에서 선택하고자 하는 필드의 이름 `SELECT` 키워드 바로 뒤에 명시
    - `WHERE`절 : 선택할 레코드의 조건 상세 설정 가능
    <br />
-   - SELECT 문법
+   - `SELECT` 문법
  ```sql
- SELECT 필드이름
-  FROM 테이블이름
+ SELECT 필드이름 FROM 테이블이름
   [WHERE 조건]
  ```
   - 모든 필드 선택
  ```sql
- SELECT *
-  FROM GDSC;
+ SELECT * FROM GDSC;
  ```
  
   - 특정 조건의 레코드 선택
@@ -166,8 +164,7 @@
     - 해당 테이블의 특정 필드만 불러올 수 있음
     - 콜론(`,`)으로 여러개의 필드 이름을 한 번에 명시 가능
  ```sql
- SELECT Name, StudentNum
-  FROM GDSC;
+ SELECT Name, StudentNum FROM GDSC;
  ```
  
   - `WHERE`절 추가로 특정 조건 만족하는 레코드만 선택 가능
@@ -185,10 +182,10 @@
   ORDER BY StudentNum;
  ```
   - 별칭(alias)을 이용한 처리
-    ```sql
-    1. SELECT 필드이름 AS 별칭 FROM 테이블이름;
-    2. SELECT 필드이름 FROM 테이블이름 AS 별칭;
-    ```
+ ```sql
+ 1. SELECT 필드이름 AS 별칭 FROM 테이블이름;
+ 2. SELECT 필드이름 FROM 테이블이름 AS 별칭;
+ ```
   
 ## 📌 참고 자료
 - [문법 특성 참고 자료](https://edu.goorm.io/learn/lecture/15413/%ED%95%9C-%EB%88%88%EC%97%90-%EB%81%9D%EB%82%B4%EB%8A%94-sql/lesson/767683/sql%EC%9D%B4%EB%9E%80)
