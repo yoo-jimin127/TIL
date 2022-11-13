@@ -170,7 +170,7 @@
   FROM GDSC;
  ```
  
-   - `WHERE`절 추가로 특정 조건 만족하는 레코드만 선택 가능
+  - `WHERE`절 추가로 특정 조건 만족하는 레코드만 선택 가능
 
  ```sql
 SELECT Name, ReserveDate 
@@ -178,13 +178,18 @@ FROM Reservation
 WHERE ID <= 3 AND ReserveDate > '2016-02-01';
  ```
  
-  - 선택한 레코드의 정렬
-    - `ORDER BY` 절의 추가로 레코드 정렬 가능
-  ```sql
-  SELECT * 
-FROM Reservation
-ORDER BY ReserveDate;
-  ```
+  - `ORDER BY` 절의 추가로 레코드 정렬 가능
+ ```sql
+ SELECT * 
+FROM GDSC
+ORDER BY StudentNum;
+ ```
+  - 별칭(alias)을 이용한 처리
+    ```sql
+    1. SELECT 필드이름 AS 별칭 FROM 테이블이름;
+     2. SELECT 필드이름 FROM 테이블이름 AS 별칭;
+    ```
+  
 ## 📌 참고 자료
 - [문법 특성 참고 자료](https://edu.goorm.io/learn/lecture/15413/%ED%95%9C-%EB%88%88%EC%97%90-%EB%81%9D%EB%82%B4%EB%8A%94-sql/lesson/767683/sql%EC%9D%B4%EB%9E%80)
 - [문법 참고 자료](http://www.tcpschool.com/mysql/mysql_basic_syntax)
