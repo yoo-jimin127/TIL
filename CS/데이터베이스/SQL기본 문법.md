@@ -31,13 +31,61 @@
 
 ## ✅ SQL 문법
 ### ▶️ CREATE
-- **CREATE : 데이터베이스 생성**
-	- `CREATE DATABASE` : 새로운 데이터베이스 생성
+- **`CREATE DATABASE` : 새로운 데이터베이스 생성**
  ```sql
  CREATE DATABASE 데이터베이스명
  ```
  
+ - **USE : 데이터베이스 선택**
+    - 데이터베이스 생성 후 데이터베이스 사용을 위해 데이터베이스를 선택하는 명령어
+ ```sql
+ USE 데이터베이스명
+ ```
  
+ - **`CREATE TABLE` : 새로운 테이블 생성**
+    - 데이터베이스는 하나 이상의 테이블로 구성
+    - 테이블에 데이터를 저장해 관리
+    - 테이블 생성 필요 요소 : `테이블 이름`, `필드 목록`, `필드 타입`
+    - 필드 타입 : 해당 필드에 저장될 데이터가 가질 수 있는 타입
+ 
+ ```sql
+  CREATE TABLE 테이블이름
+  (
+    필드이름1 필드타입1,
+    필드이름2 필드타입2,
+    ...
+ )
+ ```
+
+### ▶️ ALTER
+- **`ALTER DATABASE` : 데이터베이스 수정**
+   - 데이터베이스의 전체적인 특성 수정
+   - 데이터베이스의 특성 : `DATABASE` Dir → `db.opt` 파일에서 확인
+   - 데이터베이스의 문자 집합 및 콜레이션 변경 가능
+ ```sql
+ ALTER DATABASE 데이터베이스이름 CHARACTER SET=문자집합이름
+  ALTER DATABASE 데이터베이스이름 COLLATE=콜레이션이름
+ ```
+  - 콜레이션(collation) : 데이터베이스에서 검색 및 정렬과 같은 작업 수행 시 비교를 위한 규칙의 집합
+  - ex)``
+  ALTER DATABASE Hotel CHARACTER SET=euckr_bin COLLATE=euckr_korean_ci;``
+
+- **`ALTER TABLE` : 테이블 수정**
+   - `ADD`를 함께 사용할 경우 테이블에 **필드 추가** 가능
+  ```sql
+   ALTER TABLE 테이블이름 ADD 필드이름 필드타입
+  ```
+  
+   - `DROP`을 함께 사용할 경우 테이블의 **필드 삭제** 가능
+  ```sql
+   ALTER TABLE 테이블이름 DROP 필드이름
+  ```
+  
+  - `MODIFY COLUMN`을 함께 사용할 경우 테이블의 **필드 타입 변경** 가능
+  ```sql
+   ALTER TABLE 테이블이름 MODIFY COLUMN 필드이름 필드타입
+  ```
+  
 ## 📌 참고 자료
 - [문법 특성 참고 자료](https://edu.goorm.io/learn/lecture/15413/%ED%95%9C-%EB%88%88%EC%97%90-%EB%81%9D%EB%82%B4%EB%8A%94-sql/lesson/767683/sql%EC%9D%B4%EB%9E%80)
 - [문법 참고 자료](http://www.tcpschool.com/mysql/mysql_basic_syntax)
