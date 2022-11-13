@@ -21,8 +21,8 @@
 ## ✅ SQL 문법 특성
 1. **대소문자의 구별 X**
 	- 단, 서버 환경 또는 DBMS 종류에 따라 데이터베이스 및 필드명의 대소문자를 구분하는 경우도 존재함
-1. **SQL 명령문**은 반드시 **세미콜론(`;`)**으로 끝낼 것
-1. **고유 값**의 경우 **따옴표(`' '`)**로 감쌀 것
+1. **SQL 명령문**은 반드시 세미콜론(`;`)으로 끝낼 것
+1. **고유 값**의 경우 따옴표(`' '`)로 감쌀 것
 1. SQL에서의 객체 표현은 **백틱**으로 감쌀 것
    - ex) ``SELECT `COST`, `TYPE` FROM `INVOICE`;``
 1. 한 줄 주석은 문장 앞 `--`를 붙여 사용
@@ -64,7 +64,7 @@
    - 데이터베이스의 문자 집합 및 콜레이션 변경 가능
  ```sql
  ALTER DATABASE 데이터베이스이름 CHARACTER SET=문자집합이름;
-  ALTER DATABASE 데이터베이스이름 COLLATE=콜레이션이름;
+ ALTER DATABASE 데이터베이스이름 COLLATE=콜레이션이름;
  ```
   - 콜레이션(collation) : 데이터베이스에서 검색 및 정렬과 같은 작업 수행 시 비교를 위한 규칙의 집합
   - ex)``
@@ -173,21 +173,21 @@
   - `WHERE`절 추가로 특정 조건 만족하는 레코드만 선택 가능
 
  ```sql
-SELECT Name, ReserveDate 
-FROM Reservation
-WHERE ID <= 3 AND ReserveDate > '2016-02-01';
+ SELECT Name, StudentNum
+  FROM GDSC
+  WHERE ID <= 3 AND StudentNum > '20100000';
  ```
  
   - `ORDER BY` 절의 추가로 레코드 정렬 가능
  ```sql
  SELECT * 
-FROM GDSC
-ORDER BY StudentNum;
+  FROM GDSC
+  ORDER BY StudentNum;
  ```
   - 별칭(alias)을 이용한 처리
     ```sql
     1. SELECT 필드이름 AS 별칭 FROM 테이블이름;
-     2. SELECT 필드이름 FROM 테이블이름 AS 별칭;
+    2. SELECT 필드이름 FROM 테이블이름 AS 별칭;
     ```
   
 ## 📌 참고 자료
