@@ -401,3 +401,137 @@ public enum Error{
     WAITING_FOR_EVENT;
 }
 ```
+
+### ✅ 반복하지 마라!
+중복은 문제.
+- 코드 길이의 늘어남
+- 알고리즘이 변할 경우 여러 곳을 다 손봐야 함
+   - 위 과정 중 누락된 부분에서 오류 발생
+   <br />
+- 중복을 없앨 경우 **모듈 가독성이 높아짐**
+   <br />
+- 중복 제거 전략
+   - 구조적 프로그래밍
+   - AOP(Aspect Oriented Programming)
+   - COP(Component Oriented Programming)
+   
+### ✅ 구조적 프로그래밍
+- Dijkstra의 구조적 프로그래밍 원칙
+   - 모든 함수 & 함수 내 모든 블록에 입구와 출구는 하나씩만 존재
+   - 함수 : `return`문이 하나
+   - 루프 안에서 `break`, `continue`, `goto` 사용 X
+   <br />
+- 함수를 작게 만들 때, 간혹 `return`, `break`, `continue`를 여러 차례 사용하게 됨
+   - 단일 입/출구 규칙보다 의도 표현이 쉬워지므로 OK
+   - 단, `goto`문 : 큰 함수에서만 의미 있음, 작은 함수에서는 피할 것
+   
+### ✅ 함수를 어떻게 짜죠?
+- 처음 : 길고 복잡한, 들여쓰기 단계 및 중복된 루프가 많은 함수
+→ 이름 변경, 함수 만드는 과정 등을 거치며 개선
+
+### ✅ 결론
+- 모든 시스템 : 특정 응용 분야 시스템을 기술할 목적으로 프로그래머가 설계한 도메인 특화 언어로 만들어짐
+- 함수 : 그 언어에서의 **동사**
+- 클래스 : 그 언어에서의 **명사**
+- 마스터 프로그래머에게 시스템이란?
+   - 풀어갈 이야기 ⭕️
+   - 구현할 프로그램 ❌
+
+```js
+class SetUpTeardownIncluder{
+    constructor(pageData, isSuite, testPage, newPageContent, pageCrawler) {
+    	this.pageData = 0;	// PageData type
+        this.isSuite = 0;		// bool type
+        this.testPage = 0;	// WikiPage type
+        this.newPageContent = "";
+        this.pageCrawler = 0;	// PageCrawler type
+    }
+
+    SetUpTearDownIncluder(){
+    	this.pageData = 0	// PageData type
+        this.isSuite = 0		// bool type
+        this.testPage = 0	// WikiPage type
+        this.newPageContent = ""
+        this.pageCrawler = 0	// PageCrawler type
+    }
+    render(pageData){
+    	return this.render(pageData, false);
+    }
+    render(pageData, isSuite){
+    	return this.SetupTeardownIncluder(pageData).render(isSuite);
+    }
+    setUpTearDownIncluder(pageData){
+    	this.pageData = pageData;
+        this.testPage = pageData.getWikiPage();
+        this.pageCrawler = testPage.getPageCrawler();
+        this.newPageContent = "";
+    }
+    render(isSuite)
+    	this.isSuite = isSuite;
+        if (this.isTestPage())
+            this.includeSetupAndTeardownPages();
+        return this.pageData.getHtml();
+    isTestPage(){
+    	return this.pageData.hasAttribute("Test");
+    }
+    includeSetupAndTeardownPages(){
+    	this.includeSetupPages();
+        this.includePageContent();
+        this.includeTeardownPages();
+        this.updatPageContent();
+    }
+    includeSetupPages(){
+    	if this.isSuite{
+	        this.includeSuiteSetupPage();
+            this.includeSetupPage();
+        }
+    }
+    includeSuiteSetupPage(){
+    	this.include(SuiteResponder.SUITE_SETUP_NAME, "-setup");
+    }
+    includeSetupPage(){
+    	this.include("SetUp", "-setup");
+    }
+    includePageContent(){
+    	this.newPageContent.append(pageData.getContent())
+    }
+    includeTeardownPages(this){
+    	this.includeTearDownPage();
+        if (this.isSuite)
+            this.includeSuiteTeardownPage();
+    }
+    includeTeardownPage(this){
+    	this.include("TearDown", "-teardown");
+    }
+    includeSuiteTeardownPage(this){
+    	this.include(SuiteResponder.SUITE_TEARDOWN_NAME, "-teardown");
+    }
+    updatePageContent(){
+    	this.pageData.setContent(str(newPageContent));
+    }
+    include(pageName,arg){
+    	this.inheritedPage = this.findInheritedPage(pageName);
+        if (this.inheritedPage != NULL){
+	        this.pagePathName = this.getPathNameForPage(this.inheritedPage);
+            this.buildIncludeDirective(this.pagePathName, arg);
+        }
+    }
+    findInheritedPage(pageName){
+    	return this.PageCrawlerImpl.getInheritedPage(pageName, this.testPage);
+    }
+    getPathNameForPage(page){
+    	this.pagePath = this.pageCrawler.getFullPath(page);
+        return this.PathParser.render(this.pagePath);
+    }
+    buildIncludeDirective(pagePathName, arg){
+    	this.newPageContent.append("\n!include ");
+        this.newPageContent.append(arg);
+        this.newPageContent.append(" .");
+        this.newPageContent.append(pagePathName);
+        this.newPageContent.append("\n");
+    }
+}
+```
+
+### 📌 참고 서적
+[Clean Code](http://www.yes24.com/Product/Goods/11681152)
