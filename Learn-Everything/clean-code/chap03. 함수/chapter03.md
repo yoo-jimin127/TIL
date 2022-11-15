@@ -286,5 +286,118 @@ class UserValidator{
 - 위 코드에서 불러오는 부수 효과
    - `Session.initialize()`의 호출
    - 본 함수의 역할 : `checkPassword` (암호 확인)
-   → 시간적 결함 초래
+   - 함수 이름만 보고 함수를 호출하는 사용자 : 사용자 인증 + 세션 정보를 지워버릴 위험에 처하게 됨
+      → 시간적 결함 초래
+      
+#### ▶️ 출력 인수
+- 일반적 : 인수 - 함수 입력으로 해석
+- 선언부 `appendFooter(report)`를 봐야 호출부 `appendFooter(s)`의 `s`가 출력 인수임을 알 수 있음
+- 함수 선언부를 찾아보는 행위 : 인자적으로 거슬린다는 의미 → 피할 것
+- 출력 인수는 가급적 피하기
+- 함수에서 상태를 변경해야 하는 경우 : **함수가 속한 객체 상태를 변경**하는 방식 택할 것
+
+### ✅ 명령과 조회를 분리하라!
+함수 : 뭔가를 **수행** or 뭔가에 **답함** 둘 중 하나만 해야 함
+- 객체 상태를 **변경** or 객체 정보를 **반환**
+```js
+function set(attribute, value){
+    // pass
+}
+// ------------------------------------------
+if set("username", "unclebob") ...
+```
+- 위 코드
+   - 목적 : `attribute`인 속성을 찾아 값을 `value`로 설정 후 성공 시 `true`, 실패 시 `false` 반환
+   - `set`이라는 단어 : 동사인지 형용사인지 분간하기 어려움 → 함수 호출 코드만 봤을 경우 의미 모호
+   - 함수 구현 개발자 : `set` - 동사 의미 vs if문 안에 넣을 경우 - 형용사로 느껴짐
+   → 해결책 : **명령과 조회를 분리**해 혼란 해결
+```js
+if (element.hasAttributes("username"))
+    element.setAttribute("username", "unclebob");
+```
+
+### ✅ 오류 코드보다 예외를 사용하라!
+명령 함수에서 오류 코드를 반환하는 방식 : **명령/조회 분리 규칙** 위반
+```js
+if (deletePage(page) == E_OK)
+    // pass
+```
+- 위 코드가 좋지 않은 이유
+   - 동사/형용사 혼란을 일으키지는 않으나, 여러 단계로 중첩되는 코드 야기
+   - 오류 코드 반환 시 호출자 : 오류 코드를 곧바로 처리해야 한다는 문제 직면
    
+```js
+if (deletePage(page) == E_OK){
+    if (registry.deleteReference(page.name) == E_OK){
+    	if (configKeys.deleteKey(page.name.makeKey()) == E_OK)
+	        consolel.log("page deleted")
+        else
+	        console.log("configKey not deleted");
+    else
+    	console.log("deleteReference from registry failed");
+    }
+else:
+    console.log("delete failed");
+}
+throw new Error();
+```
+```js
+try{
+    deletePage(page);
+    registry.deleteReference(page.name);
+    configKeys.deleteKey(page.name.makeKey());
+}
+catch (e){
+    logError(e);
+}
+```
+- 위 코드에서 개선된 부분
+   - 오류 코드 대신 예외 사용 시 오류 코드 처리가 원래 코드에서 분리됨
+   
+#### ▶️ Try/Catch 블록 뽑아내기
+- try/catch문 : 코드 구조에 혼란을 일으킴, 정상 동작 및 오류 처리 동작을 뒤섞음
+- **별도 함수로 뽑아내는 것**이 코드의 가독성을 높임
+```js
+function delete(page){
+    try{
+    	deletePageAndAllReferences(page);
+    }
+    catch (e){
+    	logError(e);
+    }
+}
+function deletePageAndAllReferences(page){
+    deletePage(page);
+    registry.deleteReference(page.name);
+    configKeys.deleteKey(page.name.makeKey());
+}
+function logError(e){
+    connsole.error(e);
+}
+```
+- 위 코드에서 개선된 점
+   - delete 함수 : 모든 오류 처리, 코드의 이해도 상승
+   - 정상 동작과 오류 처리 동작을 분리 → 코드 이해 및 수정이 쉬워짐
+   
+#### ▶️ 오류 처리도 한 가지 작업이다
+오류를 처리하는 함수 : 오류만 처리
+- 함수에 키워드 try가 있을 경우 → `try`문으로 시작해 `catch/finally` 문으로 끝나야 함
+
+#### ▶️ Error.java 의존성 자석
+오류 코드의 반환 : 클래스 or 열거형 변수 or ... 어디선가 오류 코드를 정의한다는 의미
+- 의존성 자석 코드 예시
+   - Error enum이 변할 경우 : 이를 사용하는 클래스 전부를 다시 컴파일 → 배치해야 함
+      - 클래스 변경 어려워짐
+      → sol. 기존 오류 코드의 재사용해 예외 처리
+   - **오류 코드 대신 예외 사용** → 새 예외는 Execption 클래스에서 파생됨
+      → 재 컴파일 및 재 배치 없이 새 예외 클래스 추가 가능
+```java
+public enum Error{
+    OK,
+    INVALID,
+    NO_SUCH,
+    LOCKED,
+    OUT_OF_RESOURCES,
+    WAITING_FOR_EVENT;
+}
+```
