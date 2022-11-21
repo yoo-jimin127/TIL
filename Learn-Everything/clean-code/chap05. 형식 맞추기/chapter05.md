@@ -126,3 +126,339 @@ class ReporterConfig {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → 두 개념이 서로 다른 파일에 속할 경우 규칙이 통하지 않는다.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → 타당한 근거가 없다면 서로 밀접한 개념은 한 파일에 속해야 마땅하다.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → 위 이유가 java의 `protected` 변수를 피해야 하는 이유 중 하나
+
+- 같은 파일에 속할 정도로 밀접한 두 개념은 **세로 거리의 연관성**을 표현
+   - **연관성** : 한 개념을 이해하는 데 다른 개념이 중요한 정도
+- 연관성이 깊은 두 개념이 멀리 떨어져 있을 경우
+   - 코드를 읽는 사람이 소스파일과 클래스를 여기저기 뒤져야 함
+<br />
+- **변수 선언**
+   - 변수는 사용하는 위치에 **최대한 가까이** 선언
+   - 아래 예제의 함수는 매우 짧으므로 **지역 변수는 각 함수 맨 처음에 선언**
+```js
+function readPreferences() {
+  let is = null;
+  try {
+    //pass
+  }
+  catch (e) {
+    try {
+      if (is != null) is.close();
+    }
+    catch(e1) {
+    }
+  }
+}
+```
+
+- **루프를 제어하는 변수** : 루프 문 내부에 선언
+```js
+function countTestCases() {
+  let count = 0;
+  forEach(each => count += each.countTestCases());
+  return count;
+}
+```
+
+- 긴 함수에서 블록 상단이나 루프 직전에 변수를 선언하는 사례
+```testng
+for (XmlTest test : m_suite.getTests()) {
+	TestRunner tr = m_runnerFactory.newTestRunner(this.test);
+	tr.addListener(m_textReporter);
+	m_testRunners.add(tr);
+
+	invoker = tr.getInvoker();
+    
+    for (ITestNGMethod m : tr.getBeforeSuiteMethods()) {
+    	beforeSuiteMethods.put(m.getMethod(), m);
+    }
+    
+    for (ITestNGMethod m : tr.getAfterSuiteMethods()) {
+    	afterSuiteMethods.put(m.getMethod(), m);
+    }
+}
+// ...
+```
+
+- **인스턴스 변수**
+   - 클래스 맨 처음에 선언
+   - 변수간 세로로 거리를 두지 않음
+   - 잘 설계한 클래스는 클래스의 많은 메서드가 인스턴스 변수를 사용하기 떄문
+   <br />
+   - 인스턴스 변수를 선언하는 위치에 대한 논쟁 ↑
+   - `C++` : 모든 인스턴스 변수를 클래스 마지막에 선언하는 **가위 규칙** 적용
+   - `Java` : 보통 클래스 맨 처음에 인스턴스 선언
+   → 중요점 : 잘 알려진 위치에 인스턴스 변수를 모은다는 사실
+   → 변수 선언을 어디서 찾을지 모두가 알고 있어야 함
+   <br />
+- 코드를 읽다가 우연히 변수를 발견하게 되는 상황
+```js
+class TestSuite implements Test {
+  constructor(theClass, name) {
+  	this.theClass = theClass;
+    this.name = name;
+  }
+  
+  createTest(theClass, name) {
+    // ...
+  }
+  
+  warning(message) {
+    // ...
+  }
+  
+  exceptionToString(t) {
+   // ...
+  }
+  
+  const fName;
+  const fTests;
+  
+  TestSuite() {
+  }
+  
+  TestSuite(theClass) {
+    // ...
+  }
+  
+  TestSuite(theclass, name) {
+    // ...
+  }
+```
+
+- **종속 함수*
+   - 한 함수가 다른 함수를 호출할 경우 두 함수는 **세로로 가까이 배치**
+   - 가능할 경우, **함수를 호출되는 함수보다 먼저 배치**
+   → 효과 : 자연스럽게 읽히는 프로그램
+   - 일관적인 규칙을 적용할 경우 독자는 **방금 호출한 함수가 잠시 후에 정의되리라는 사실을 예측**할 수 있음
+   <br />
+  - 아래 예제
+     - 첫째 함수에서 가장 먼저 호출하는 함수가 바로 아래 정의됨
+     - 다음으로 호출하는 함수는 그 아래에 정의됨
+     - 호출되는 함수를 찾기 쉬워짐
+     - 모듈 전체의 가독성이 높아짐
+     
+```js
+clss WikiPageResponder implements SecureResponder {
+  constructor(page, pageData, pageTitle, request, crawler) {
+   	this.page = page;
+   	this.pageData = pageData;
+   	this.pageTitle = pageTitle;
+   	this.request = request;
+   	this.crawler = crawler;
+  }
+  
+  makeResponse(context, request)
+ 	throw exception {
+      const pageName = getPageNameOrDefault(request, "FrontPage");
+      loadPage(pageName, context);
+      if (page == null)
+        return notFountResponse(context, request);
+      else
+        return makePageResponse(context);
+  }
+   
+  getPageNameOrDefault(request, defaultPageName) {
+    const pageName = request.getResource();
+    if (pageName == null)
+      pageName = defaultPageName;
+
+    return pageName;
+   }
+
+  loadPage(resuorce, context)
+  throw exception {
+    const path = PathParser.paser(resource);
+    this.crawler = context.root.getPageCrawler();
+    this.page = crawler.getPage(context.root, path);
+    if (page != null)
+      this.pageData = this.page.getData();
+  }
+
+  notFoundResponse(context, request) 
+  throw exception {
+    return new NotFoundResponder().makeResponse(context, request);
+  }
+
+  makePageResponse(context)
+  throw exception {
+    this.pageTitle = PathParser.render(this.crawler.getFullPath(this.page));
+    const html = makeHtml(context);
+
+    const response = new SimpleResponse();
+    response.setMaxAge(0);
+    response.setContent(html);
+    return response;
+  }
+}
+```
+- 위 코드는 상수를 적절한 수준에 두는 좋은 예제이다.
+- `getPageNameOrDefault()` 내부에서 `"FrontPage"` 상수를 사용하는 방법도 가능
+   - 하지만, 잘 알려진 상수가 적절하지 않은 저차원 함수에 묻히게 됨
+   → 상수를 알아야 마땅한 함수에서 실제로 사용하는 함수로 상수를 넘겨주는 방법이 더욱 좋음
+
+- **개념적 유사성**
+   - 어떤 코드는 서로 끌어당김 → **개념적 친화도가 높기 떄문**
+   - 친화도가 높을수록 코드를 가까이에 배치할 것
+
+   - 친화도가 높은 요인
+   1. 한 함수가 다른 함수를 호출해 생기는 직접적인 종속성
+   1. 변수와 그 변수를 사용하는 함수
+   1. 비슷한 동작을 수행하는 일군의 함수
+
+- 개념적 유사성의 좋은 예시 코드
+```js
+class Assert {
+    assertTrue(message, condition) {
+        if (!condition) fail(message);
+    }
+
+    assertTrue(condition) {
+        assertTrue(null, condition);
+    }
+
+    asertFalse(message, condition) {
+        assertTrue(message, !condition);
+    }
+
+    assetFalse(condition) {
+        assertFalse(null, condition);
+    }
+}
+```
+- 위 예제는 개념적인 친화도가 매우 높음
+   - 명명법이 똑같으며 기본 기능이 유사하고 간단함
+   - 서로가 서로를 호출하는 관계는 부차적 요인
+   - 종속적인 관계가 없어도 가까이 배치할 함수들임
+
+#### ▶️ 세로 순서
+- 일반적으로 함수 호출 종속성은 **아래 방향**으로 유지
+- 함수를 호출하는 함수보다 나중에 배치
+   - 소스 코드 모듈이 `고차원` → `저차원`으로 자연스럽게 내려감
+- 신문 기사와 마찬가지로 **가장 중요한 개념을 가장 먼저 표현**함
+   - 표현 시 : **세세한 사항을 최대한 배제할 것**
+   - 세세한 사항 : 가장 마지막에 표현
+   → 독자가 소스 파일에서 첫 함수 몇개만 읽어도 개념 파악이 용이해짐 
+
+#### ▶️ 가로 형식 맞추기
+<img width="466" alt="스크린샷 2022-11-21 오후 5 25 06" src="https://user-images.githubusercontent.com/66112716/203001189-eca76a2d-18fc-491e-94c4-6c94a82d1c1c.png">
+
+- 프로젝트 7개에서 조사한 행 길이 분포 그래프
+→ 프로그래머는 명백하게 **짧은 행을 선호**함
+- 따라서 **짧은 행이 바람직**함
+
+- 예전 : 오른쪽으로 스크롤할 필요가 없도록 프로그래밍
+- 최근 : 매우 커진 모니터
+   → 글꼴 크기를 줄여 200자까지도 한 화면에 들어감    
+   → 추천하지 않는 방식    
+- 120자 정도의 행 길이 제한
+
+#### ▶️ 가로 공백과 밀집도
+가로로는 **공백**을 사용해 **밀접한 개념과 느슨한 개념을 표현**함    
+```js
+function measureLine(line) {
+    lineCount++;
+    const lineSize = line.length();
+    const totalChars += lineSize;
+    lineWidthHistogram.addLine(lineSize, lineCount);
+    recordWidestLine(lineSize);
+}
+```
+- 할당 연산자의 강조를 위해 앞뒤에 공백을 준 예시 코드
+   <br/>
+- 할당문 : 왼쪽 요소와 오른쪽 요소가 분명히 나뉨
+   - 공백을 넣을 시 **두가지 주요 요소가 확실히 나뉨**이 더욱 분명해짐
+   <br/>
+- 함수 이름과 이어지는 괄호 사이에는 공백을 넣지 않음
+   - 함수와 인수는 서로 밀접하기 때문
+- 공백을 넣으면 한 개념이 아니라 별개로 보임
+   - 함수 호출 코드에서 괄호 안 **인수** : 공백으로 분리
+   - 쉼표를 강조해 **인수가 별개**라는 사실을 보여주기 위함
+   <br/>
+- **연산자 우선순위 강조**를 위해서도 공백 사용
+```js
+class Quadatic {
+    root1(a, b, c) {
+        let determinant = determinant(a, b, c);
+        return (-b + Math.sqrt(determinant)) / (2*a);
+    }
+
+    root2(a, b, c) {
+        let determinant = determinant(a, b, c);
+        return (-b + Math.sqrt(determinant)) / (2*a);
+    }
+
+    determinant(a, b, c) {
+        return b*b - 4*a*c;
+    }
+}
+```
+- 수식을 읽기에 아주 편한 예제
+   - 승수 사이 공백 X
+   - 곱셈 : 우선순위 가장 높음
+   - 항 사이 : 공백 들어감
+   - 덧셈 & 뺄셈 : 우선순위가 곱셉보다 낮음
+   <br/>
+- 코드 형식을 자동으로 맞춰주는 도구 : 대다수가 **연산자 우선순위를 고려하지 못함**
+   - 수식에 똑같은 간격 적용
+   - 위와 같은 공백을 넣어줘도 도구에서 없애는 경우가 흔함
+
+#### ▶️ 가로 정렬
+```java
+public class FitNesseExpediter implements ResponseSender {
+    private   Socket          socket;
+    private   InputStream     input;
+    private   OutputStream    output;
+    private   Request         request;
+    private   Response        response;
+    private   FitNesseContext context;
+    protected long            requestParsingTimeLimit;
+    private   long            requestProgress;
+    private   long            requestParsingDeadline; 
+    private   boolean         hasError;
+
+    public FitNesseExpeditor(Socket s,
+                             FitNesseContext context) throws Exception
+    {
+      this.context =            context;
+      socket =                  s;
+      input =                   s.getInputStream();
+      output =                  s.getOutputStream();
+      requestParsingTileLimit = 10000;
+    }
+}
+```
+- 위 코드 : 유용하지 않음
+- 코드가 엉뚱한 부분을 강조해 진짜 의도가 가려짐
+   - 변수 유형은 무시하고 변수 이름부터 읽게 됨
+   - 할당 연산자보다 오른쪽 피 연산자에 눈이 감
+   - 코드 형식을 자동으로 맞춰주는 도구는 대다수가 **위와 같은 정렬을 무시함**
+   <br/>
+- 정렬하지 않을 경우 오히려 중대한 결함을 찾기 쉬움
+- 정렬이 필요할 정도로 목록이 길 경우,
+   - 문제는 **목록의 길이**이지, 정렬 부족이 아님
+   <br/>
+- 아래 코드와 같이 선언부가 길 경우 클래스를 쪼개야 함
+```java
+public class FitNesseExpediter implements ResponseSender {
+    private Socket socket;
+    private InputStream input;
+    private OutputStream output;
+    private Request request;
+    private Response response;
+    private FitNesseContext context;
+    protected long requestParsingTimeLimit;
+    private long requestProgress;
+    private long requestParsingDeadline; 
+    private boolean hasError;
+
+    public FitNesseExpeditor(Socket s, FitNesseContext context) throws Exception
+    {
+      this.context = context;
+      socket = s;
+      input = s.getInputStream();
+      output = s.getOutputStream();
+      requestParsingTileLimit = 10000;
+    }
+}
+```
