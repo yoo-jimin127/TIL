@@ -565,7 +565,7 @@ class CodeAnalyzer implements JavaFileAnalysis {
     constructor(lineCount, maxLineWidth, widestLineNumber, lineWidthHistogram, totalChars) {
         this.lineCount = lineCount;
         this.maxLineWidth = maxLineWidth;
-        this.widtestLineNumber = widestLineNumber;
+        this.widestLineNumber = widestLineNumber;
         this.lineWidthHistogram = lineWidthHistogram;
         this.totalChars = totalChars;
     }
@@ -603,5 +603,18 @@ class CodeAnalyzer implements JavaFileAnalysis {
         this.lineWidthHistogram.addLine(lineSize, this.lineCount);
         recordWidestLine(lineSize);
     }
+
+    recordWidestLine(lineSize) {
+        if (lineSize > maxLineWidth) {
+            this.maxLineWidth = lineSize;
+            this.widestLineNumber = this.lineCount;
+        }
+    }
+
+    getLineCount() {
+        return this.lineCount;
+    }
+
+    // 어서 빠르게 작성해서 커밋하겠습니다..ㅎㅎ
 }
 ```
