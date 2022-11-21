@@ -12,7 +12,7 @@
 <img width="427" src="https://user-images.githubusercontent.com/66112716/202843818-40e3122e-4572-4eba-8eef-65014fc8218b.png">
 - 상자를 관통하는 선 : 각 프로젝트에서의 최대 파일 길이와 최소 파일 길이    
 → 500줄이 넘지 않고 대부분 200줄 정도인 파일으로 커다란 시스템을 구축할 수 있음을 명시
-- 일반적으로 **큰 파일보다 작은 파일이 이해하기 쉽다.**
+- 일반적으로 **큰 파일보다 작은 파일이 이해하기 쉬움**
 
 #### ▶️ 신문 기사처럼 작성하라
 독자는 위 → 아래로 기사를 읽는다.
@@ -35,7 +35,7 @@
   신문이 읽을 만한 이유는 여기에 있다.
 
 #### ▶️ 개념은 빈 행으로 분리하라
-대부분의 코드 : `왼쪽` → `오른쪽`, `위` → `아래` 방향으로 읽힌다.
+대부분의 코드 : `왼쪽` → `오른쪽`, `위` → `아래` 방향으로 읽힌다.    
 - **각 행** : 수식 or 절
 - **일련의 행 묶음** : 완결된 생각 하나를 표현
    - 생각 사이는 빈 행을 넣어 분리
@@ -461,4 +461,84 @@ public class FitNesseExpediter implements ResponseSender {
       requestParsingTileLimit = 10000;
     }
 }
+```
+
+#### ▶️ 들여쓰기
+소스파일은 윤곽도와 계층이 유사하다.    
+**파일 전체에 적용되는 정보**와 **파일 내 개별 클래스에 적용되는 정보**가 있다.    
+클래스 내 **각 메서드에 적용되는 정보**가 있으며, **블록 내 블록에 재귀적으로 적용되는 정보**가 있다.    
+계층에서의 각 수준은 **이름을 선언하는 범위이자 선언문과 실행문을 해석하는 범위**이다.    
+범위로 이뤄진 계층의 표현을 위해 **코드 들여쓰기**를 사용한다.    
+
+들여쓰는 정도는 계층에서 코드가 자리잡은 수준에 비례한다.     
+**클래스 정의와 같은 파일 수준인 문장**은 들여쓰지 않는다.     
+**클래스 내 메서드**는 클래스보다 한 수준 들여쓴다.     
+**메서드 코드**는 메서드 선언보다 한 수준 들여쓴다.     
+**블록 코드**는 블록을 포함하는 코드보다 한 수준 들여쓴다.     
+
+프로그래머는 이런 들여쓰기 체계에 크게 의존한다.    
+왼쪽으로 코드를 맞춰 코드가 속하는 범위를 시각적으로 표현한다.    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → 이 범위에서 저 범위로 재빨리 이동하기 쉬워진다.     
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → 현재 상황과 무관한 `if문`/`while문` 코드를 일일이 살펴볼 필요가 없다.    
+소스파일 왼쪽을 훑으며 새 메서드, 새 변수, 새 클래스를 찾는다.     
+
+```js
+class FitNesseServer implements SocketServer { constructor(context) { this.context = context; } serve(s) { serve(s, 10000); } serve(s, requestTimeout) { try { const sender = new FitNesseExpediter(s, context); sender.setRequestParsingTimeLimit(requestTimeout); sender.start();} catch(e) {e.printStackTrace(); } } }
+```
+```js
+class FitNesseServer implements SocketServer {
+    constructor(context) { 
+        this.context = context; 
+    } 
+    serve(s) { 
+        serve(s, 10000);
+    } 
+    serve(s, requestTimeout) { 
+        try { 
+            const sender = new FitNesseExpediter(s, context); 
+            sender.setRequestParsingTimeLimit(requestTimeout); 
+            sender.start();
+        } 
+        catch(e) { e.printStackTrace(); }
+        } 
+}
+```
+- 들여쓰기를 한 파일의 구조는 **한 눈에 들어옴**
+- 변수, 생성자 함수, 접근자 합수, 메서드가 금방 보임
+- 들여쓰기를 한 코드 : 쉽게 분석 및 이해 가능
+- 들여쓰기를 하지 않은 코드 : 열심히 분석하지 않는 한 빠른 이해가 어려움
+
+- **들여쓰기 무시하기**
+   - 간단한 if문, 짧은 while문, 짧은 함수에서의 들여쓰기 규칙을 무시하고자 하는 유혹이 생김
+   - 한 행에 범위를 뭉뚱그린 코드를 피할 것
+```js
+class CommentWidget extends TextWidget {
+    constructor(REGEXP) { this.REGEXP = "^#[^\r\n]*(?:(?:\r\n)|\n|\r)?"; }
+    CommentWidget(parent, text) { super(parent, text); }
+    render() { throw ""; }
+}
+```
+- 들여쓰기로 범위를 제대로 표현한 코드 (위 코드 리팩터링 버전)
+```js
+class CommentWidget extends TextWidget {
+    constructor(REGEXP) { 
+        this.REGEXP = "^#[^\r\n]*(?:(?:\r\n)|\n|\r)?"; 
+    }
+
+    CommentWidget(parent, text) { 
+        super(parent, text); 
+    }
+
+    render() { 
+        throw ""; 
+    }
+}
+```
+
+#### ▶️ 가짜 범위
+빈 블록을 올바로 들여쓰고 괄호로 감쌀 것     
+```js
+// 좋지 않은 코드
+while(dis.read(buf, 0, readBufferSize) != -1)
+;
 ```
