@@ -542,3 +542,66 @@ class CommentWidget extends TextWidget {
 while(dis.read(buf, 0, readBufferSize) != -1)
 ;
 ```
+
+- **팀 규칙**
+   - 팀은 한가지 규칙에 합의해야 한다.
+   - 모든 팀원은 그 규칙을 따라야 한다.
+<br/>
+- 팀 규칙에 고려할 부분
+   - 어디에 괄호를 넣을 것인가?
+   - 들여쓰기는 몇 자로 할 것인가?
+   - 클래스와 변수와 메서드 이름은 어떻게 지을 것인가?
+   - etc.
+
+좋은 소프트웨어 시스템은 읽기 쉬운 문서로 이루어진다.     
+스타일은 일관적으로 매끄려워야 한다.     
+**한 소스 파일에서 봤던 형식이 다른 소스 파일에도 쓰이리라는 신뢰감을 독자에게 줘야 한다.**     
+온갖 스타일을 뒤섞어 소스코드를 필요 이상으로 복잡하게 만드는 실수는 피할 것    
+
+- **밥 아저씨의 형식 규칙**
+   - 코드 자체가 최고의 구현 표준 문서가 되는 예시
+```js
+class CodeAnalyzer implements JavaFileAnalysis {
+    constructor(lineCount, maxLineWidth, widestLineNumber, lineWidthHistogram, totalChars) {
+        this.lineCount = lineCount;
+        this.maxLineWidth = maxLineWidth;
+        this.widtestLineNumber = widestLineNumber;
+        this.lineWidthHistogram = lineWidthHistogram;
+        this.totalChars = totalChars;
+    }
+
+    CodeAnalyzer() {
+        this.lineWidthHistogram = new LineWidthHistogram();
+    }
+
+    findJavaFiles(parentDirectory) {
+        const files = [];
+        findJavailes(parentDirectory, files);
+        return files;
+    }
+
+    findJavaFiles(parentDirectory, files) {
+        for (file in parentDirectory.listFiles()) {
+            if (file.getName().endsWith(".java"))
+                files.add(file);
+            else if (file.isDirectory())
+                findJavaFiles(file, files);
+        }
+    }
+
+    analyzeFile(javaFile) {
+        const br = new BufferReader(new FileReader(javaFiles));
+        const line;
+        while((line =  br.readLine()) != null)
+            neasureLine(line);
+    }
+
+    measureLine(line) {
+        this.lineCount++;
+        const lineSize = line.length();
+        this.totalChars += lineSize;
+        this.lineWidthHistogram.addLine(lineSize, this.lineCount);
+        recordWidestLine(lineSize);
+    }
+}
+```
