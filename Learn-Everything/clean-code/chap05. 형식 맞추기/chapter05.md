@@ -490,6 +490,7 @@ public class FitNesseExpediter implements ResponseSender {
 ```js
 class FitNesseServer implements SocketServer { constructor(context) { this.context = context; } serve(s) { serve(s, 10000); } serve(s, requestTimeout) { try { const sender = new FitNesseExpediter(s, context); sender.setRequestParsingTimeLimit(requestTimeout); sender.start();} catch(e) {e.printStackTrace(); } } }
 ```
+vs    
 ```js
 class FitNesseServer implements SocketServer {
     constructor(context) { 
