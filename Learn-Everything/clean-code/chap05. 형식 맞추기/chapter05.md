@@ -615,6 +615,42 @@ class CodeAnalyzer implements JavaFileAnalysis {
         return this.lineCount;
     }
 
-    // 어서 빠르게 작성해서 커밋하겠습니다..ㅎㅎ
+    getMatLineWidth() {
+        return this.maxLineWidth;
+    }
+
+    getWidestLineNumber() {
+        return this.getWidestLineNumber;
+    }
+
+    getLineWidthHistogram() {
+        return this.lineWidthHistogram;
+    }
+
+    getMeanLineWidth() {
+        return this.totalChars / this.lineCount;
+    }
+
+    getMedianLineWidth() {
+        const sortedWidths = getSortedWidths();
+        const cumulativeLineCount = 0;
+        for (let width in sortedWidths) {
+            cumulativeLineCount += lineCountForWidth(width);
+            if (cumulatuveLineCount > this.lineCount/2)
+                return width;
+        }
+        throw new Error("Cannot get here");
+    }
+
+    lineCountForWidth(width) {
+        return this.lineWidthHistogram.getLineforWidth(width).size();
+    }
+
+    getSortedWidths() {
+        const widths = this.lineWidthHistogram.getWidths();
+        const sortedWidths = Array.from(width);
+        sortedWidths.sort();
+        return sortedWidths;
+    }
 }
 ```
