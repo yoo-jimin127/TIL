@@ -5,7 +5,7 @@
 - 관계형 데이터베이스 시스템(RDBMS)에서 자료의 관리 및 처리 목적으로 설계된 언어
 
 ## ✅ 데이터베이스 언어 종류
-- [데이터베이스 언어 및 개념 자세히 살펴보기](https://github.com/gdsc-ssu/cs-study/pull/10)
+- [데이터베이스 언어 및 개념 자세히 살펴보기](https://github.com/gdsc-ssu/cs-study/blob/main/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4/DB%20%EA%B0%9C%EB%85%90%20%EC%A0%95%EB%A6%AC.md)
 - ▶️ **DDL(Data Definition Language) : 데이터 정의어**
    - 각 릴레이션의 정의를 위해 사용되는 언어 (`CREATE`, `ALTER`, `DROP`, `RENAME`, `TRUNCATE` ...)
 
@@ -14,10 +14,10 @@
 
 - ▶️ **DCL(Data Control Language) : 데이터 제어어**
    - 사용자 관리 및 사용자별 릴레이션 또는 데이터로의 관리 및 접근 권한을 제어하는 언어 (`GRANT`, `REVOKE` ...)
-   
+
 - ▶️ **TCL(Transaction Control Language) : 트랜잭션 제어어**
    - 트랜잭션을 제어하는 언어 (`COMMIT`, `ROLLBACK`, `SAVEPOINT` ...)
- 
+
 ## ✅ SQL 문법 특성
 1. **대소문자의 구별 X**
 	- 단, 서버 환경 또는 DBMS 종류에 따라 데이터베이스 및 필드명의 대소문자를 구분하는 경우도 존재함
@@ -35,19 +35,19 @@
  ```sql
  CREATE DATABASE 데이터베이스이름;
  ```
- 
+
  - **USE : 데이터베이스 선택**
     - 데이터베이스 생성 후 데이터베이스 사용을 위해 데이터베이스를 선택하는 명령어
  ```sql
  USE 데이터베이스이름;
  ```
- 
+
  - **`CREATE TABLE` : 새로운 테이블 생성**
     - 데이터베이스는 하나 이상의 테이블로 구성
     - 테이블에 데이터를 저장해 관리
     - 테이블 생성 필요 요소 : `테이블 이름`, `필드 목록`, `필드 타입`
     - 필드 타입 : 해당 필드에 저장될 데이터가 가질 수 있는 타입
- 
+
  ```sql
   CREATE TABLE 테이블이름
   (
@@ -75,17 +75,17 @@
   ```sql
    ALTER TABLE 테이블이름 ADD 필드이름 필드타입
   ```
-  
+
    - `DROP`을 함께 사용할 경우 테이블의 **필드 삭제** 가능
   ```sql
    ALTER TABLE 테이블이름 DROP 필드이름;
   ```
-  
+
   - `MODIFY COLUMN`을 함께 사용할 경우 테이블의 **필드 타입 변경** 가능
   ```sql
    ALTER TABLE 테이블이름 MODIFY COLUMN 필드이름 필드타입;
   ```
-  
+
 ### ▶️ DROP
 - **`DROP DATABASE` : 데이터베이스 삭제**
   ```sql
@@ -116,7 +116,7 @@
       1. `NULL`을 저장할 수 있도록 설정된 필드
       1. `DEFAULT` 제약 조건이 설정된 필드
       1. `AUTO_INCREMENT` 키워드가 설정된 필드
-      
+
 ### ▶️ UPDATE
 - **`UPDATE` : 레코드의 내용 수정**
    - `UPDATE`문 : 해당 테이블 중 `WHERE` 절의 조건을 만족하는 레코드의 값만 수정
@@ -125,7 +125,7 @@
   SET 필드이름1=데이터값1, 필드이름2=데이터값2, ...
   WHERE 필드이름=데이터값;
  ```
- 
+
 ### ▶️ DELETE
 - **`DELETE` : 레코드 삭제**
    - `DELETE`문 : 해당 테이블의 `WHERE`절 조건을 만족하는 레코드만 삭제
@@ -135,7 +135,7 @@
  DELETE FROM 테이블이름
   WHERE 필드이름=데이터값;
  ```
- 
+
 ### ▶️ SELECT
 - **`SELECT` : 테이블의 레코드 선택**
    - `FROM` : 레코드를 선택할 테이블의 이름 명시
@@ -151,7 +151,7 @@
  ```sql
  SELECT * FROM GDSC;
  ```
- 
+
   - 특정 조건의 레코드 선택
      - Name의 필드 값이 'GDSC SSU'인 것 만 선택
  ```sql
@@ -159,14 +159,14 @@
   FROM GDSC
   WHERE Name = 'GDSC SSU';
  ```
-  
+
   - 특정 필드만 선택
     - 해당 테이블의 특정 필드만 불러올 수 있음
     - 콜론(`,`)으로 여러개의 필드 이름을 한 번에 명시 가능
  ```sql
  SELECT Name, StudentNum FROM GDSC;
  ```
- 
+
   - `WHERE`절 추가로 특정 조건 만족하는 레코드만 선택 가능
 
  ```sql
@@ -174,7 +174,7 @@
   FROM GDSC
   WHERE ID <= 3 AND StudentNum > '20100000';
  ```
- 
+
   - `ORDER BY` 절의 추가로 레코드 정렬 가능
  ```sql
  SELECT * 
@@ -186,7 +186,7 @@
  1. SELECT 필드이름 AS 별칭 FROM 테이블이름;
  2. SELECT 필드이름 FROM 테이블이름 AS 별칭;
  ```
-  
+
 ## 📌 참고 자료
 - [문법 특성 참고 자료](https://edu.goorm.io/learn/lecture/15413/%ED%95%9C-%EB%88%88%EC%97%90-%EB%81%9D%EB%82%B4%EB%8A%94-sql/lesson/767683/sql%EC%9D%B4%EB%9E%80)
 - [문법 참고 자료](http://www.tcpschool.com/mysql/mysql_basic_syntax)
