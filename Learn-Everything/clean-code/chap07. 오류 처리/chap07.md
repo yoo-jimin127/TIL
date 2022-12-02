@@ -95,8 +95,9 @@ function retrieveSection(sectionName) {
 ```
 
 코드가 예외를 던지지 않아 단위 테스트는 실패한다.    
-예외를 던지는 코드로 변경해 잘못된 파일 접근을 시도하도록 하자.    
+예외를 던지는 코드로 변경해 잘못된 파일 접근을 시도하도록 하자.     
 ```js
+// 7-3 예제 : 예외를 던지는 코드
 function retriveSection(sectionName) {
     try {
         const stream = new FileInputStream(sectionName);
@@ -106,3 +107,42 @@ function retriveSection(sectionName) {
     return new [];
 }
 ```
+
+- catch 블록에서 예외 유형을 좁힌 리팩토링 버전
+```js
+// 7-3 리팩토링 코드
+function retrieveSection(sectionName) {
+    try {
+        const stream = new FileInputStream(sectionName);
+        stream.close();
+    } catch (e) {
+        throw new Error("retrieval error", e);
+    }
+    return new [];
+}
+```
+- `try-catch` 구조로 범위를 정했으므로 TDD를 사용해 **나머지 논리**를 추가한다.
+    - FileInputStream 생성하는 코드와 close 호출문 사이에 넣어 오류와 예외가 전혀 발생하지 않는다고 가정한다.
+
+- 권장 : **강제로 예외를 일으키는 테스트 케이스를 작성한 후 테스트를 통과하게 코드를 작성하는 방법**
+    - `try`블록의 트랜잭션 범위부터 구현하게 되어 **범위 내에서 트랜잭션의 본질을 유지**하기 쉬워진다.
+
+## ✅ 미확인 예외를 사용하라
+예전, 확인된 예외를 멋진 아이디어라고 생각했다.    
+하지만 지금은 **안정적인 소프트웨어를 제작하는 요소**로 **확인된 예외가 반드시 필요하지 않다**는 사실이 분명해졌다.    
+→ 확인된 오류가 **치르는 비용에 상응하는 이익을 제공**하는지 따져봐야 한다.
+    - 확인된 예외 : OCP(Open Closed Principle) 위반
+        - 메서드에서 확인된 예외를 던졌을 때, `catch` 블록이 세 단계 위에 있을 경우 그 사이 메서드 모두가 선언부에 해당 예외를 정의해야 함    
+        → 하위 단계에서 코드를 변경하면 상위 단계 메서드 선언부 전부를 고쳐야 한다는 의미     
+
+- **대규모 시스템에서의 호출 방식**
+    - 최상위 함수 : 아래 함수 호출
+    - 아래 함수 : 그 아래 함수 호출    
+    → 단계를 내려갈수록 호출하는 함수 수는 늘어남    
+- **확인된 오류를 던질 경우**
+    - 함수는 선언부에 `throws`절을 추가해야 함
+    - 변경하는 함수를 호출하는 함수 모두가    
+        1. `catch` 블록에서 새로운 예외를 처리하거나    
+        2. 선언부에 `throw`절을 추가해야 함    
+        → 최하위 단계에서 최상위 단계까지 연쇄적인 수정이 일어남을 의미    
+→ `throws` 경로에 위치하는 모든 함수가 최하위 함수에서 던지는 예외를 알아야 하므로 **캡슐화가 깨진다.**    
