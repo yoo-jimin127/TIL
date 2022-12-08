@@ -245,3 +245,82 @@ public class LocalPort {
 - 예외 클래스가 하나만 있어도 충분한 코드가 많다.
     - ex) 예외 클래스에 포함된 정보로 오류를 구분해도 괜찮은 경우
 - 한 예외는 잡아내고 다른 에외는 무시해도 괜찮은 경우 : 여러 예외 클래스를 사용
+
+## ✅ 정상 흐름을 정의하라
+위 지침을 따랐다면 비즈니스 논리와 오류 처리가 잘 분리된 코드가 나온다.    
+코드 대부분이 깨끗하고 간결한 알고리즘으로 보이기 시작한다.    
+→ 오류 감지가 프로그램 언저리로 밀려날 수 있다.     
+
+- 외부 API를 감싸 독자적인 예외를 던지고, 코드 위에 처리기를 정의해 중단된 계산을 처리하는 방식    
+→ 대게는 멋진 처리방식이나, 때로는 중단이 적합하지 않은 경우도 존재
+
+다음은 비용 청구 애플리케이션에서 총계를 계산하는 허술한 코드이다.
+```js
+// 7-5 예제
+// 식비를 비용으로 청구했다면 직원이 청구한 식비를 총계에 더한다.
+// 식비를 비용으로 청구하지 않았다면 일일 기본 식비를 총계에 더한다.
+try {
+    const expenses = expenseReportDAO.getMeals(employee.getID());
+    m_total += expenses.getTotal();
+} catch (e) {
+    m_total += getMealPerDiem();
+}
+```
+예외가 논리를 따라가기 어렵게 만든다.    
+→ 특수 상황을 처리할 필요가 없도록 리팩토링해보자.    
+
+```js
+// 7-5 예제 : 리팩토링한 코드
+const expenses = expenseReportDAO.getMeals(employee.getID());
+m_total += expenses.getTotal();
+```
+`ExpenseReportDAO`를 고쳐 언제나 `MealExpense` 객체를 반환하도록 한다.    
+청구한 식비가 없다면 일일 기본 식비를 반환하는 `MealExpense` 객체를 반환한다.    
+
+```js
+class PerDiemMealExpenses implements MealExpenses {
+    getTotal() {
+        // 기본 값으로 일일 기본 식비를 반환한다.
+    }
+}
+```
+- **특수 사례 패턴**(special case pattern)
+    - 클래스를 만들거나 객체를 조작해 특수 사례를 처리하는 방식    
+    → 클라이언트 코드가 예외적인 상황을 처리할 필요가 없어진다.    
+    → 클래스나 객체가 예외적인 상황을 캡슐화해 처리하기 때문.    
+
+## ✅ null을 반환하지 마라
+우리가 흔히 저지르는 바람에 오류를 유발하는 행위도 언급해야 한다.    
+ex) null을 반환하는 습관    
+```js
+// 7-6 예제
+function registerItm(item) {
+    if (item != null) {
+        const registry = persistentStore.getItemRegistry();
+        if (registry != null) {
+            const existing = registry.getItem(item.getID());
+            if (existing.getBillingPeriod().hasRetailOwner()) {
+                existing.register(item);
+            }
+        }
+    }
+}
+```
+위 코드는 나쁘다.    
+**null을 반환하는 코드는 일거리를 늘릴 뿐만 아니라 호출자에게 문제를 떠넘긴다.**    
+→ 누구 하나라도 null 확인을 빼먹는다면 애플리케이션이 통제 불능에 빠질지도 모른다.     
+<br />
+
+위 코드는 null 확인이 누락된 문제라 말하기 쉽다.    
+하지만 실상은 null 확인이 너무 많아서 문제이다.    
+- 메서드에서 null을 반환하고픈 유혹이 든다면? 그 대신 예외를 던지거나 특수 사례 객체를 반환
+- 사용하려는 외부 API가 null을 반환한다면? 감싸기 메서드를 구현해 예외를 던지거나 특수 사례 객체를 반환
+<br />
+
+많은 경우에 특수 사례 객체가 손쉬운 해결책    
+```js
+const employees = getEmployees();
+if (employees != null) {
+
+}
+```
