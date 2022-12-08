@@ -319,8 +319,80 @@ function registerItm(item) {
 
 많은 경우에 특수 사례 객체가 손쉬운 해결책    
 ```js
+// 7-7 예제
 const employees = getEmployees();
 if (employees != null) {
-
+    for (let e in employees) {
+        totalPay += e.getPay();
+    }
 }
 ```
+`getEmployees`를 변경해 빈 리스트를 반환해 코드를 더욱 깔끔하게 해보자.    
+```js
+// 7-7 예제 : 리팩토링 코드
+const employees = getEmployees();
+for (let e in employees) {
+    totalPay += e.getPay();
+}
+```
+- java의 경우 : `Collections.emptyList()`로 미리 정의된 읽기 전용 리스트 반환 가능
+```java
+// 7-7 예제 : 리팩토링 코드 (in java)
+public List<Employee> getEmployees() {
+    if (.. 직원이 없다면 ..)
+        return Collections.emptyList();
+}
+```
+위 코드 : 코드가 깔끔해짐 + `NullPointerException` 발생 가능성 ↓    
+
+## ✅ null을 전달하지 마라
+메서드에서 null을 반환하는 방식도 나쁘나, 메서드로 null을 전달하는 방식은 더 나쁘다.    
+정상적인 인수로 null을 기대하는 API가 아닐 경우 메서드로 null을 전달하는 코드를 최대한 피할 것.    
+```js
+// 7-8 예제
+class MetricsCalculator {
+    xProjection(p1, p2) {
+        return (p2.x - p1.x) * 1.5;
+    }
+    ...
+}
+```
+인수로 null을 전달할 경우 어떤 일이 벌어질까?    
+`calculator.xProjection(null, new Point(12,13));` → `NullPointerException` 발생    
+
+- 새로운 예외 유형을 만들어 던지는 방법
+```js
+// 7-8 예제 : 리팩토링 코드
+class MetricsCalculator {
+    xProjection(p1, p2) {
+        if (p1 == null || p2 == null) {
+            throw new Error("Invalid argument for MetricsCalculator.xProjection");
+        }
+        return (p2.x - p1.x) * 1.5;
+    }
+}
+```
+위 코드는 `InvaludArgumentException`을 잡아내는 처리기가 필요    
+→ `assert` 문을 사용하는 방법    
+```js
+class MetricsCalculator {
+    xProjection(p1, p2) {
+        console.assert(p1 != null, "p1 should not be null");
+        console.assert(p2 != null, "p2 should not be null");
+        return (p2.x - p1.x) * 1.5;
+    }
+}
+```
+문서화가 잘 되어 코드 읽기는 편하나, 문제를 해결하지는 못한다.    
+→ 누군가 null을 전달할 경우 여전히 실행 오류 발생    
+
+대다수 프로그래밍 언어는 호출자가 실수로 넘기는 null을 적절히 처리하는 방법이 없다.    
+애초에 null을 넘기지 못하도록 금지하는 정책이 합리적이다.    
+즉, 인수로 null이 넘어오면 코드에 문제가 있다는 것이다.    
+이런 정책을 따르면 그만큼 부주의한 실수를 저지를 확률도 작아진다.    
+
+## ▶️ 결론
+깨끗한 코드는 읽기도 좋아야 하지만 **안정성도 높아야 한다.**    
+코드의 가독성과 안정성은 상충하는 목표가 아니다.    
+**오류 처리를 프로그램 논리와 분리해 독자적인 시안으로 고려**할 경우 튼튼하고 깨끗한 코드를 작성할 수 있다.    
+**오류 처리를 프로그램 논리와 분리**하면 **독립적인 추론**이 가능해지며, **코드 유지보수성**도 크게 높아진다.    
