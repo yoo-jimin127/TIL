@@ -146,3 +146,102 @@ function retrieveSection(sectionName) {
         2. 선언부에 `throw`절을 추가해야 함    
         → 최하위 단계에서 최상위 단계까지 연쇄적인 수정이 일어남을 의미    
 → `throws` 경로에 위치하는 모든 함수가 최하위 함수에서 던지는 예외를 알아야 하므로 **캡슐화가 깨진다.**    
+→ 오류를 원거리에서 처리하기 위해 예외를 사용한다는 사실을 감안할 경우, **확인된 예외가 캡슐화를 깨버리는 현상**이 발생할 수 있다.     
+
+- 확인된 예외가 유용한 경우도 존재
+    - ex) 아주 중요한 라이브러리를 작성할 때
+
+### ✅ 예외에 의미를 제공하라
+예외를 던질 때에는 전후 상황을 충분히 덧붙일 것.    
+   → 오류의 발생 원인과 위치를 찾기 쉬워진다.    
+**오류 메시지에 정보**를 담아 **예외와 함께 던진다.**    
+    - 실패한 연산 이름과 실패 유형도 언급
+    - 애플리케이션이 로깅 기능을 사용할 때 `catch`블록에서 오류를 기록하도록 충분한 정보를 넘겨준다.    
+
+### ✅ 호출자를 고려해 예외 클래스를 정의하라
+오류를 분류하는 방법은 수없이 많다.    
+    - 오류가 발생한 위치로 분류
+    - 오류가 발생한 컴포넌트로 분류
+    - 유형으로 분류 ex) `디바이스 실패`, `네트워크 실패`, `프로그래밍 오류`
+애플리케이션에서 오류를 정의할 때 프로그래머에게 가장 중요한 관심사 : **오류를 잡아내는 방법**
+
+- 오류를 형편없이 분류한 사례
+    - 외부 라이브러리를 호출하는 `try-catch-finally`문을 포함한 코드
+    - 외부 라이브러리가 던질 예외를 모두 잡아내는 코드.
+```js
+// 7-4 예제
+const port = new ACMEPort(12);
+
+try {
+    port.open();
+} catch (e) {
+    reportPortError(e);
+    console.log("Device response exception", e);
+} catch (e) {
+    reportPortError(e);
+    console.log("Unlock exception", e);
+} catch (e) {
+    reportPortError(e);
+    console.log("Device response exception", e);
+} finally {
+    // ...
+}
+```
+- 위 코드 : 중복이 심하지만 그리 놀랍지 않다.
+- 대다수 상황에서 오류를 처리하는 방식은 (오류를 일으킨 원인과 무관하게) 비교정 일정하다.    
+    1. 오류를 기록한다.    
+    2. 프로그램을 계속 수행해도 좋은지 확인한다.    
+    
+- 위의 경우 예외에 대응하는 방식이 예외 유형과 무관하게 거의 동일하다.
+
+```js
+// 7-4 예제 리팩토링 코드
+// 호출하는 라이브러리 API를 감싸 예외 유형 하나를 반환하는 방식
+const port = new LocalPort(12);
+try {
+    port.open();
+} catch (e) {
+    reportError(e);
+    console.log(e.getMessage(), e);
+} finally {
+    // ...
+}
+```
+- 위 `LocalPort` 클래스는 단순히 `ACMEPort` 클래스가 던지는 예외를 잡아 변환하는 감싸기(wrapper)클래스의 역할만을 수행한다.
+
+```java
+// 7-4 예제 확장 ver. (java)
+public class LocalPort {
+    private ACMEPort innerPort;
+
+    public LocalPort(int portNumber) {
+        innerPort = new ACMEPort(portNumber);
+    }
+
+    public void open() {
+        try {
+            innerPort.open();
+        } catch (DeviceResponseException e) {
+            throw new PortDeviceFailure(e);
+        } catch (ATM1212UnlickedException e) {
+            throw new PortDeviceFailure(e);
+        } catch (GMXError e) {
+            throw new PortDeviceFailure(e);
+        }
+    }
+}
+```
+- `LocalPort` 클래스와 같이 `ACMEPort`를 감싸는 클래스는 유용하다.
+<br/>
+
+- **외부 API를 사용**할 때 : **감싸기 기법**이 최선
+    - 외부 API를 감싸면 외부 라이브러리와 프로그램 사이의 의존성이 크게 줄어든다.
+    - 추후 다른 라이브러리로 갈아타도 비용이 적다.
+    - 감싸기 클래스에서 외부 API를 호출하는 대신 테스트 코드를 넣어주는 방법으로 프로그램 테스트하는 것도 쉬워진다.
+    - 특정 업체가 API를 설계한 방식에 발목 잡히지 않는다.
+        - 프로그램이 사용하기 편리한 API를 정의하면 된다.
+<br/>
+
+- 예외 클래스가 하나만 있어도 충분한 코드가 많다.
+    - ex) 예외 클래스에 포함된 정보로 오류를 구분해도 괜찮은 경우
+- 한 예외는 잡아내고 다른 에외는 무시해도 괜찮은 경우 : 여러 예외 클래스를 사용
