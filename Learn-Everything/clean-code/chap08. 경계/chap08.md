@@ -79,22 +79,43 @@ class Sensors() {
 
 (참고 : [https://www.hanbit.co.kr/channel/category/category\_view.html?cms\_code=CMS4250329609](https://www.hanbit.co.kr/channel/category/category_view.html?cms_code=CMS4250329609))
 
-```python
-def testLogCreate():
-    # 1. 로거 인스턴스를 만든다
-    logger = logging.getLogger('mylogger')
+```java
+public class LogTest {
+  private Logger logger;
+  
+  @Before
+  public void initialize() {
+    logger = Logger.getLogger("logger");
+    logger.removeAllAppenders();
+    Logger.getRootLogger().removeAllAppenders();
+  }
+  
+  @Test
+  public void basicLogger() {
+    BasicConfiguurator.configure();
+    logger.info("basicLogger");
+  }
+  
+  @Test
+  public void addAppenderWithStream() {
+    logger.addAppender(
+    	new ConsoleAppender(
+      	new PatternLayout("%p %t %m%n")
+      )
+    );
+    logger.info("addAppenderWithStream");
+  }
  
-    # 2. 스트림과 파일로 로그를 출력하는 핸들러를 각각 만든다.
-    fileHandler = logging.FileHandler('./myLoggerTest.log')
-    streamHandler = logging.StreamHandler()
- 
-    # 3. 1번에서 만든 로거 인스턴스에 스트림 핸들러와 파일핸들러를 붙인다.
-    logger.addHandler(fileHandler)
-    logger.addHandler(streamHandler)
-    
-    # 4. 로거 인스턴스로 로그를 찍는다.
-    logger.setLevel(logging.DEBUG)
-    logger.info("hello")
+  @Test
+  public void addAppenderWithoutStream() {
+    logger.addAppender(
+    	new ConsoleAppender(
+      	new PatternLayout("%p %t %m%n")
+      )
+    );
+    logger.info("addAppenderWithoutStream");
+  }
+}
 ```
 
 ### **학습 테스트는 공짜 이상이다**
