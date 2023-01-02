@@ -181,7 +181,7 @@ test('turnOnLoTempAlarmAtThreashold', () => {
   expect(hw.heaterState()).toBeTruthy();
   expect(hw.blowerState()).toBeTruthy();
   expect(hw.coolerState()).toBeFalsy();
-	expect(hw.hiTempAlarm()).toBeFalsy();
+  expect(hw.hiTempAlarm()).toBeFalsy();
   expect(hw.loTempAlarm()).toBeTruthy();
 })
 ```
@@ -271,21 +271,21 @@ describe('testAddMonths', () => {
   test('add 1 month & finish with 30', () => {
     const d2 = SerialDate.addMonths(1, d1);
     expect(d2.getDayOfMonth()).toBe(30);
-		expect(d2.getMonth()).toBe(6);
+	expect(d2.getMonth()).toBe(6);
     expect(d2.getYYYY()).toBe(2004);
   });
   
   test('add 2 months & finish with 31', () => {
     const d3 = SerialDate.addMonths(2, d1);
     expect(d3.getDayOfMonth()).toBe(31);
-		expect(d3.getMonth()).toBe(7);
+	expect(d3.getMonth()).toBe(7);
     expect(d3.getYYYY()).toBe(2004);
   });
   
   test('add 1 months & finish with 30', () => {
     const d4= SerialDate.addMonths(2, SerialDate.addMonths(1, d1));
     expect(d4.getDayOfMonth()).toBe(30);
-		expect(d4.getMonth()).toBe(7);
+	expect(d4.getMonth()).toBe(7);
     expect(d4.getYYYY()).toBe(2004);
   });
 })
