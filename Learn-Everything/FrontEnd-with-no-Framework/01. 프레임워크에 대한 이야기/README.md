@@ -159,4 +159,200 @@ const Box = posed.div({
         duration: 500
     }
 });
+
+class PosedExample extends Component { 
+    constructor (props) {
+        super(props) 
+        this.state = {
+            isVisible: true
+        }
+
+        this.toggle = this.toggle.bind(this)
+    }
+
+    toggle() {
+        this.setState({
+            isVisible: !this.state.isVisible 
+        })
+    }
+
+render () {
+    const { isVisible } = this.state
+    const pose = isVisible ? 'visible' : 'hidden'
+    return ( 
+        <div>
+            <Box className= 'box' pose={pose} />
+            <button onClick={this.toggle}>Toggle‹/button>
+        </div> 
+        )
+    }
+}
+
+export default PosedExample;
 ```
+리액트에서 사용하는 **선언적 패턴**    
+
+- 웹 애니메이션 API를 사용한 리액트 애니메이션
+```js
+// 1-8
+import React, { Component } from 'react';
+const animationTiming = { 
+    duration: 500,
+    ease: 'linear',
+    fill : 'forwards'
+}
+
+const showKeyframes = [ 
+    { opacity: 0 },
+    { opacity: 1 } 
+]
+
+const hideKeyframes = [ 
+    ...showKeyframes
+].reverse()
+
+class PosedExample extends Component { 
+    constructor (props) {
+        super(props) 
+        this.state = {
+            isVisible: true
+        }
+
+    this.toggle = this.toggle.bind(this)
+    }
+
+    toggle () { 
+        this.setState({
+            isVisible: !this.state.isVisible
+        })
+    }
+
+    componentDidUpdate (prevProps, prevstate) { 
+        const { isVisible } = this.state
+        if (prevState.isVisible !== isVisible) {
+            const animation = isVisible ? showKeyframes : hideKeyframes
+            this.div.animate(animation, animationTiming)
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <div ref={div => {this.div = div}} className='box' />
+                <button onClick={this.toggle}>Toggle</button>
+            </div>
+        )
+    }
+```
+명령형 패턴으로 사각형을 움직이는 코드    
+→ 필자가 리액트가 라이브러리가 아닌 프레임워크라고 믿는 이유    
+> 팁 : 작업을 처리할 때 **프레임워크 방식**을 사용하고 있다면 프레임워크라고 볼 수 있다.
+
+## ✅ 자바스크립트 프레임워크 연혁
+### ▶️ 제이쿼리
+- 선택자 구문
+    - ex) `var element = $('.my-class')`
+- 브라우저 간 공통어를 만듦
+- ajax 요청, 애니메이션, 기타 유틸리티 등의 기능 추가
+- jqueryUI라는 공식 UIKit을 통해 웹에서 모든 요구 사항을 만족시킬 수 있게 됨
+
+### ▶️ AngularJS
+- SPA 개발에 큰 역할
+- **양방향 데이터 바인딩**
+    - ex) AngularJS의 지시문(디렉티브)인 `ng-model` 사용
+```js
+// 1-9
+<div ng-app="app" ng-controller="ctrl">
+    Value: <input ng-model="value">
+    <h1>You entered: {{value}}</h1>
+</div> 
+
+<script>
+    angular
+    .module ('app', [])
+    .controller ('ctri', [ 
+        '$scope',
+        $scope => { 
+            $scope.value = 'initial value'
+        } 
+    ]);
+</script>
+```
+- `$scope`의 모든 변경 사항은 DOM에 자동으로 적용됨
+- 입력 이벤트는 `$scope` 객체에 새로운 값을 생성함
+
+- 양방향 데이터 바인딩 스키마
+    - 대규모 애플리케이션에 적합하지 않아 많은 개발자들이 AngularJS를 떠나게 됨
+![image](https://user-images.githubusercontent.com/66112716/210302613-ab8248ff-e8cf-4384-a43e-60f87e3960b0.png)
+
+### ▶️ 리액트
+- 라이프사이클 메서드를 갖고 있는 기본 리액트 구성 요소
+```js
+// 1-9
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+
+class Timer extends Component { 
+    constructor (props) {
+        super(props) 
+        this.state = {
+            seconds: 0
+        }
+    }
+
+    componentDidMount () {
+        this.interval = setInterval(() >= { 
+            const { seconds } = this.state
+            this.setState({
+                seconds: seconds + 1
+            })
+        },1000) 
+    }
+
+    componentWillUnmount() { 
+        clearInterval (this.interval)
+    }
+
+    render(){
+        const { seconds } = this.state 
+        return (
+            <div>
+                Seconds Elapsed: {seconds} 
+            </div>
+        )
+    }
+}
+
+const mountNode = document. getElementById('app') 
+render (<Timer></Timer>, mountNode)
+```
+- 리액트 : **선언적 패러다임**으로 동작
+- DOM을 직접 수정하는 대신 `setState()` 메서드의 **상태를 변경**하면 리액트가 나머지 작업 수행
+- 리액트는 기술적으로 보면, 프레임워크가 아닌 *렌더링 라이브러리*
+
+### ▶️ Angular (Angular2)
+- 엔터프라이즈 세계를 타깃으로 해 출시
+- AngularJS (Angular1)은 SPA 개발에 사용되었으나, 대규모 애플리케이션용으로 설계된 것이 아님
+    - TypeScript를 표준으로 Angular 릴리즈
+        - 자바, C# 개발자가 프론트엔드 애플리케이션 개발에 쉽게 접근할 수 있게 됨
+
+### ▶️ 기술 부채
+> 프로젝트에 기능을 추가할 때에는 여러 옵션이 존재한다.
+> 어떤 것은 빠르지만 지저분한 반면, 어떤 것은 잘 설계되었지만 느리다.
+→ **워드 커닝 햄 - 기술 부채** 개념 도입    
+- 지저분한 솔루션을 선택할수록 부채는 늘어남
+    - 시간이 지남에 따라 기존 기능의 변경 및 새로운 기능의 추가에 따르는 비용이 기하급수적으로 늘어남
+![스크린샷 2023-01-03 오후 2 40 50](https://user-images.githubusercontent.com/66112716/210305160-88f7736a-4e3b-4f76-8b2e-f978211e4c21.png)
+
+### ▶️ 프레임워크 비용
+- 필자의 생각 : 모든 프레임워크가 기술 부채를 가지고 있음
+    → 최적이 아닌 방법을 선택할 때 부채가 발생하기 시작    
+    → **내 문제를 해결하는 데 있어 다른 사람의 코드가 최적이 될 수 없음**    
+- 미래에 코드 변경이 어렵다는 측면에서 보았을 때, **모든 프레임워크에는 비용이 발생함**
+    - 프레임워크는 아키텍쳐 자체에 이미 비용을 포함함
+    - 연쇄적인 비용 발생
+
+### ▶️ 기술 투자
+*기술 부채가 반드시 나쁜 것만은 아님*    
+합리적인 이유로 빠른 솔루션을 사용한다면 기술 부채가 아닌 **기술 투자**가 됨    
+합당한 이유로 선정된 프레임워크는 **비용이 아니라 자산**    
