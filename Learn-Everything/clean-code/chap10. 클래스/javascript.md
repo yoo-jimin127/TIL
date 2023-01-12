@@ -18,16 +18,19 @@
 1. 공개(public) 변수와 함수를 먼저 작성한다
 2. 그 후에 비공개(private) 변수와 함수를 작성한다
 
-```cpp
+```js
 class Student{
-public:
-	char name[20]="";
-	int age=0;
-	void show(){
-		cout<<name<<endl<<age<<endl<<id<<endl;
+    constructor(name, age, id) {
+        this.name = name;
+        this.age = age;
+        this._id = 12345678;
+    }
+
+	show(){
+        console.log(name, '\n');
+        console.log(age, '\n');
+        console.log(_id, '\n');
 	}
-private:
-	int id=123124123;
 }
 ```
 
@@ -161,23 +164,26 @@ public class Version {
 → 일반적으로 메서드가 변수를 더 많이 사용할수록 응집도가 높아진다.
 - 우리는 응집도가 높은 클래스를 선호한다.
   → 응집도가 높다는 소리는 클래스에 속한 메서드와 변수로 서로 의존하며 논리적인 단위로 묶인다는 의미기 때문이다.
-```cpp
+```js
 class Stack {
-	int topOfStack = 0;
-	List<int> elements;
-public:
-	int size() {
-		return topOfStack;
+    constructor(topOfStack, elements) {
+        this.topOfStack = 0;
+        this.elements = [];
+    }
+	size() {
+		return this.topOfStack;
 	}
-	void push(int element) {
-		topOfStack++;
-		elements.add(element);
+    
+    push(element) {
+		this.topOfStack++;
+		this.elements.add(element);
 	}
-	int pop() throws PoppedWhenEmpty {
-		if (topOfStack == 0)
-			throw new PoppedWhenEmpty();
-		int element = elements.get(--topOfStack);
-		elements.remove(topOfStack);
+
+	pop(){
+		if (this.topOfStack == 0)
+			throw new Error("PoppedWhenEmpty");
+		const element = this.elements.get(--this.topOfStack);
+		this.elements.remove(this.topOfStack);
 		return element;
 	}
 }
@@ -189,27 +195,34 @@ public:
 - 큰 함수를 작은 함수 여럿으로 나누기만 해도 클래스 수가 많아진다
   - 예를들어 변수가 아주 많은 큰 함수 하나가 있다. 큰 함수 일부를 작은 함수 하나로 빼내고 싶은데, 빼내려는 코드가 큰 함수에 정의된 변수 넷을 사용한다.
     → 네 변수를 클래스 인스턴스 변수로 승격한다면 새 함수는 인수가 필요없다.
-  ```cpp
-  class AAA{
-  public:
-  	void fourOperations(){
-  		int a=1,b=2,c,3,d=4;
-  		cout<<a+b+c+d<<endl;
-  		... //많은 양의 코드들
-  	}
+```js
+class AAA{
+	fourOperations(){
+      const a = 1;
+      const b = 2;
+      const c = 3;
+      const d = 4;
+		console.log(parseInt(a) + parseInt(b) + parseInt(c) + parseInt(d));
+		... //많은 양의 코드들
+	}
+}
+```
+```js
+class AAA{
+  constructor(a, b, c, d) {
+      this.a = 1;
+      this.b = 2;
+      this.c = 3;
+      this.d = 4;
+      //fourOperations 안에 있는 a,b,c,d를 클래스 인스턴스 변수로 만들어줌
   }
-  ```
-  ```cpp
-  class AAA{
-  public:
-  	int a=1,b=2,c=3,d=4; //fourOperations 안에 있는 a,b,c,d를 클래스 인스턴스 변수로 만들어줌
-  	void sum(){ //인수 없이 사용가능.
-  		cout<<a+b+c+d<<endl;
-  	}
-  	void fourOperations(){
-  	}
-  }
-  ```
+	sum(){ //인수 없이 사용가능.
+		console.log(this.a + this.b + this.c + this.d);
+	}
+	fourOperations(){
+	}
+}
+```
 - 하지만 이렇게 되면 클래스가 응집력을 잃는다. 몇몇 함수만 사용하는 인스턴스 변수가 점점 늘어나기 때문.
   → 이렇게 응집력을 잃는다면 클래스를 쪼개라!
   → 큰 함수를 작은 함수, 큰 클래스를 작은 클래스로 쪼개다 보면 프로그램에 점점 더 체계가 잡히고 구조가 투명해진다.
@@ -498,6 +511,7 @@ public class PrimeGenerator {
   public:
   	ColumnList(Column[] columns)
   	string generate()
+  }
   }
   ```
   - 이렇게 고친다면 각 클래스는 극도로 단순해지고 코드를 순식간에 이해할 수 있다.
