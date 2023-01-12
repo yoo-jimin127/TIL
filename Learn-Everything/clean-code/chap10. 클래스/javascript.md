@@ -20,16 +20,17 @@
 
 ```js
 class Student{
-    constructor(name, age, id) {
+	#id = 12345678;
+    
+	constructor(name, age) {
         this.name = name;
         this.age = age;
-        this._id = 12345678;
     }
 
 	show(){
-        console.log(name, '\n');
-        console.log(age, '\n');
-        console.log(_id, '\n');
+        console.log(this.name, '\n');
+        console.log(this.age, '\n');
+        console.log(#id, '\n');
 	}
 }
 ```
@@ -202,8 +203,8 @@ class AAA{
       const b = 2;
       const c = 3;
       const d = 4;
-		console.log(parseInt(a) + parseInt(b) + parseInt(c) + parseInt(d));
-		... //많은 양의 코드들
+	  console.log(a + b + c + d);
+	  ... //많은 양의 코드들
 	}
 }
 ```
@@ -436,21 +437,45 @@ public class PrimeGenerator {
 - 대다수의 시스템은 지속적인 변경이 가해진다. 또한 변경할 때마다 시스템이 의도대로 동작하지 않을 위험이 따른다.
   → 깨끗한 시스템은 클래스를 체계적으로 정리해 변경에 수반하는 위험을 낮춘다.
 - 다음은 SQL 문자열을 만드는 sql 클래스다.
-  ```cpp
+  ```js
   class Sql {
-  public:
-  	Sql(String table, Column[] columns)
-  	string create()
-  	string insert(Object[] fields)
-  	string selectAll()
-  	string findByKey(String keyColumn, String keyValue)
-  	string select(Column column, String pattern)
-  	string select(Criteria criteria)
-  	string preparedInsert()
-  private:
-  	string columnList(Column[] columns)
-  	string valuesList(Object[] fields, final Column[] columns) private String selectWithCriteria(String criteria)
-  	string placeholderList(Column[] columns)
+  	Sql(table, columns) {
+		throw new Error("Sql is not implemented");
+	}
+  	create() {
+		throw new Error("create() method is not implemented");
+	}
+  	insert(fields) {
+		throw new Error("create() method is not implemented");
+	}
+  	selectAll() {
+		throw new Error("selectAll() method is not implemented");
+	}
+  	findByKey(keyColumn, keyValue) {
+		throw new Error("findByKey() method is not implemented");
+	}
+  	select(column, pattern) {
+		throw new Error("select() method is not implemented");
+	}
+  	select(criteria) {
+		throw new Error("select() method is not implemented");
+	}
+  	preparedInsert() {
+		throw new Error("preparedInsert() method is not implemented");
+	}
+
+  	#columnList(columns) {
+		throw new Error("columnList() method is not implemented");
+	}
+  	#valuesList(fields, columns) {
+		throw new Error("valuesList() method is not implemented");
+	} 
+	#selectWithCriteria(criteria) {
+		throw new Error("selectWithCriteria() method is not implemented");
+	}
+  	#placeholderList(columns) {
+		throw new Error("placeholderList() method is not implemented");
+	}
   }
   ```
   - 두가지 이유로 변경을 해야하므로 SRP 위반
