@@ -13,28 +13,6 @@
 
 ⇒ 추상화 단계가 순차적으로 내려간다.
 
-(c++의 경우)
-
-1. 공개(public) 변수와 함수를 먼저 작성한다
-2. 그 후에 비공개(private) 변수와 함수를 작성한다
-
-```js
-class Student{
-	#id = 12345678;
-    
-	constructor(name, age) {
-        this.name = name;
-        this.age = age;
-    }
-
-	show(){
-        console.log(this.name, '\n');
-        console.log(this.age, '\n');
-        console.log(#id, '\n');
-	}
-}
-```
-
 ### 캡슐화
 
 - 변수와 유틸리티 함수는 가능한 공개하지 않는 편이 좋다. (반드시는 아니다)
@@ -167,26 +145,24 @@ public class Version {
   → 응집도가 높다는 소리는 클래스에 속한 메서드와 변수로 서로 의존하며 논리적인 단위로 묶인다는 의미기 때문이다.
 ```js
 class Stack {
-    constructor(topOfStack, elements) {
-        this.topOfStack = 0;
-        this.elements = [];
-    }
-	size() {
-		return this.topOfStack;
-	}
-    
-    push(element) {
-		this.topOfStack++;
-		this.elements.add(element);
-	}
-
-	pop(){
-		if (this.topOfStack == 0)
-			throw new Error("PoppedWhenEmpty");
-		const element = this.elements.get(--this.topOfStack);
-		this.elements.remove(this.topOfStack);
-		return element;
-	}
+  topOfStack;
+  elements;
+  constructor(topOfStack = 0, elements = []) {
+    this.topOfStack = topOfStack;
+    this.elements = elements;
+  }
+  size() {
+    return this.topOfStack;
+  }
+  push(element) {
+    this.topOfStack++;
+    this.elements[this.topOfStack] = element;
+  }
+  pop() {
+    if (this.topOfStack === 0) throw new Error('PoppedWhenEmpty');
+    const element = this.elements[--this.topOfStack];
+    return element;
+  }
 }
 ```
 - 위 Stack 클래스는 응집도가 아주 높다. size()를 제외한 다른 두 메서드는 두 변수를 모두 사용한다.
@@ -196,34 +172,41 @@ class Stack {
 - 큰 함수를 작은 함수 여럿으로 나누기만 해도 클래스 수가 많아진다
   - 예를들어 변수가 아주 많은 큰 함수 하나가 있다. 큰 함수 일부를 작은 함수 하나로 빼내고 싶은데, 빼내려는 코드가 큰 함수에 정의된 변수 넷을 사용한다.
     → 네 변수를 클래스 인스턴스 변수로 승격한다면 새 함수는 인수가 필요없다.
-```js
-class AAA{
-	fourOperations(){
+  ```js
+  class AAA {
+    fourOperations() {
       const a = 1;
       const b = 2;
       const c = 3;
       const d = 4;
-	  console.log(a + b + c + d);
-	  ... //많은 양의 코드들
-	}
-}
-```
-```js
-class AAA{
-  constructor(a, b, c, d) {
+      console.log(a + b + c + d);
+      ... //많은 양의 코드들
+    }
+  }
+  ```
+  ```typescript
+  class AAA {
+    a;
+    b;
+    c;
+    d;
+  
+    constructor() {
       this.a = 1;
       this.b = 2;
       this.c = 3;
       this.d = 4;
-      //fourOperations 안에 있는 a,b,c,d를 클래스 인스턴스 변수로 만들어줌
+      // fourOperations 안에 있는 a,b,c,d를 클래스 인스턴스 변수로 만들어줌
+    }
+  
+    sum() {
+      // 인수 없이 사용가능.
+      console.log(this.a + this.b + this.c + this.d);
+    }
+  
+    fourOperations() {}
   }
-	sum(){ //인수 없이 사용가능.
-		console.log(this.a + this.b + this.c + this.d);
-	}
-	fourOperations(){
-	}
-}
-```
+  ```
 - 하지만 이렇게 되면 클래스가 응집력을 잃는다. 몇몇 함수만 사용하는 인스턴스 변수가 점점 늘어나기 때문.
   → 이렇게 응집력을 잃는다면 클래스를 쪼개라!
   → 큰 함수를 작은 함수, 큰 클래스를 작은 클래스로 쪼개다 보면 프로그램에 점점 더 체계가 잡히고 구조가 투명해진다.
@@ -438,107 +421,71 @@ public class PrimeGenerator {
   → 깨끗한 시스템은 클래스를 체계적으로 정리해 변경에 수반하는 위험을 낮춘다.
 - 다음은 SQL 문자열을 만드는 sql 클래스다.
   ```js
-  class Sql {
-  	Sql(table, columns) {
-		throw new Error("Sql is not implemented");
-	}
-  	create() {
-		throw new Error("create() method is not implemented");
-	}
-  	insert(fields) {
-		throw new Error("create() method is not implemented");
-	}
-  	selectAll() {
-		throw new Error("selectAll() method is not implemented");
-	}
-  	findByKey(keyColumn, keyValue) {
-		throw new Error("findByKey() method is not implemented");
-	}
-  	select(column, pattern) {
-		throw new Error("select() method is not implemented");
-	}
-  	select(criteria) {
-		throw new Error("select() method is not implemented");
-	}
-  	preparedInsert() {
-		throw new Error("preparedInsert() method is not implemented");
-	}
-
-  	#columnList(columns) {
-		throw new Error("columnList() method is not implemented");
-	}
-  	#valuesList(fields, columns) {
-		throw new Error("valuesList() method is not implemented");
-	} 
-	#selectWithCriteria(criteria) {
-		throw new Error("selectWithCriteria() method is not implemented");
-	}
-  	#placeholderList(columns) {
-		throw new Error("placeholderList() method is not implemented");
-	}
+  interface Sql {
+    table;
+    columns;
+  
+    create();
+    insert(fields);
+    selectAll();
+    findByKey(keyColumn, keyValue);
+    select(column, pattern);
+    preparedInsert();
+    columnList(columns);
+    valuesList(fields, columns);
+    selectWithCriteria(criteria);
+    placeholderList(columns);
   }
   ```
   - 두가지 이유로 변경을 해야하므로 SRP 위반
     1. 새로운 SQL문을 지원할때 sql 클래스를 변경해야함
     2. 기본 sql문을 수정할때도 sql 클래스를 변경해야함
 - 위에서 공개 인터페이스를 각각 sql 클래스에서 파생하는 클래스로 만들었다.
-  ```cpp
-  class Sql {
-  public:
-  	Sql(String table, Column[] columns)
-  	virtual string generate();
+  ```js
+  interface Sql {
+    table;
+    columns;
+    generate();
   }
-  class CreateSql : public Sql {
-  public:
-  	CreateSql(String table, Column[] columns)
-  	string generate()
+  
+  interface CreateSql extends Sql {}
+  
+  interface SelectSql extends Sql {}
+  
+  interface InsertSql extends Sql {
+    fields;
+    valuesList(fields, column);
   }
-  class SelectSql :public Sql {
-  	public:
-  	SelectSql(String table, Column[] columns)
-  	string generate()
+  
+  interface SelectWithCriteriaSql extends Sql {
+    criteria;
   }
-  class InsertSql :public Sql {
-  public:
-  	InsertSql(String table, Column[] columns, Object[] fields)
-  	string generate()
-  private:
-  	string valuesList(Object[] fields, final Column[] columns)
+  
+  interface SelectWithMatchSql extends Sql {
+    column;
+    pattern;
   }
-  class SelectWithCriteriaSql :public Sql {
-  	public:
-  SelectWithCriteriaSql(string table, Column[] columns, Criteria criteria)
-  	string generate()
+  
+  interface FindByKeySql extends Sql {
+    keyColumn;
+    keyValue;
   }
-  class SelectWithMatchSql :public Sql {
-  public:
-  	SelectWithMatchSql(string table, Column[] columns, Column column, string pattern)
-  	string generate()
+  
+  interface PreparedInsertSql extends Sql {
+    placeholderList(columns);
   }
-  class FindByKeySql :public Sql {
-  public:
-  	FindByKeySql(string table, Column[] columns, string keyColumn, string keyValue)
-  	string generate()
+  
+  interface Where {
+    criteria;
+    generate();
   }
-  class PreparedInsertSql :public Sql {
-  public:
-  	PreparedInsertSql(string table, Column[] columns)
-  	string generate() {
-  private:
-  	string placeholderList(Column[] columns)
-  }
-  public class Where {
-  public:
-  	Where(string criteria);
-  	string generate()
-  }
-  public class ColumnList {
-  public:
-  	ColumnList(Column[] columns)
-  	string generate()
-  }
+  
+  interface ColumnList {
+    columns;
+    generate();
   }
   ```
+  
   - 이렇게 고친다면 각 클래스는 극도로 단순해지고 코드를 순식간에 이해할 수 있다.
   - 또한 함수 하나를 수정했다고 다른 함수가 망가질 위험도 사실상 사라진다.
   - 새로운 sql문을 추가하여도 다른 코드가 망가지지 않는다.
@@ -553,38 +500,38 @@ public class PrimeGenerator {
   - 예를 들어, PortFolio 클래스를 만든다고 가정하자. 그런데 이 클래스는 TokyoStockExchange라는 외부 api를 사용해 값을 계산한다.
     → 5분마다 값이 달라지는 api이므로 테스트 코드를 짜기란 쉽지 않다.
 - 그래서 직접 api를 호출하는게 아닌 exchange라는 추상클래스 생성 후 메서드를 하나 선언
-```cpp
-class stockExchange {
-	virtual Money currentPrice(String Symbol);
+```js
+interface StockExchange {
+	currentPrice(Symbol);
 }
 ```
 - 다음으로 StockExchange 추상클래스를 구현하는 TokyoStockExchange 클래스를 구현.
   또한 PortFolio 생성자를 수정해 StockExchange 참조를 인수로 받는다.
-```cpp
+```js
 class Portfolio {
-	StockExchange exchange;
-	public Portfolio
+  private exchange;
+  constructor(exchange) {
+    this.exchange = exchange
+  }
 }
 ```
 - 이제 TokyoStockExchange 클래스를 흉내내는 테스트용 클래스를 만들 수 있다.
   - 테스트용 클래스는 StockExchagne 추상클래스를 사용하여 고정된 주가를 반환.
   - 고정된 값을 테스트에 이용.
-```cpp
+```js
 // 테스트용 클래스는 StockExchange 인터페이스를 구현하며 고정된 주가를 반환한다.
 class PortfolioTest {
-	FixedStockExchangeStub exchange;
-	Portfolio portfolio;
-protected:
-	void setUp() throws Exception {
-		exchange = new FixedStockExchangeStub();
-		exchange.fix("MSFT", 100);
-		portfolio = new Portfolio(exchange);
-	}
-public:
-	void GivenFiveMSFTTotalShouldBe500() throws Exception {
-		portfolio.add(5, "MSFT");
-		Assert.assertEquals(500, portfolio.value());
-	}
+  private exchange;
+  private portfolio;
+  protected setUp() {
+    this.exchange = new FixedStockExchangeStub();
+    this.exchange.fix('MSFT', 100);
+    this.portfolio = new Portfolio(this.exchange);
+  }
+  GivenFiveMSFTTotalShouldBe500() {
+    portfolio.add(5, 'MSFT');
+    Assert.assertEquals(500, portfolio.value());
+  }
 }
 ```
 - 위에서 개선한 Portfolio 클래스는 상세 구현 클래스가 아닌 StockExchange라는 인터페이스에 의존하므로,실제로 주가를 얻어오는 출처나 얻어오는 방식 등과 같은 구체적인 사실을 모두 숨길 수 있다.
