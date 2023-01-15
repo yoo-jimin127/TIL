@@ -67,7 +67,7 @@ cell.style.background = 'red'
 - 사용자 정의 성능 모니터 위젯
     - FPS 계산 후 위젯에 숫자를 표시하거나 콘솔을 사용해 데이터를 출력할 수 있음
 ```js
-// 2-3
+// 2-3) 사용자 정의 성능 모니터 위젯
 let panel
 let start
 let frames = 0
@@ -158,6 +158,18 @@ window.requestAnimationFrame(() => {
     - 다음 다시 그리기(repaint)가 이벤트 루프에서 스케줄링 되기 직전에 실행됨
 
 - 정적 렌더링 스키마
+![](https://user-images.githubusercontent.com/66112716/210338957-c408923e-9e46-41a9-8fbd-f52382f18007.png)
 
-![스크린샷 2023-01-03 오후 7 22 41](https://user-images.githubusercontent.com/66112716/210338957-c408923e-9e46-41a9-8fbd-f52382f18007.png)
+### ▶️ 코드 리뷰
+예제 2-6에서의 렌더링 방식은 `requestAnimationFrame`과 가상 노드 조작 사용을 통해 충분한 성능 보장    
+뷰 함수의 낮은 가독성    
 
+- 예제 2-6의 문제점
+    - **하나의 거대한 함수**
+        - 여러 DOM 요소를 조작하는 함수가 단 하나뿐 → 로직을 복잡하게 만들기 쉬움
+    - **동일한 작업을 수행하는 여러 방법**
+        - 문자열을 통해 리스트 항목 생성
+        - `todo count` 요소 : 기존 요소에 테스트를 추가하면 해결
+        - 필터 : `classList` 관리
+
+- 예제 
