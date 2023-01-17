@@ -29,7 +29,8 @@
 </html>
 - 테이블의 DOM 표현
 ```
-![](https://user-images.githubusercontent.com/66112716/210324973-27ce8fcd-fad6-4cfc-85d6-97495479dd1f.png)
+<img src="https://user-images.githubusercontent.com/66112716/210324973-27ce8fcd-fad6-4cfc-85d6-97495479dd1f.png" width="500" />
+
 DOM : HTML 요소로 정의된 트리를 관리하는 방법    
 
 ```js
@@ -169,6 +170,7 @@ window.requestAnimationFrame(() => {
     - 다음 다시 그리기(repaint)가 이벤트 루프에서 스케줄링 되기 직전에 실행됨
 
 - 정적 렌더링 스키마
+
 ![](https://user-images.githubusercontent.com/66112716/210338957-c408923e-9e46-41a9-8fbd-f52382f18007.png)
 
 ### ▶️ 코드 리뷰
