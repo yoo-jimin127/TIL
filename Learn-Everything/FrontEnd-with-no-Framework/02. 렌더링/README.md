@@ -29,7 +29,7 @@
 </html>
 - 테이블의 DOM 표현
 ```
-<img src="https://user-images.githubusercontent.com/66112716/210324973-27ce8fcd-fad6-4cfc-85d6-97495479dd1f.png" width="500" />
+<img src="https://user-images.githubusercontent.com/66112716/210324973-27ce8fcd-fad6-4cfc-85d6-97495479dd1f.png" width="700" />
 
 DOM : HTML 요소로 정의된 트리를 관리하는 방법    
 
