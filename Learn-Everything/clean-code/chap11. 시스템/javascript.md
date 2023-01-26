@@ -228,13 +228,13 @@ interface Bank {
 // 추상화를 위한 POJO ("Plain Old Java Object") 구현
 
 class BankImpl implements Bank {
-	private accounts
+	#accounts
 
-  public getAccounts() {
+  getAccounts() {
   	return this.accounts;
   }
   
-	public setAccounts(accounts) {
+	setAccounts(accounts) {
       this.accounts = new Array();
       accounts.forEach((account) => {
         this.accounts.push(account);
@@ -245,17 +245,17 @@ class BankImpl implements Bank {
 // BankProxyHandler.js
 
 // 프록시 API가 필요한 "InvocationHandler"
-public class BankProxyHandler implements InvocationHandler {
-	private bank;
+class BankProxyHandler implements InvocationHandler {
+	#bank;
 
-	public BankProxyHandler(bank) {
-		this.bank = bank;
+	BankProxyHandler(bank) {
+		this.#bank = bank;
 	}
 
 	// InvocationHandler에 정의된 메서드
-	public Object invoke(proxy, method, args)
+	invoke(proxy, method, args)
 			throws Throwable {
-		const methodName = method.getName() as string;
+		const methodName = method.getName();
 		if (methodName.equals("getAccounts")) {
 			bank.setAccounts(getAccountsFromDatabase());
 			return bank.getAccounts();
@@ -269,8 +269,8 @@ public class BankProxyHandler implements InvocationHandler {
 	}
   
 	// 세부사항은 여기에 이어진다.
-	protected getAccountsFromDatabase() {...}
-	protected setAccountsToDatabase(accounts) {...}
+	getAccountsFromDatabase() {...}
+	setAccountsToDatabase(accounts) {...}
 }
 
 // 다른 곳에 위치하는 코드
@@ -323,8 +323,8 @@ p:dataAccessObject-ref="bankDataAccessObject"/>
 
 ```js
 const bf =
-	new XmlBeanFactory(new ClassPathResource("app.xml", getClass())) as XmlBeanFactory;
-const bank = bf.getBean("bank") as Bank;
+	new XmlBeanFactory(new ClassPathResource("app.xml", getClass()));
+const bank = bf.getBean("bank");
 ```
 
 스프링 관련 자바 코드가 거의 필요없으므로 애플리케이션은 사실상 스프링과 독립적이다. 즉, EJB2 시스템이 지녔던 강한 결합이라는 문제가 모두 사라진다.
