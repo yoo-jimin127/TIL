@@ -24,11 +24,12 @@
 불행히도 대다수 애플리케이션은 시작 단계라는 관심사를 분리하지 않는다.
 준비 과정 코드를 주먹구구식으로 구현할 뿐 아니라 런타임 로직과 마구 뒤섞인다.
 
-```java
-public Service getService() {
-	if(service == null)
-		service = new MyServiceImpl(...); // 모든 상황에 적합한 기본값일까?
-	return service;
+```js
+function getService() {
+  if(service == null) {
+     service = new MyServiceImpl(...);
+  }
+  return service;
 }
 ```
 
@@ -213,71 +214,67 @@ AOP에서 **관점**이라는 모듈 구성 개념은 “특정 관심사를 지
 
 목록 11-3은 Bank 애플리케이션에서 JDK 프록시를 사용해 영속성을 지원하는 예제다.
 
-```java
-// Bank.java (패키지이름을감춘다)
-import java.util.*;
-
-public interface Bank {
-	Collection<Account> getAccounts);
-	void setAccounts (Collection<Account> accounts);
+```js
+// Bank.js (패키지 이름을 감춘다)
+interface Bank {
+  getAccounts();
+  setAccounts(accounts);
 }
 ```
 
-```java
-// BankImpl.java
+```js
+// BankImpl.js
 
-import java.util.*;
 // 추상화를 위한 POJO ("Plain Old Java Object") 구현
 
-public class BankImpl implements Bank {
-	private List<Account> accounts;
+class BankImpl implements Bank {
+	private accounts
 
-	public Collection<Account> getAccounts () {
-	return accounts;
-}
-public void setAccounts (Collection<Account> accounts) {
-	this.accounts = new ArrayList<Account>;
-	for (Account account: accounts) {
-	this.accounts.add (account);
-		}
-	}
+  public getAccounts() {
+  	return this.accounts;
+  }
+  
+	public setAccounts(accounts) {
+      this.accounts = new Array();
+      accounts.forEach((account) => {
+        this.accounts.push(account);
+      })
+  }
 }
 
-// BankProxyHandler. java
-import java.lang.reflect.*;
-import java.util.*;
+// BankProxyHandler.js
 
 // 프록시 API가 필요한 "InvocationHandler"
 public class BankProxyHandler implements InvocationHandler {
-	private Bank bank;
+	private bank;
 
-	public BankProxyHandler (Bank bank) {
+	public BankProxyHandler(bank) {
 		this.bank = bank;
 	}
 
-// InvocationHandler에 정의된 메서드
-public Object invoke(Object proxy, Method method, Object [] args)
-	throws Throwable {
-String methodName = method.getName();
-if (methodName.equals("getAccounts")) {
-	bank.setAccounts(getAccountsFromDatabase());
-	return bank.getAccounts();
-} else if (methodName.equals ("setAccounts")) {
-	bank.setAccounts((Collection<Account>) args[0]);
-	setAccountsToDatabase(bank.getAccounts));
-	return null;
-}else{
-...
+	// InvocationHandler에 정의된 메서드
+	public Object invoke(proxy, method, args)
+			throws Throwable {
+		const methodName = method.getName() as string;
+		if (methodName.equals("getAccounts")) {
+			bank.setAccounts(getAccountsFromDatabase());
+			return bank.getAccounts();
+		} else if (methodName.equals ("setAccounts")) {
+			bank.setAccounts(args[0]);
+			setAccountsToDatabase(bank.getAccounts);
+			return null;
+		} else {
+			...
+		}
 	}
+  
+	// 세부사항은 여기에 이어진다.
+	protected getAccountsFromDatabase() {...}
+	protected setAccountsToDatabase(accounts) {...}
 }
-// 세부사항은 여기에 이어진다.
 
-protected Collection<Account> getAccountsFromDatabase) < . . . }
-protected void setAccountsToDatabase(Collection<Account> accounts) ? . S
-}
 // 다른 곳에 위치하는 코드
-
-Bank bank = (Bank) Proxy.newProxyInstance(
+const bank = Proxy.newProxyInstance(
 	Bank.class.getClassLoader(),
 	new Class[] { Bank.class },
 	new BankProxylandler(new Bankimpt()));
@@ -324,10 +321,10 @@ p:dataAccessObject-ref="bankDataAccessObject"/>
 
 애플리케이션에서 DI 컨테이너에게 (XML 파일에 명시된) 시스템 내 최상위 객체를 요청하려면 다음 코드가 필요하다.
 
-```java
-XmlBeanFactory bf =
-	new XmlBeanFactory(new ClassPathResource("app.xml", getClass()));
-Bank bank = (Bank) bf.getBean("bank");
+```js
+const bf =
+	new XmlBeanFactory(new ClassPathResource("app.xml", getClass())) as XmlBeanFactory;
+const bank = bf.getBean("bank") as Bank;
 ```
 
 스프링 관련 자바 코드가 거의 필요없으므로 애플리케이션은 사실상 스프링과 독립적이다. 즉, EJB2 시스템이 지녔던 강한 결합이라는 문제가 모두 사라진다.
