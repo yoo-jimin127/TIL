@@ -502,7 +502,7 @@ private void findCommonPrefix() {
 ```
 
 <details>
-<sumamry><b>💻 함수를 더 깔끔하게 수정하기</b></summary>
+<summary><b>💻 함수를 더 깔끔하게 수정하기</b></summary>
 
 ```java
 private void findCommonPrefixAndSuffix() { 
