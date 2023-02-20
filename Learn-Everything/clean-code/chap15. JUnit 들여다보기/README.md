@@ -129,7 +129,7 @@ public class ComparisonCompactorTest extends TestCase {
 
 다음으로 15-2 예제 코드를 통해 `ComparisonCompactor` 코드를 살펴보자.   
 <details>
-<summary><b>💻 예제 15-2. ComparisonCompactor.java(원본) </b></summary>
+<summary><b>💻 예제 15-2. ComparisonCompactor.java (원본) </b></summary>
 
 ```java
 // 예제 15-2. ComparisonCompactor.java(원본)
@@ -227,7 +227,7 @@ public class ComparisonCompactor {
     - `예제 15-3`과 같이 짰을 수도 있었기에, `예제 15-2`는 상당히 훌륭한 모듈이다.
 
 <details>
-<summary><b>💻 예제 15-3. ComparisonCompactor.java(디팩터링 결과) </b></summary>
+<summary><b>💻 예제 15-3. ComparisonCompactor.java (디팩터링 결과) </b></summary>
 
 ```java
 // 예제 15-3. ComparisonCompactor.java(디팩터링 결과)
@@ -539,7 +539,7 @@ private boolean suffix0verlapsPrefix(int suffixLength) {
 
 이후 `suffixIndex`를 `suffixLength`로 변경하여 가독성을 높였다.   
 <details>
-<summary><b>💻 예제 15-4. ComparisonCompactor.java (중간버전) </b></summary>
+<summary><b>💻 예제 15-4. ComparisonCompactor.java (중간 버전) </b></summary>
 
 ```java
 // 예제 15-4. ComparisonCompactor.java (중간버전) 
