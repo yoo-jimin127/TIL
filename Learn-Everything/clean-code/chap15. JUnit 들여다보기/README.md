@@ -342,7 +342,7 @@ private boolean shouldNotCompact() {
 `fExpected`에서 `f`를 빼버리는 바람에 생긴 결과다.   
 함수에서 멤버 변수와 이름이 똑같은 변수를 사용하는 이유가 없다면 이를 변경한다.   
 
-이름을 명확하게 붙인다.   
+보다 명확하게 이름을 붙인다.   
 ```java
 String compactExpected = compactString(expected);
 String compactActual = compactString(actual);
@@ -468,3 +468,278 @@ private int findCommonSuffix(int prefixIndex) {
 }
 ```
 
+`prefixIndex`를 인수로 전달하는 방식은 다소 자의적이다.    
+함수 호출 순서는 확실히 정해지나, `prefixlndlex`가 필요한 이유는 설명하지 못하고 있다.    
+
+```java
+private void compactExpectedAndActual() {
+    findCommonPrefixAndSuffix();
+    compactExpected = compactString(expected);
+    compactActual = compactString(actual);
+}
+
+private void findCommonPrefixAndSuffix() {
+    findCommonPrefix();
+int expectedSuffix = expected.length() - 1;
+int actualSuffix = actual.length() - 1;
+for (;
+    actualSuffix >= prefixIndex && expectedSuffix >= prefixIndex;
+    actualSuffix--, expectedSuffix--
+) {
+    if (expected.charAt(expectedSuffix) != actual.charAt(actualSuffix))
+        break;
+    }
+    suffixIndex = expected.length() - expectedSuffix;
+}
+
+private void findCommonPrefix() {
+    prefixindex = 0;
+    int end = Math.min(expected.length(), actual. length());
+    for (; prefixIndex < end; prefixIndex++)
+        if (expected.charAt(prefixIndex) != actual.charAt(pretixIndex))
+            break;
+}
+```
+
+<details>
+<sumamry><b>💻 함수를 더 깔끔하게 수정하기</b></summary>
+
+```java
+private void findCommonPrefixAndSuffix() { 
+    findCommonPrefix(); 
+    int suffixLength = 1; 
+    for (; !suffixOverlapsPrefix(suffixLength); suffixLength++) {
+        if (charFromEnd(expected, suffixLength) != 
+                charFromEnd(actual, suffixLength))
+            break;
+    }
+    suffixIndex = suffixLength;
+}
+
+private char charFromEnd(String s, int i) { 
+    return s.charAt(s.length()-i);
+}
+
+private boolean suffix0verlapsPrefix(int suffixLength) { 
+    return actual.length() - suffixLength < prefixLength ||
+        expected.length() - suffixLength < prefixLength;
+}
+```
+</details>
+
+코드를 개선하니 `suffixIndex`가 접미어 길이라는 사실이 드러난다.   
+이름이 적절하지 않다는 의미이다.   
+`prefixIndex` 역시 `index`와 `length`가 동의어이기에 이 역시 수정한다.   
+<br>
+
+`computerCommonSuffix`에서 `+1`을 없애고, `charFromEnd`에 `-1`을 추가하였으며,   
+`suffixOverlapsPrefix`에 `<=`를 사용하였다.   
+개선된 코드는 논리적으로 타당하다.   
+<br>
+
+이후 `suffixIndex`를 `suffixLength`로 변경하여 가독성을 높였다.   
+<details>
+<summary><b>💻 예제 15-4. ComparisonCompactor.java (중간버전) </b></summary>
+
+```java
+// 예제 15-4. ComparisonCompactor.java (중간버전) 
+package junit.framework;
+
+public class ComparisonCompactor {
+...
+private int suffixLength;
+...
+  private void findCommonPrefixAndSuffix() {
+    findCommonPrefix();
+    suffixLength = 0;
+    for (; !suffixOverlapsPrefix(suffixLength); suffixLength++) {
+      if (charFromEnd(expected, suffixLength) !=
+          charFromEnd(actual, suffixLength))
+        break;
+    }
+  }
+  private char charFromEnd(String s, int i) {
+    return s.charAt(s.length() - i - 1);
+  }
+  private boolean suffixOverlapsPrefix(int suffixLength) {
+    return actual.length() - suffixLength <= prefixLength ||
+      expected.length() - suffixLength <= prefixLength;
+  }
+...
+  private String compactString(String source) {
+    String result =
+      DELTA_START +
+      source.substring(prefixLength, source.length() - suffixLength) +
+      DELTA_END;
+    if (prefixLength > 0)
+      result = computeCommonPrefix() + result;
+    if (suffixLength > 0)
+      result = result + computeCommonSuffix();
+    return result;
+  }
+...
+  private String computeCommonSuffix() {
+    int end = Math.min(expected.length() - suffixLength +
+      contextLength, expected.length()
+    );
+    return
+      expected.substring(expected.length() - suffixLength, end) +
+      (expected.length() - suffixLength <
+        expected.length() - contextLength ?
+        ELLIPSIS : "");
+  }
+}
+```
+</details>
+
+`+1` 제거하며, `compactString`의 `if (suffixLength > 0)`의 행에서 발생할 수 있는 문제를 살펴보자.   
+`suffixLength`는 언제나 1 이상이기에 if문 자체가 있으나 마나이다.   
+<br>
+
+따라서 `compactString` 구조를 다듬어 불필요한 if문을 다듬어 깔끔하게 만들어보자.   
+```java
+private String compactString(String source) {
+    return
+        computeCommonPrefix() +
+        DELTA_START +
+        source.substring(prefixLength, source.length() - suffixLength) +
+        DELTA_END +
+        conputeCommonSuffix();
+}
+```
+이제 `compactString` 함수는 단순 문자열 조각만 결합하며,   
+조금 더 깔끔하게 정리한 코드는 아래 `예제 15-5`에서 살펴볼 수 있다.   
+
+<details>
+<summary><b>💻 예제 15-5. ComparisonCompactor.java (최종 버전) </b></summary>
+
+```java
+// 예제 15-5. ComparisonCompactor.java (최종 버전)
+package junit.framework;
+
+public class ComparisonCompactor {
+
+  private static final String ELLIPSIS = "...";
+  private static final String DELTA_END = "]";
+  private static final String DELTA_START = "[";
+
+  private int contextLength;
+  private String expected;
+  private String actual;
+  private int prefixLength;
+  private int suffixLength;
+
+  public ComparisonCompactor(
+    int contextLength, String expected, String actual
+  ) {
+    this.contextLength = contextLength;
+    this.expected = expected;
+    this.actual = actual;
+  }
+
+  public String formatCompactedComparison(String message) {
+    String compactExpected = expected;
+    String compactActual = actual;
+    if (shouldBeCompacted()) {
+      findCommonPrefixAndSuffix();
+      compactExpected = compact(expected);
+      compactActual = compact(actual);
+    }
+    return Assert.format(message, compactExpected, compactActual);
+  }
+
+  private boolean shouldBeCompacted() {
+    return !shouldNotBeCompacted();
+  }
+
+  private boolean shouldNotBeCompacted() {
+    return expected == null ||
+            actual == null ||
+            expected.equals(actual);
+  }
+
+  private void findCommonPrefixAndSuffix() {
+    findCommonPrefix();
+    suffixLength = 0;
+    for (; !suffixOverlapsPrefix(); suffixLength++) {
+      if (charFromEnd(expected, suffixLength) !=
+          charFromEnd(actual, suffixLength)
+      )
+        break;
+    }
+  }
+
+  private char charFromEnd(String s, int i) {
+    return s.charAt(s.length() - i - 1);
+  }
+
+  private boolean suffixOverlapsPrefix() {
+    return actual.length() - suffixLength <= prefixLength ||
+      expected.length() - suffixLength <= prefixLength;
+  }
+
+  private void findCommonPrefix() {
+    prefixLength = 0;
+    int end = Math.min(expected.length(), actual.length());
+    for (; prefixLength < end; prefixLength++)
+      if (expected.charAt(prefixLength) != actual.charAt(prefixLength))
+        break;
+  }
+
+  private String compact(String s) {
+    return new StringBuilder()
+      .append(startingEllipsis())
+      .append(startingContext())
+      .append(DELTA_START)
+      .append(delta(s))
+      .append(DELTA_END)
+      .append(endingContext())
+      .append(endingEllipsis())
+      .toString();
+  }
+
+  private String startingEllipsis() {
+    return prefixLength > contextLength ? ELLIPSIS : "";
+  }
+
+  private String startingContext() {
+    int contextStart = Math.max(0, prefixLength - contextLength);
+    int contextEnd = prefixLength;
+    return expected.substring(contextStart, contextEnd);
+  }
+
+  private String delta(String s) {
+    int deltaStart = prefixLength;
+    int deltaEnd = s.length() - suffixLength;
+    return s.substring(deltaStart, deltaEnd);
+  }
+
+  private String endingContext() {
+    int contextStart = expected.length() - suffixLength;
+    int contextEnd =
+      Math.min(contextStart + contextLength, expected.length());
+    return expected.substring(contextStart, contextEnd);
+  }
+
+  private String endingEllipsis() {
+    return (suffixLength > contextLength ? ELLIPSIS : "");
+  }
+}
+```
+</details>
+
+최종 코드를 보면, 모듈은 일련의 분석 함수와 일련의 조합 함수로 나뉜다.   
+전체 함수는 위상적으로 정렬되어 있으므로, 각 함수가 사용된 직후에 정의된다.   
+<br>
+
+코드의 리팩터링을 반복하며 처음에 추출했던 메서드 몇개를 `formatCompactedComparison`에다 다시 집어넣었다.   
+또한 `shouldNotNeCompacted`의 조건 역시 원래대로 되돌렸다.   
+<br>
+
+코드를 리팩터링하다 보면, 원래 했던 변경을 되돌리는 경우가 흔하다.   
+**💡 리팩터링은 코드가 어느 수준에 이를때까지 수많은 시행착오를 반복하는 작업이기 때문이다.**
+
+## ✅ 결론
+우리는 보이스카우트 규칙을 지켰다.    
+모듈은 처음보다 더욱 깨끗해졌으며, _세상에 개선이 불필요한 모듈은 없다._    
+코드를 처음보다 조금 더 깨끗하게 만드는 책임은 우리 모두에게 있다.   
