@@ -1,5 +1,5 @@
 ## yoo-jimin127's Today I Learned 💻✏
-> [https://github.com/yoo-jimin127/TIL] (2021.10 ~ )  
+> [yoo-jimin127/TIL](https://github.com/yoo-jimin127/TIL) (2021.10 ~ )  
 
 학습한 내용이 온전한 제 것이 될 수 있도록 꾸준히 기록하고 복습하고자 생성한 레포지토리입니다.<br>
 느리고 더디더라도 멈추지 않고 끊임없이 성장하는 모습을 지켜봐주세요 😊
@@ -17,3 +17,13 @@
 - [yoo-jimin127's velog](https://velog.io/@dev_jiminn)
 - [yoo-jimin127's naver blog](https://blog.naver.com/dbwlals9936) 
    - 현재는 기술블로그를 [velog](https://velog.io/@dev_jiminn)로 이전하였습니다 😉
+
+## Study Table ✏️
+|**contents**|
+|:---|
+|📚 [Front End](https://github.com/yoo-jimin127/TIL/tree/main/01.%20Front-End)|
+|📚 [Back End](https://github.com/yoo-jimin127/TIL/tree/main/02.%20Back-End)|
+|📚 [CS](https://github.com/yoo-jimin127/TIL/tree/main/03.%20CS)|
+|📚 [Book](https://github.com/yoo-jimin127/TIL/tree/main/04.%20Book)|
+|📚 [Programming Language](https://github.com/yoo-jimin127/TIL/tree/main/05.%20Programming-Language)|
+|📚 [Learn Everything](https://github.com/yoo-jimin127/TIL/tree/main/06.%20Learn-Everything)|
