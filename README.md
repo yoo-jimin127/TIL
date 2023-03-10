@@ -4,13 +4,6 @@
 학습한 내용이 온전한 제 것이 될 수 있도록 꾸준히 기록하고 복습하고자 생성한 레포지토리입니다.<br>
 느리고 더디더라도 멈추지 않고 끊임없이 성장하는 모습을 지켜봐주세요 😊
 
-## Writer 🔥
-<table align="center">
-   <tr>
-        <td align="center"><a href="https://github.com/yoo-jimin127"><img src="https://avatars.githubusercontent.com/u/66112716?v=4" width="150px;" alt=""/><br /><sub><b>yoo-jimin127<br/>유지민</b></sub></a></td>
-   </tr>
-</table>
-
 ## Rules ✅
 본 레포지토리는 매일 학습하고 기록하는 습관을 기르고자 메모의 목적으로 사용되고 있습니다.     
 따라서 공유하며 성장하고자 하는 내용의 경우 기록물을 정제하여 블로그 글로 게시합니다.    
@@ -27,3 +20,10 @@
 |📚 [Book](https://github.com/yoo-jimin127/TIL/tree/main/04.%20Book)|
 |📚 [Programming Language](https://github.com/yoo-jimin127/TIL/tree/main/05.%20Programming-Language)|
 |📚 [Learn Everything](https://github.com/yoo-jimin127/TIL/tree/main/06.%20Learn-Everything)|
+
+## Writer 🔥
+<table align="center">
+   <tr>
+        <td align="center"><a href="https://github.com/yoo-jimin127"><img src="https://avatars.githubusercontent.com/u/66112716?v=4" width="150px;" alt=""/><br /><sub><b>yoo-jimin127<br/>유지민</b></sub></a></td>
+   </tr>
+</table>
