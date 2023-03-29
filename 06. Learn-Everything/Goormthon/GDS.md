@@ -74,3 +74,9 @@ UI 파편화 발생
 1. Figma와 Storybook 컴포넌트 정의 일치시키기   
 2. Figma properties와 Storybook controls 일치시키기  
 3. Figma Rules of Use 린트화시키기  
+
+## Q & A
+- 디자인 시스템을 사용하면 디자이너의 창의성이 떨어지는거 아닌가요?
+- 작은 규모의 서비스를 만들 때 디자인 시스템을 만드는 건 비효율적이지 않나요?
+- 특정 요소를 컴포넌트화하는 기준이 있나요?
+    - 자주 사용될 요소는 GDS를 통해 관리
